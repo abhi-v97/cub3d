@@ -1,0 +1,7 @@
+[submodule "libft"]
+	path = libft
+	url = https://github.com/abhi-v97/libft
+
+[submodule "minilibx-linux"]
+	path = minilibx-linux
+	url = https://github.com/42paris/minilibx-linux
