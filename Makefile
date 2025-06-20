@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 
 SRC_DIR = src
 BONUS_DIR = srcb
@@ -14,7 +14,7 @@ BONUS_OBJS = ${BONUS:${BONUS_DIR}/%.c=${OBJ_DIR}/%.o}
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -O3 -Ofast -march=native
+CFLAGS = -Wall -Wextra -Werror -O3 -ffast-math -march=native
 # -D WIDTH=1000 -D HEIGHT=1000
 # -g
 # -O3 -Ofast -march=native
@@ -23,7 +23,7 @@ CFLAGS = -Wall -Wextra -Werror -O3 -Ofast -march=native
 LIBFT = libft/libft.a
 
 ${NAME}: ${LIBFT} ${OBJS}
-	${CC} ${OBJS} -o $@ -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
+	${CC} ${OBJS} -o $@ -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c
 	mkdir -p obj
@@ -45,8 +45,8 @@ bonus: ${LIBFT} ${BONUS_OBJS}
 
 clean:
 	rm -f ${OBJS} ${BONUS_OBJS}
-	make clean -C libft/
-	make  -C minilibx-linux/ clean
+	make -C libft clean
+	make -C minilibx-linux clean
 
 fclean: clean
 	rm -f ${NAME}
