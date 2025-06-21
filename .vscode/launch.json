@@ -6,10 +6,10 @@
 		"request": "launch",
 		"program": "${workspaceFolder}/cub3D",
 		"args": [
-			"mapcub"
+			"map.cub"
 		],
 		"stopAtEntry": false,
-		"cwd": "${fileDirname}",
+		"cwd": "${workspaceFolder}",
 		"environment": [],
 		"externalConsole": false,
 		"MIMode": "gdb",

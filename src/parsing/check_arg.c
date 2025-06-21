@@ -18,7 +18,7 @@ static int	check_ext(char *file);
 
 // tests the map given as arg if its valid or not
 // zero if valid, 1 if not: this results in an exit statement
-int check_map(char *file)
+int check_arg(char *file)
 {
 	int		fd;
 
@@ -50,7 +50,9 @@ static int	check_ext(char *file)
 	char	*temp;
 
 	temp = ft_strrchr(file, '.');
-	if (!temp && ft_strcmp(temp,	".cub"))
+	if (!temp)
+		return (1);
+	if (ft_strcmp(temp,	".cub"))
 		return (1);
 	return (0);
 }

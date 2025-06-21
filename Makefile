@@ -5,7 +5,7 @@ BONUS_DIR = srcb
 OBJ_DIR = obj
 
 SRC =	src/main.c src/error.c \
-		src/parsing/check_map.c
+		src/parsing/check_arg.c src/parsing/parse_file.c
 
 BONUS =
 

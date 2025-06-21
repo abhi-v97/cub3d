@@ -38,6 +38,7 @@ int	key_handler(int key, t_gdata *gdata)
 
 bool	init_graphics(t_gdata *gdata)
 {
+	gdata->map = NULL;
 	gdata->ww = 1600;
 	gdata->wh = 900;
 	gdata->display = mlx_init();
@@ -56,17 +57,19 @@ bool	init_graphics(t_gdata *gdata)
 
 int	main(int argc, char **argv)
 {
-	t_gdata	gdata;
+	t_gdata		gdata;
 
 	(void) argc;
 	(void) argv;
-	if (argc > 1 && check_map(argv[1])) // change this later to only accept 1 arg
+	if (argc > 1 && check_arg(argv[1])) // change this later to only accept 1 arg
 		exit(1);
 
 	printf("This is the amazing cub3D!\n");
-	exit(0);
 	if (!init_graphics(&gdata))
 		return (1);
+	parse_file(&gdata, argv[1]);
+	// TODO: remove exit before merging
+	exit(0);
 	mlx_key_hook(gdata.win, key_handler, &gdata);
 	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.display);
 	mlx_loop_hook(gdata.display, rendering_function, &gdata);
