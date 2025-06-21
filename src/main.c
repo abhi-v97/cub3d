@@ -21,9 +21,9 @@ int	rendering_function(void *param)
 	int i = 0;
 	while (i < (int)(gd->cnvs.w * gd->cnvs.h))
 		data[i++] = 0x00c8c8c8;
-	printf("Line %d\n", __LINE__);
+	// printf("Line %d\n", __LINE__);
 	mlx_put_image_to_window(gd->display, gd->win, gd->cnvs.img, 0, 0);
-	printf("Line %d\n", __LINE__);
+	// printf("Line %d\n", __LINE__);
 	return (1);
 }
 
@@ -60,7 +60,11 @@ int	main(int argc, char **argv)
 
 	(void) argc;
 	(void) argv;
+	if (argc > 1 && check_map(argv[1])) // change this later to only accept 1 arg
+		exit(1);
+
 	printf("This is the amazing cub3D!\n");
+	exit(0);
 	if (!init_graphics(&gdata))
 		return (1);
 	mlx_key_hook(gdata.win, key_handler, &gdata);

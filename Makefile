@@ -4,17 +4,20 @@ SRC_DIR = src
 BONUS_DIR = srcb
 OBJ_DIR = obj
 
-SRC = src/main.c
+SRC =	src/main.c src/error.c \
+		src/parsing/check_map.c
 
 BONUS =
 
 OBJS = ${SRC:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
+# OBJ = ${SRC:.c=.o}
+# OBJS = &{addprefix &{OBJ_DIR}}
 
 BONUS_OBJS = ${BONUS:${BONUS_DIR}/%.c=${OBJ_DIR}/%.o}
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -O3 -ffast-math -march=native
+CFLAGS = -Wall -Wextra -Werror -O3 -ffast-math -march=native -g
 # -D WIDTH=1000 -D HEIGHT=1000
 # -g
 # -O3 -Ofast -march=native
@@ -23,11 +26,12 @@ CFLAGS = -Wall -Wextra -Werror -O3 -ffast-math -march=native
 LIBFT = libft/libft.a
 
 ${NAME}: ${LIBFT} ${OBJS}
-	${CC} ${OBJS} -o $@ -Lminilibx-linux -lmlx -lXext -lX11 -lm
+	${CC} ${OBJS} -I. ${LIBFT} -o $@ -Lminilibx-linux -lmlx -lXext -lX11 -lm 
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c
 	mkdir -p obj
-	${CC} ${CFLAGS} -c $< -o $@
+	mkdir -p obj/parsing
+	${CC} ${CFLAGS} -c $< -o $@ 
 
 ${OBJ_DIR}/%.o:${BONUS_DIR}/%.c
 	mkdir -p obj

@@ -16,6 +16,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
 # include "../minilibx-linux/mlx.h"
 
 # define EMLXERR 1
@@ -63,5 +65,16 @@ typedef struct s_gdata
 	int			wh;
 	int			exit_code;
 }	t_gdata;
+
+// libft funcs
+size_t	ft_strlen(const char *s);
+char	*ft_strrchr(const char *s, int c);
+int		ft_strcmp(const char *s1, const char *s2);
+
+// parsing/check_map.c
+int		check_map(char *file);
+
+// error.c
+void	ft_error(char *msg);
 
 #endif
