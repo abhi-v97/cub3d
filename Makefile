@@ -4,8 +4,8 @@ SRC_DIR = src
 BONUS_DIR = srcb
 OBJ_DIR = obj
 
-SRC =	src/main.c src/error.c \
-		src/parsing/check_arg.c src/parsing/parse_file.c
+SRC =	src/main.c src/error.c src/utils.c \
+		src/parsing/check_arg.c src/parsing/parse_file.c src/parsing/check_map.c
 
 BONUS =
 
@@ -15,9 +15,10 @@ OBJS = ${SRC:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
 
 BONUS_OBJS = ${BONUS:${BONUS_DIR}/%.c=${OBJ_DIR}/%.o}
 
-CC = cc
+CC = gcc -g
 
-CFLAGS = -Wall -Wextra -Werror -O3 -ffast-math -march=native -g
+CFLAGS = -Wall -Wextra -Werror -O0
+# -ffast-math -march=native
 # -D WIDTH=1000 -D HEIGHT=1000
 # -g
 # -O3 -Ofast -march=native

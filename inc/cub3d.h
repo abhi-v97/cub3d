@@ -63,6 +63,7 @@ typedef struct s_gdata
 	void		*display;
 	char		**map;
 	int			file_fd;
+	int			map_height;
 	void		*win;
 	t_canvas	cnvs;
 	int			ww;
@@ -72,18 +73,26 @@ typedef struct s_gdata
 
 // libft funcs
 size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *src);
+char	*get_next_line(int fd);
 
-// parsing/check_map.c
+// parsing/check_arg.c
 int		check_arg(char *file);
 
 // parsing/parse_file.c
 int		parse_file(t_gdata *gdata, char *file);
 
+// parsing/check_map.c
+int		check_map(t_gdata *data);
+
 // error.c
 void	ft_error(char *msg);
+
+// utils.c
+int		is_blank(char c);
 
 #endif

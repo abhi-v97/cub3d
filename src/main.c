@@ -39,6 +39,8 @@ int	key_handler(int key, t_gdata *gdata)
 bool	init_graphics(t_gdata *gdata)
 {
 	gdata->map = NULL;
+	gdata->map_height = 0;
+
 	gdata->ww = 1600;
 	gdata->wh = 900;
 	gdata->display = mlx_init();
@@ -68,6 +70,7 @@ int	main(int argc, char **argv)
 	if (!init_graphics(&gdata))
 		return (1);
 	parse_file(&gdata, argv[1]);
+	check_map(&gdata);
 	// TODO: remove exit before merging
 	exit(0);
 	mlx_key_hook(gdata.win, key_handler, &gdata);

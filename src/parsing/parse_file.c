@@ -19,12 +19,10 @@ static void	map_fill(char **map, int fd);
 // grabs map data from file into char ** array gdata->map
 int	parse_file(t_gdata *gdata, char *file)
 {
-	int		rows;
 	(void) gdata;
 	(void) file;
-
-	rows = line_count(file);
-	gdata->map = (char **) malloc(sizeof(char *) * (rows + 1));
+	gdata->map_height = line_count(file);
+	gdata->map = (char **) malloc(sizeof(char *) * (gdata->map_height + 1));
 	if (!gdata->map)
 		return (ft_error("malloc failed"), 1);
 	gdata->file_fd = open(file, O_RDONLY);
@@ -35,7 +33,7 @@ int	parse_file(t_gdata *gdata, char *file)
 }
 
 // gets number of lines in map file
-static int line_count(char *file)
+static int	line_count(char *file)
 {
 	int		fd;
 	int		count;
@@ -46,7 +44,7 @@ static int line_count(char *file)
 	if (fd < 0)
 		ft_error(strerror(errno));
 	else
-	 {
+	{
 		buffer = get_next_line(fd);
 		while (buffer)
 		{
@@ -54,7 +52,7 @@ static int line_count(char *file)
 			buffer = get_next_line(fd);
 			count++;
 		}
-	 }
+	}
 	return (close(fd), count);
 }
 
