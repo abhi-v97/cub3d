@@ -68,7 +68,7 @@ static int	check_vertical(char **map, int map_height)
 			j++;
 		if (map[i][j] != '1')
 			return (1);
-		j = ft_strlen(map[i]) - 2;
+		j = ft_strlen(map[i]) - 1;
 		while (is_blank(map[i][j]))
 			j--;
 		if (map[i][j] != '1')

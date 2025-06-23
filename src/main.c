@@ -12,6 +12,8 @@
 
 #include "../inc/cub3d.h"
 
+static void		print_debug_info(t_gdata *data);
+
 int	rendering_function(void *param)
 {
 	const t_gdata *const gd = param;
@@ -40,6 +42,7 @@ bool	init_graphics(t_gdata *gdata)
 {
 	gdata->map = NULL;
 	gdata->map_height = 0;
+	gdata->map_width = 0;
 	gdata->player_direction = 0;
 
 	gdata->ww = 1600;
@@ -72,6 +75,7 @@ int	main(int argc, char **argv)
 		return (1);
 	parse_file(&gdata, argv[1]);
 	check_map(&gdata);
+	print_debug_info(&gdata);
 	// TODO: remove exit before merging
 	exit(0);
 	mlx_key_hook(gdata.win, key_handler, &gdata);
@@ -79,4 +83,16 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(gdata.display, rendering_function, &gdata);
 	mlx_loop(gdata.display);
 	return (0);
+}
+
+static void	print_debug_info(t_gdata *data)
+{
+	int		i;
+
+	printf("map_height:\t%i\n", data->map_height);
+	printf("map_width:\t%i\n", data->map_width);
+	i = 0;
+	printf("\nMap:\n");
+	while (data->map[i])
+		printf("\t%s\n", data->map[i++]);
 }

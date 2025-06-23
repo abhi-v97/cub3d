@@ -67,6 +67,7 @@ typedef struct s_gdata
 	int			file_fd;
 	int			player_direction;
 	int			map_height;
+	int			map_width;
 	void		*win;
 	t_canvas	cnvs;
 	int			ww;

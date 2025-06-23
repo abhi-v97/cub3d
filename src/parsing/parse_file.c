@@ -13,7 +13,7 @@
 #include "../../inc/cub3d.h"
 #include <fcntl.h>
 
-static int	line_count(char *file);
+static int	line_count(t_gdata *data, char *file);
 static void	map_fill(char **map, int fd);
 
 // grabs map data from file into char ** array gdata->map
@@ -21,7 +21,7 @@ int	parse_file(t_gdata *gdata, char *file)
 {
 	(void) gdata;
 	(void) file;
-	gdata->map_height = line_count(file);
+	gdata->map_height = line_count(gdata, file);
 	gdata->map = (char **) malloc(sizeof(char *) * (gdata->map_height + 1));
 	if (!gdata->map)
 		return (ft_error("malloc failed"), 1);
@@ -33,11 +33,12 @@ int	parse_file(t_gdata *gdata, char *file)
 }
 
 // gets number of lines in map file
-static int	line_count(char *file)
+static int	line_count(t_gdata *data, char *file)
 {
 	int		fd;
 	int		count;
 	char	*buffer;
+	int		buffer_len;
 
 	count = 0;
 	fd = open(file, O_RDONLY);
@@ -48,6 +49,9 @@ static int	line_count(char *file)
 		buffer = get_next_line(fd);
 		while (buffer)
 		{
+			buffer_len = ft_strlen(buffer);
+			if (buffer_len > data->map_width)
+				data->map_width = buffer_len;
 			free(buffer);
 			buffer = get_next_line(fd);
 			count++;
@@ -61,11 +65,15 @@ static void	map_fill(char **map, int fd)
 {
 	char	*buffer;
 	int		row;
+	char	*nl_char;
 
 	row = 0;
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
+		nl_char = ft_strchr(buffer, '\n');
+		if (nl_char)
+			*nl_char = '\0';
 		map[row] = ft_strdup(buffer);
 		if (!map[row])
 			return (free(map), ft_error("malloc failed"));
