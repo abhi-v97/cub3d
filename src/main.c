@@ -91,8 +91,8 @@ static void	print_debug_info(t_gdata *data)
 
 	printf("map_height:\t%i\n", data->map_height);
 	printf("map_width:\t%i\n", data->map_width);
-	i = 0;
 	printf("\nMap:\n");
+	i = 0;
 	while (data->map[i])
 		printf("\t%s\n", data->map[i++]);
 }

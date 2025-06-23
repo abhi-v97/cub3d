@@ -84,6 +84,9 @@ char	*get_next_line(int fd);
 char	*ft_strdup(const char *src);
 char	*ft_strndup(const char *s, int n);
 char	*get_next_line(int fd);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_memset(void *s, int c, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
 
 // parsing/check_arg.c
 int		check_arg(char *file);
