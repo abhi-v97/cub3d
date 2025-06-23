@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/20 18:47:50 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/23 16:32:35 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,27 @@
 # define EMLXWINERR 2
 
 # define k_ESC 65307
-# define k_left 65361
-# define k_up 65362
-# define k_right 65363
-# define k_down 65364
-# define k_lt 44
-# define k_gt 46
-# define k_sqb1 91
-# define k_sqb2 93
-# define k_a 97
-# define k_c 99
-# define k_l 108
-# define k_d 100
-# define k_r 114
-# define k_s 115
-# define k_w 119
-# define k_x 120
+# define k_LEFT 65361
+# define k_UP 65362
+# define k_RIGHT 65363
+# define k_DOWN 65364
+# define k_LT 44
+# define k_GT 46
+# define k_SQB1 91
+# define k_SQB2 93
+# define k_A 97
+# define k_C 99
+# define k_L 108
+# define k_D 100
+# define k_R 114
+# define k_S 115
+# define k_W 119
+# define k_X 120
+
+# define DN 1
+# define DS 2
+# define DE 3
+# define DW 4
 
 /*
  *	bpp - bit per pixel
@@ -58,6 +63,22 @@ typedef struct s_canvas
 	int		h;
 }	t_canvas;
 
+typedef struct s_pos
+{
+	double	x;
+	double	y;
+}	t_pos;
+
+/*
+ *	(x, y)	position of the player on the map and in the "game"
+ *	dir		direction the player is facing (DN | DS | DE | DW)
+ */
+typedef struct s_player
+{
+	t_pos	pos;
+	int		dir;
+}	t_player;
+
 typedef struct s_gdata
 {
 	void		*display;
@@ -69,6 +90,7 @@ typedef struct s_gdata
 	int			ww;
 	int			wh;
 	int			exit_code;
+	t_player	player;
 }	t_gdata;
 
 // libft funcs
@@ -94,5 +116,12 @@ void	ft_error(char *msg);
 
 // utils.c
 int		is_blank(char c);
+
+// init.c
+void	init_data(t_gdata *gdata);
+bool	init_graphics(t_gdata *gdata);
+
+// player_get_pos.c
+t_pos	player_get_pos_from_map(t_gdata *gdata);
 
 #endif
