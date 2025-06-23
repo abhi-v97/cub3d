@@ -52,6 +52,7 @@ int	main(int argc, char **argv)
 		return (1);
 	parse_file(&gdata, argv[1]);
 	check_map(&gdata);
+	print_map_info(&gdata);
 	t_pos	p = player_get_pos_from_map(&gdata);
 	printf("Player X = %f, Y = %f\n", p.x, p.y);
 	// TODO: remove exit before merging

@@ -79,21 +79,6 @@ typedef struct s_player
 	int		dir;
 }	t_player;
 
-typedef struct s_pos
-{
-	double	x;
-	double	y;
-}	t_pos;
-
-/*
- *	(x, y)	position of the player on the map and in the "game"
- *	dir		direction the player is facing (DN | DS | DE | DW)
- */
-typedef struct s_player
-{
-	t_pos	pos;
-	int		dir;
-}	t_player;
 
 // player_direction: used to set starting direction of player
 // should probably make a separate struct for player and link it here
