@@ -13,6 +13,7 @@
 #include "../inc/cub3d.h"
 #include <unistd.h>
 
+// print error msg to stderr
 void	ft_error(char *msg)
 {
 	write(STDERR_FILENO, "cub3d: Error: ", 14);

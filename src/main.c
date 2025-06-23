@@ -12,7 +12,7 @@
 
 #include "../inc/cub3d.h"
 
-static void		print_debug_info(t_gdata *data);
+static void		print_map_info(t_gdata *data);
 
 int	rendering_function(void *param)
 {
@@ -75,7 +75,7 @@ int	main(int argc, char **argv)
 		return (1);
 	parse_file(&gdata, argv[1]);
 	check_map(&gdata);
-	print_debug_info(&gdata);
+	print_map_info(&gdata);
 	// TODO: remove exit before merging
 	exit(0);
 	mlx_key_hook(gdata.win, key_handler, &gdata);
@@ -85,7 +85,8 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-static void	print_debug_info(t_gdata *data)
+// prints map info from t_gdata struct
+static void	print_map_info(t_gdata *data)
 {
 	int		i;
 

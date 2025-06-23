@@ -15,8 +15,6 @@
 static int	check_horizontal(char *map);
 static int	check_vertical(char **map, int map_height);
 static int	check_invalid_char(t_gdata *data, char **map, int map_height);
-static int	check_missing_wall(t_gdata *data, char **map, int i, int j);
-static int	check_map_bounds(t_gdata *data, char **map, int map_height);
 
 int	check_map(t_gdata *data)
 {
@@ -44,9 +42,7 @@ static int	check_horizontal(char *map)
 		return (1);
 	while (map[i])
 	{
-		if (is_blank(map[i]))
-			;
-		else if (map[i] != '1' && map[i] != '-')
+		if (map[i] != '1' && map[i] != '-')
 			return (1);
 		i++;
 	}
@@ -78,6 +74,8 @@ static int	check_vertical(char **map, int map_height)
 	return (0);
 }
 
+// checks if map has any invalid characters
+// allowed chars: 01NSWE, empty space represented by '-'
 static int	check_invalid_char(t_gdata *data, char **map, int map_height)
 {
 	int		i;
@@ -95,51 +93,13 @@ static int	check_invalid_char(t_gdata *data, char **map, int map_height)
 				;
 			else if (!ft_strchr("01NSWE", map[i][j]))
 				return (ft_error("invalid character found"), 1);
-			else if (ft_strchr("NSWE", map[i][j]) && data->player_direction == 0)
+			else if (ft_strchr("NSWE", map[i][j]) && !data->player_direction)
 				data->player_direction = map[i][j];
-			else if (ft_strchr("NSWE", map[i][j]) && data->player_direction != 0)
+			else if (ft_strchr("NSWE", map[i][j]) && data->player_direction)
 				return (ft_error("too many players"), 1);
 			j++;
 		}
 		i++;
 	}
-	return (0);
-}
-
-static int	check_map_bounds(t_gdata *data, char **map, int map_height)
-{
-	int		i;
-	int		j;
-
-	if (!map || !*map)
-		return (1);
-	i = 0;
-	while (i < map_height - 1)
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == '-' && check_missing_wall(data, map, i, j))
-				return (ft_error("missing wall"), 1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-// checks if the map has a missing wall that would cause
-// players to fall out of the map
-static int	check_missing_wall(t_gdata *data, char **map, int i, int j)
-{
-	(void) data;
-	if (j > 0 && (map[i][j - 1] != '-' && map[i][j - 1] != '1'))
-		return (1);
-	if (map[i][j + 1] && (map[i][j + 1] != '-' && map[i][j + 1] != '1'))
-		return (1);
-	if (i > 1 && (map[i - 1][j] != '-' && map[i - 1][j] != '1'))
-		return (1);
-	if (map[i + 1] && (map[i + 1][j] != '-' && map[i + 1][j] != '1'))
-		return (1);
 	return (0);
 }

@@ -97,6 +97,9 @@ int		parse_file(t_gdata *gdata, char *file);
 // parsing/check_map.c
 int		check_map(t_gdata *data);
 
+// parsing/check_bounds.c
+int		check_map_bounds(t_gdata *data, char **map, int map_height);
+
 // error.c
 void	ft_error(char *msg);
 

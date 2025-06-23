@@ -25,7 +25,7 @@ int	parse_file(t_gdata *gdata, char *file)
 	gdata->map_height = line_count(gdata, file);
 	gdata->map = (char **) malloc(sizeof(char *) * (gdata->map_height + 1));
 	if (!gdata->map)
-		return (ft_error("malloc failed"), 1);
+		return (ft_error(strerror(errno)), 1);
 	gdata->file_fd = open(file, O_RDONLY);
 	if (gdata->file_fd < 0)
 		ft_error(strerror(errno));
@@ -34,6 +34,8 @@ int	parse_file(t_gdata *gdata, char *file)
 }
 
 // gets number of lines in map file
+// also calculates and stores the biggest line found as
+// the map_width, which is used to malloc each string in map array
 static int	line_count(t_gdata *data, char *file)
 {
 	int		fd;
@@ -67,20 +69,25 @@ static void	map_fill(t_gdata *data, char **map, int fd)
 	char	*buffer;
 	int		row;
 
-
 	row = 0;
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
 		copy_buffer(data, buffer, map, row);
 		if (!map[row])
-			return (free(map), ft_error("malloc failed"));
+			return (free(map), ft_error(strerror(errno)));
 		row++;
 		buffer = get_next_line(fd);
 	}
 	map[row] = NULL;
 }
 
+// normalises each map line to have the same width
+// empty gaps are represented by a '-' sign
+// actually, it doesn't need to be a dash, it can just be a
+// space character. so once we no longer need to print the
+// map with print_map_info, we can remove the while loop at the end
+// and replace the '-' checks with ' '
 static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row)
 {
 	char	*nl_char;
