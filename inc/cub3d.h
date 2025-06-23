@@ -81,6 +81,7 @@ char	*ft_strrchr(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *src);
+char	*ft_strndup(const char *s, int n);
 char	*get_next_line(int fd);
 
 // parsing/check_arg.c

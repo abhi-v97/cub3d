@@ -15,7 +15,8 @@
 static int	check_horizontal(char *map);
 static int	check_vertical(char **map, int map_height);
 static int	check_invalid_char(t_gdata *data, char **map, int map_height);
-static void set_player_direction(t_gdata *data, char c);
+static int	check_missing_wall(t_gdata *data, char **map, int i, int j);
+static int	check_map_bounds(t_gdata *data, char **map, int map_height);
 
 int	check_map(t_gdata *data)
 {
@@ -25,6 +26,8 @@ int	check_map(t_gdata *data)
 	if (check_vertical(data->map, data->map_height))
 		return (ft_error("map has incorrect vertical borders"), 1);
 	if (check_invalid_char(data, data->map, data->map_height))
+		return (1);
+	if (check_map_bounds(data, data->map, data->map_height))
 		return (1);
 	printf("Map borders OKAY\n");
 	return (0);
@@ -93,7 +96,7 @@ static int	check_invalid_char(t_gdata *data, char **map, int map_height)
 			else if (!ft_strchr("01NSWE", map[i][j]))
 				return (ft_error("invalid character found"), 1);
 			else if (ft_strchr("NSWE", map[i][j]) && data->player_direction == 0)
-				set_player_direction(data, map[i][j]);
+				data->player_direction = map[i][j];
 			else if (ft_strchr("NSWE", map[i][j]) && data->player_direction != 0)
 				return (ft_error("too many players"), 1);
 			j++;
@@ -103,8 +106,40 @@ static int	check_invalid_char(t_gdata *data, char **map, int map_height)
 	return (0);
 }
 
-static void set_player_direction(t_gdata *data, char c)
+static int	check_map_bounds(t_gdata *data, char **map, int map_height)
 {
-	if (data->player_direction == 0)
-		data->player_direction = c;
+	int		i;
+	int		j;
+
+	if (!map || !*map)
+		return (1);
+	i = 1;
+	while (i < map_height - 1)
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (is_blank(map[i][j]) && check_missing_wall(data, map, i, j))
+				return (ft_error("missing wall"), 1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+// checks if the map has a missing wall that would cause
+// players to fall out of the map
+static int	check_missing_wall(t_gdata *data, char **map, int i, int j)
+{
+	(void) data;
+	if (j > 0 && (is_blank(map[i][j - 1]) == 0 && map[i][j - 1] != '1'))
+		return (1);
+	if (map[i][j + 1] && (is_blank(map[i][j + 1]) == 0 && map[i][j + 1] != '1'))
+		return (1);
+	if (i > 1 && (is_blank(map[i - 1][j]) == 0 && map[i - 1][j] != '1'))
+		return (1);
+	if (map[i + 1] && (is_blank(map[i + 1][j]) == 0 && map[i + 1][j] != '1'))
+		return (1);
+	return (0);
 }
