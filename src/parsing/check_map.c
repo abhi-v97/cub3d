@@ -46,7 +46,7 @@ static int	check_horizontal(char *map)
 	{
 		if (is_blank(map[i]))
 			;
-		else if (map[i] != '1')
+		else if (map[i] != '1' && map[i] != '-')
 			return (1);
 		i++;
 	}
@@ -64,12 +64,12 @@ static int	check_vertical(char **map, int map_height)
 	while (i < map_height - 1)
 	{
 		j = 0;
-		while (is_blank(map[i][j]))
+		while (map[i][j] == '-')
 			j++;
 		if (map[i][j] != '1')
 			return (1);
 		j = ft_strlen(map[i]) - 1;
-		while (is_blank(map[i][j]))
+		while (map[i][j] == '-')
 			j--;
 		if (map[i][j] != '1')
 			return (1);
@@ -91,7 +91,7 @@ static int	check_invalid_char(t_gdata *data, char **map, int map_height)
 		j = 0;
 		while (map[i][j])
 		{
-			if (is_blank(map[i][j]))
+			if (map[i][j] == '-')
 				;
 			else if (!ft_strchr("01NSWE", map[i][j]))
 				return (ft_error("invalid character found"), 1);
@@ -113,13 +113,13 @@ static int	check_map_bounds(t_gdata *data, char **map, int map_height)
 
 	if (!map || !*map)
 		return (1);
-	i = 1;
+	i = 0;
 	while (i < map_height - 1)
 	{
 		j = 0;
 		while (map[i][j])
 		{
-			if (is_blank(map[i][j]) && check_missing_wall(data, map, i, j))
+			if (map[i][j] == '-' && check_missing_wall(data, map, i, j))
 				return (ft_error("missing wall"), 1);
 			j++;
 		}
@@ -133,13 +133,13 @@ static int	check_map_bounds(t_gdata *data, char **map, int map_height)
 static int	check_missing_wall(t_gdata *data, char **map, int i, int j)
 {
 	(void) data;
-	if (j > 0 && (is_blank(map[i][j - 1]) == 0 && map[i][j - 1] != '1'))
+	if (j > 0 && (map[i][j - 1] != '-' && map[i][j - 1] != '1'))
 		return (1);
-	if (map[i][j + 1] && (is_blank(map[i][j + 1]) == 0 && map[i][j + 1] != '1'))
+	if (map[i][j + 1] && (map[i][j + 1] != '-' && map[i][j + 1] != '1'))
 		return (1);
-	if (i > 1 && (is_blank(map[i - 1][j]) == 0 && map[i - 1][j] != '1'))
+	if (i > 1 && (map[i - 1][j] != '-' && map[i - 1][j] != '1'))
 		return (1);
-	if (map[i + 1] && (is_blank(map[i + 1][j]) == 0 && map[i + 1][j] != '1'))
+	if (map[i + 1] && (map[i + 1][j] != '-' && map[i + 1][j] != '1'))
 		return (1);
 	return (0);
 }

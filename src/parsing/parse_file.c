@@ -52,7 +52,7 @@ static int	line_count(t_gdata *data, char *file)
 		{
 			buffer_len = ft_strlen(buffer);
 			if (buffer_len > data->map_width)
-				data->map_width = buffer_len;
+				data->map_width = buffer_len - 1;
 			free(buffer);
 			buffer = get_next_line(fd);
 			count++;

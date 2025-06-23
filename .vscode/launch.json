@@ -6,7 +6,7 @@
 		"request": "launch",
 		"program": "${workspaceFolder}/cub3D",
 		"args": [
-			"map.cub"
+			"test.cub"
 		],
 		"stopAtEntry": false,
 		"cwd": "${workspaceFolder}",
