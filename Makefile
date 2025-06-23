@@ -37,7 +37,6 @@ ${NAME}: ${LIBFT} ${OBJS}
 	${CC} ${OBJS} -I. ${LIBFT} -o $@ -Lminilibx-linux -lmlx -lXext -lX11 -lm 
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c | ${OBJ_DIR}
-	mkdir -p obj/parsing
 	${CC} ${CFLAGS} -c $< -o $@ 
 
 ${OBJ_DIR}/%.o:${BONUS_DIR}/%.c | ${OBJ_DIR}
@@ -57,7 +56,7 @@ all: ${NAME}
 #	${CC} ${BONUS_OBJS} -o fractol -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
 
 clean:
-	${RM} ${OBJS} ${BONUS_OBJS}
+	${RM} ${OBJ_DIR}
 	make -C libft clean
 	make -C minilibx-linux clean
 
