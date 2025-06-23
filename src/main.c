@@ -40,6 +40,7 @@ bool	init_graphics(t_gdata *gdata)
 {
 	gdata->map = NULL;
 	gdata->map_height = 0;
+	gdata->player_direction = 0;
 
 	gdata->ww = 1600;
 	gdata->wh = 900;

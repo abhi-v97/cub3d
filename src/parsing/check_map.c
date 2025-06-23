@@ -14,7 +14,8 @@
 
 static int	check_horizontal(char *map);
 static int	check_vertical(char **map, int map_height);
-static int	check_invalid_char(char **map, int map_height);
+static int	check_invalid_char(t_gdata *data, char **map, int map_height);
+static void set_player_direction(t_gdata *data, char c);
 
 int	check_map(t_gdata *data)
 {
@@ -23,8 +24,8 @@ int	check_map(t_gdata *data)
 		return (ft_error("map has incorrect horizontal borders"), 1);
 	if (check_vertical(data->map, data->map_height))
 		return (ft_error("map has incorrect vertical borders"), 1);
-	if (check_invalid_char(data->map, data->map_height))
-		return (ft_error("map has invalid characters"), 1);
+	if (check_invalid_char(data, data->map, data->map_height))
+		return (1);
 	printf("Map borders OKAY\n");
 	return (0);
 }
@@ -74,7 +75,7 @@ static int	check_vertical(char **map, int map_height)
 	return (0);
 }
 
-static int	check_invalid_char(char **map, int map_height)
+static int	check_invalid_char(t_gdata *data, char **map, int map_height)
 {
 	int		i;
 	int		j;
@@ -89,11 +90,21 @@ static int	check_invalid_char(char **map, int map_height)
 		{
 			if (is_blank(map[i][j]))
 				;
-			else if (!ft_strchr("01NSEW", map[i][j]))
-				return (1);
+			else if (!ft_strchr("01NSWE", map[i][j]))
+				return (ft_error("invalid character found"), 1);
+			else if (ft_strchr("NSWE", map[i][j]) && data->player_direction == 0)
+				set_player_direction(data, map[i][j]);
+			else if (ft_strchr("NSWE", map[i][j]) && data->player_direction != 0)
+				return (ft_error("too many players"), 1);
 			j++;
 		}
 		i++;
 	}
 	return (0);
+}
+
+static void set_player_direction(t_gdata *data, char c)
+{
+	if (data->player_direction == 0)
+		data->player_direction = c;
 }

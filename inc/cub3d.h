@@ -58,11 +58,14 @@ typedef struct s_canvas
 	int		h;
 }	t_canvas;
 
+// player_direction: used to set starting direction of player
+// should probably make a separate struct for player and link it here
 typedef struct s_gdata
 {
 	void		*display;
 	char		**map;
 	int			file_fd;
+	int			player_direction;
 	int			map_height;
 	void		*win;
 	t_canvas	cnvs;

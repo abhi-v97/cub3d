@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
-#include <fcntl.h>
 
 static int	is_dir(char *file);
 static int	check_ext(char *file);
