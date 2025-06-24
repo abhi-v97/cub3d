@@ -15,8 +15,8 @@
 static int	check_missing_wall(t_gdata *data, char **map, int i, int j);
 
 // checks if map has no empty gaps in walls
-// loops through every char until it finds an empty space '-'
-// if the empty space isn't surrounded by another '-' or a wall (1),
+// loops through every char until it finds an empty space ' '
+// if the empty space isn't surrounded by another ' ' or a wall (1),
 // it means there is a gap in the wall
 int	check_map_bounds(t_gdata *data, char **map, int map_height)
 {
@@ -31,7 +31,7 @@ int	check_map_bounds(t_gdata *data, char **map, int map_height)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == '-' && check_missing_wall(data, map, i, j))
+			if (map[i][j] == ' ' && check_missing_wall(data, map, i, j))
 				return (ft_error("missing wall"), 1);
 			j++;
 		}
@@ -48,13 +48,13 @@ int	check_map_bounds(t_gdata *data, char **map, int map_height)
 static int	check_missing_wall(t_gdata *data, char **map, int i, int j)
 {
 	(void) data;
-	if (j > 0 && (map[i][j - 1] != '-' && map[i][j - 1] != '1'))
+	if (j > 0 && (map[i][j - 1] != ' ' && map[i][j - 1] != '1'))
 		return (1);
-	if (map[i][j + 1] && (map[i][j + 1] != '-' && map[i][j + 1] != '1'))
+	if (map[i][j + 1] && (map[i][j + 1] != ' ' && map[i][j + 1] != '1'))
 		return (1);
-	if (i > 0 && (map[i - 1][j] != '-' && map[i - 1][j] != '1'))
+	if (i > 0 && (map[i - 1][j] != ' ' && map[i - 1][j] != '1'))
 		return (1);
-	if (map[i + 1] && (map[i + 1][j] != '-' && map[i + 1][j] != '1'))
+	if (map[i + 1] && (map[i + 1][j] != ' ' && map[i + 1][j] != '1'))
 		return (1);
 	return (0);
 }

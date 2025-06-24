@@ -42,7 +42,7 @@ static int	check_horizontal(char *map)
 		return (1);
 	while (map[i])
 	{
-		if (map[i] != '1' && map[i] != '-')
+		if (map[i] != '1' && map[i] != ' ')
 			return (1);
 		i++;
 	}
@@ -60,12 +60,12 @@ static int	check_vertical(char **map, int map_height)
 	while (i < map_height - 1)
 	{
 		j = 0;
-		while (map[i][j] == '-')
+		while (map[i][j] == ' ')
 			j++;
 		if (map[i][j] != '1')
 			return (1);
 		j = ft_strlen(map[i]) - 1;
-		while (map[i][j] == '-')
+		while (map[i][j] == ' ')
 			j--;
 		if (map[i][j] != '1')
 			return (1);
@@ -75,7 +75,7 @@ static int	check_vertical(char **map, int map_height)
 }
 
 // checks if map has any invalid characters
-// allowed chars: 01NSWE, empty space represented by '-'
+// allowed chars: 01NSWE, empty space represented by ' '
 static int	check_invalid_char(t_gdata *data, char **map, int map_height)
 {
 	int		i;
@@ -89,7 +89,7 @@ static int	check_invalid_char(t_gdata *data, char **map, int map_height)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == '-')
+			if (map[i][j] == ' ')
 				;
 			else if (!ft_strchr("01NSWE", map[i][j]))
 				return (ft_error("invalid character found"), 1);

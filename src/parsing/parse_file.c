@@ -73,6 +73,12 @@ static void	map_fill(t_gdata *data, char **map, int fd)
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
+		if (get_textures(data, buffer))
+			break ;
+		buffer = get_next_line(fd);
+	}
+	while (buffer)
+	{
 		copy_buffer(data, buffer, map, row);
 		if (!map[row])
 			return (free(map), ft_error(strerror(errno)));
@@ -83,29 +89,31 @@ static void	map_fill(t_gdata *data, char **map, int fd)
 }
 
 // normalises each map line to have the same width
-// empty gaps are represented by a '-' sign
+// empty gaps are represented by a ' ' sign
 // actually, it doesn't need to be a dash, it can just be a
 // space character. so once we no longer need to print the
 // map with print_map_info, we can remove the while loop at the end
-// and replace the '-' checks with ' '
+// and replace the ' ' checks with ' '
 static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row)
 {
 	char	*nl_char;
-	int		i;
+	// int		i;
 
-	nl_char = ft_strchr(buffer, '\n');
-	if (nl_char)
-		*nl_char = '\0';
 	map[row] = (char *) malloc(sizeof(char *) * (data->map_width + 1));
 	if (!map[row])
 		return ;
 	ft_memset(map[row], ' ', data->map_width);
 	ft_memcpy(map[row], buffer, ft_strlen(buffer));
-	i = 0;
-	while (map[row][i] != '\0')
-	{
-		if (map[row][i] == ' ')
-			map[row][i] = '-';
-		i++;
-	}
+	nl_char = ft_strchr(map[row], '\n');
+	if (nl_char)
+		*nl_char = ' ';
+	map[row][data->map_width] = '\0';
+	
+	// i = 0;
+	// while (map[row][i] != '\0')
+	// {
+	// 	if (map[row][i] == ' ')
+	// 		map[row][i] = ' ';
+	// 	i++;
+	// }
 }
