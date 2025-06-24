@@ -69,15 +69,15 @@ static void	print_map_info(t_gdata *data)
 {
 	int		i;
 
-	printf("map_height:\t%i\n", data->map_height);
-	printf("map_width:\t%i\n", data->map_width);
+	printf("map_height:\t\t%i\n", data->map_height);
+	printf("map_width:\t\t%i\n", data->map_width);
 	printf("\nTexture info:\n");
-	printf("north:\t%s\n", data->texture_n);
-	printf("south:\t%s\n", data->texture_s);
-	printf("west:\t%s\n", data->texture_w);
-	printf("east:\t%s\n", data->texture_e);
-	printf("floor:\t%s\n", data->texture_f);
-	printf("ceiling:\t%s\n", data->texture_c);
+	printf("north:\t\t%s\n", data->texture_n);
+	printf("south:\t\t%s\n", data->texture_s);
+	printf("west:\t\t%s\n", data->texture_w);
+	printf("east:\t\t%s\n", data->texture_e);
+	printf("floor:\t\t%s\n", data->texture_f);
+	printf("ceil:\t\t%s\n", data->texture_c);
 	printf("\nMap:\n");
 	i = 0;
 	while (data->map[i])
