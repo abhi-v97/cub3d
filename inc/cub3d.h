@@ -145,5 +145,7 @@ bool	init_graphics(t_gdata *gdata);
 
 // player_get_pos.c
 t_pos	player_get_pos_from_map(t_gdata *gdata);
+int		player_outside_map(t_gdata *data, t_pos pos);
+
 
 #endif

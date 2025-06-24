@@ -53,8 +53,10 @@ int	main(int argc, char **argv)
 	parse_file(&gdata, argv[1]);
 	check_map(&gdata);
 	print_map_info(&gdata);
-	t_pos	p = player_get_pos_from_map(&gdata);
-	printf("Player X = %f, Y = %f\n", p.x, p.y);
+	// t_pos	p = player_get_pos_from_map(&gdata);
+	if (gdata.player.pos.x != -1 && gdata.player.pos.y != -1 && player_outside_map(&gdata, gdata.player.pos))
+		return (ft_error("Player out of bounds!"), 1);
+	printf("Player X = %f, Y = %f\n", gdata.player.pos.x, gdata.player.pos.y);
 	// TODO: remove exit before merging
 	exit(0);
 	mlx_key_hook(gdata.win, key_handler, &gdata);

@@ -35,5 +35,27 @@ t_pos	player_get_pos_from_map(t_gdata *gdata)
 			c = map[i][++j];
 		}
 	}
-	return (pos);
+	return (ft_error("Player not found!"), pos);
+}
+
+// function to check if player is placed outside map, for whatever reason
+// if the player is adjacent to a space, it has to be out of bounds
+int player_outside_map(t_gdata *data, t_pos pos)
+{
+	int		x;
+	int		y;
+
+	x = (int)pos.x;
+	y = (int)pos.y;
+	if (!data->map && x > data->map_width && y > data->map_height && !data->map[x][y])
+		return (1);
+	if (y > 0 && (data->map[x][y - 1] == ' '))
+		return (1);
+	if (x > 0 && (data->map[x - 1][y] == ' '))
+		return (1);
+	if (data->map[x + 1] && data->map[x + 1][y] == ' ')
+		return (1);
+	if (data->map[y + 1] && data->map[x][y + 1] == ' ')
+		return (1);
+	return (0);
 }
