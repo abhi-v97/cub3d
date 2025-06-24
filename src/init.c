@@ -19,6 +19,12 @@ void	init_data(t_gdata *gdata)
 	gdata->player.pos = player_get_pos_from_map(gdata);
 	gdata->player_direction = 0;
 	gdata->map_width = 0;
+	gdata->texture_c = 0;
+	gdata->texture_f = 0;
+	gdata->texture_n = 0;
+	gdata->texture_s = 0;
+	gdata->texture_w = 0;
+	gdata->texture_e = 0;
 }
 
 bool	init_graphics(t_gdata *gdata)

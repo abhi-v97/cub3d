@@ -81,11 +81,18 @@ typedef struct s_player
 
 
 // player_direction: used to set starting direction of player
-// should probably make a separate struct for player and link it here
+// add player_direction to s_player later, if it makes sense
+// separate texture struct?
 typedef struct s_gdata
 {
 	void		*display;
 	char		**map;
+	char		*texture_n;
+	char		*texture_w;
+	char		*texture_s;
+	char		*texture_e;
+	char		*texture_f;
+	char		*texture_c;
 	int			file_fd;
 	int			player_direction;
 	int			map_height;
@@ -122,6 +129,9 @@ int		check_map(t_gdata *data);
 
 // parsing/check_bounds.c
 int		check_map_bounds(t_gdata *data, char **map, int map_height);
+
+// parsing/get_textures.c
+int		get_textures(t_gdata *data, char *buffer);
 
 // error.c
 void	ft_error(char *msg);
