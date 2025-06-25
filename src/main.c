@@ -13,6 +13,7 @@
 #include "cub3d.h"
 
 static void		print_map_info(t_gdata *data);
+void	free_data(t_gdata *data);
 
 int	rendering_function(void *param)
 {
@@ -24,7 +25,7 @@ int	rendering_function(void *param)
 	while (i < (int)(gd->cnvs.w * gd->cnvs.h))
 		data[i++] = 0x00c8c8c8;
 	// printf("Line %d\n", __LINE__);
-	mlx_put_image_to_window(gd->display, gd->win, gd->cnvs.img, 0, 0);
+	mlx_put_image_to_window(gd->mlx, gd->win, gd->cnvs.img, 0, 0);
 	// printf("Line %d\n", __LINE__);
 	return (1);
 }
@@ -34,7 +35,7 @@ int	key_handler(int key, t_gdata *gdata)
 	(void) gdata;
 
 	if (key == k_ESC)
-		mlx_loop_end(gdata->display);
+		mlx_loop_end(gdata->mlx);
 	return (1);
 }
 
@@ -47,22 +48,25 @@ int	main(int argc, char **argv)
 	if (argc > 1 && check_arg(argv[1])) // change this later to only accept 1 arg
 		exit(1);
 
+	printf("player pos now: %f\n", gdata.player.pos.x);
 	printf("This is the amazing cub3D!\n");
 	if (!init_graphics(&gdata))
 		return (1);
 	parse_file(&gdata, argv[1]);
 	check_map(&gdata);
 	print_map_info(&gdata);
+	gdata.player.pos = player_get_pos_from_map(&gdata);
 	// t_pos	p = player_get_pos_from_map(&gdata);
-	if (gdata.player.pos.x != -1 && gdata.player.pos.y != -1 && player_outside_map(&gdata, gdata.player.pos))
+	if (gdata.player.pos.x > 0 && gdata.player.pos.y > 0 && player_outside_map(&gdata, gdata.player.pos))
 		return (ft_error("Player out of bounds!"), 1);
 	printf("Player X = %f, Y = %f\n", gdata.player.pos.x, gdata.player.pos.y);
 	// TODO: remove exit before merging
+	free_data(&gdata);
 	exit(0);
 	mlx_key_hook(gdata.win, key_handler, &gdata);
-	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.display);
-	mlx_loop_hook(gdata.display, rendering_function, &gdata);
-	mlx_loop(gdata.display);
+	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.mlx);
+	mlx_loop_hook(gdata.mlx, rendering_function, &gdata);
+	mlx_loop(gdata.mlx);
 	return (0);
 }
 
@@ -84,4 +88,32 @@ static void	print_map_info(t_gdata *data)
 	i = 0;
 	while (data->map[i])
 		printf("\t%s\n", data->map[i++]);
+}
+
+void	free_data(t_gdata *data)
+{
+	int		i;
+	if (data->texture_n)
+		free(data->texture_n);
+	if (data->texture_w)
+		free(data->texture_w);
+	if (data->texture_s)
+		free(data->texture_s);
+	if (data->texture_e)
+		free(data->texture_e);
+	if (data->texture_f)
+		free(data->texture_f);
+	if (data->texture_c)
+		free(data->texture_c);
+	i = 0;
+	while (data->map && data->map[i])
+		free(data->map[i++]);
+	free(data->map);
+	if (data->mlx)
+	{
+		mlx_destroy_image(data->mlx, data->cnvs.img);
+		mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
 }

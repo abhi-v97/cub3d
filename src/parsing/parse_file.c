@@ -72,6 +72,7 @@ static void	map_fill(t_gdata *data, char **map, int fd)
 	{
 		if (get_textures(data, buffer))
 			break ;
+		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	while (buffer)
@@ -80,6 +81,7 @@ static void	map_fill(t_gdata *data, char **map, int fd)
 		if (!map[row])
 			return (free(map), ft_error(strerror(errno)));
 		row++;
+		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	map[row] = NULL;

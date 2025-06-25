@@ -85,7 +85,7 @@ typedef struct s_player
 // separate texture struct?
 typedef struct s_gdata
 {
-	void		*display;
+	void		*mlx;
 	char		**map;
 	char		*texture_n;
 	char		*texture_w;
