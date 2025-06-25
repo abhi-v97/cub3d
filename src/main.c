@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/23 18:47:55 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/25 14:33:11 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,23 @@
 
 static void		print_map_info(t_gdata *data);
 
-int	rendering_function(void *param)
-{
-	const t_gdata *const gd = param;
-
-	usleep(100000);
-	int *data = (int *)gd->cnvs.addr;
-	int i = 0;
-	while (i < (int)(gd->cnvs.w * gd->cnvs.h))
-		data[i++] = 0x00c8c8c8;
-	// printf("Line %d\n", __LINE__);
-	mlx_put_image_to_window(gd->display, gd->win, gd->cnvs.img, 0, 0);
-	// printf("Line %d\n", __LINE__);
-	return (1);
-}
-
-int	key_handler(int key, t_gdata *gdata)
-{
-	(void) gdata;
-
-	if (key == k_ESC)
-		mlx_loop_end(gdata->display);
-	return (1);
-}
-
 int	main(int argc, char **argv)
 {
 	t_gdata		gdata;
 
-	(void) argc;
-	(void) argv;
 	if (argc > 1 && check_arg(argv[1])) // change this later to only accept 1 arg
 		exit(1);
-
 	printf("This is the amazing cub3D!\n");
-	if (!init_graphics(&gdata))
-		return (1);
+	if (!init_all(&gdata))
+		return (cleanup(&gdata), gdata.exit_code);
 	parse_file(&gdata, argv[1]);
 	check_map(&gdata);
 	print_map_info(&gdata);
 	t_pos	p = player_get_pos_from_map(&gdata);
 	printf("Player X = %f, Y = %f\n", p.x, p.y);
-	// TODO: remove exit before merging
-	exit(0);
 	mlx_key_hook(gdata.win, key_handler, &gdata);
 	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.display);
-	mlx_loop_hook(gdata.display, rendering_function, &gdata);
+	mlx_loop_hook(gdata.display, render_screen, &gdata);
 	mlx_loop(gdata.display);
 	return (0);
 }

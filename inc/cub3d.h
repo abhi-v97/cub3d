@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/23 18:44:46 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/25 14:31:17 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,16 @@
 # include <errno.h>
 # include "mlx.h"
 
-# define EMLXERR 1
-# define EMLXWINERR 2
+# define EMLXERR 500
+# define EMLXWINERR 501
+
+# ifndef W_WIDTH
+#  define W_WIDTH 800
+# endif
+
+# ifndef W_HEIGHT
+#  define W_HEIGHT 600
+# endif
 
 # define k_ESC 65307
 # define k_LEFT 65361
@@ -43,10 +51,10 @@
 # define k_W 119
 # define k_X 120
 
-# define DN 1
-# define DS 2
-# define DE 3
-# define DW 4
+# define NORTH 1
+# define SOUTH 2
+# define EAST 3
+# define WEST 4
 
 /*
  *	bpp - bit per pixel
@@ -71,17 +79,24 @@ typedef struct s_pos
 
 /*
  *	(x, y)	position of the player on the map and in the "game"
- *	dir		direction the player is facing (DN | DS | DE | DW)
+ *	angle	direction the player is looking at:
+ *			angle 0 faces NORTH (precisely)
+ *			angle 90 faces EAST (precisely)
+ *			angle 180 faces SOUTH (precisely)
+ *			angle 270 faces WEST (precisely)
  */
 typedef struct s_player
 {
 	t_pos	pos;
-	int		dir;
+	double	angle;
 }	t_player;
 
-
-// player_direction: used to set starting direction of player
-// should probably make a separate struct for player and link it here
+/*
+ *	gdata - Game data
+ *
+ *	player_direction: used to set starting direction of player
+ *	should probably make a separate struct for player and link it here
+ */
 typedef struct s_gdata
 {
 	void		*display;
@@ -130,10 +145,21 @@ void	ft_error(char *msg);
 int		is_blank(char c);
 
 // init.c
-void	init_data(t_gdata *gdata);
-bool	init_graphics(t_gdata *gdata);
+bool	init_all(t_gdata *gdata);
+
+// cleanup.c
+void    cleanup(t_gdata *gdata);
+
+// put_pixel.c
+void	put_pixel(t_canvas *cdata, int x, int y, int color);
 
 // player_get_pos.c
 t_pos	player_get_pos_from_map(t_gdata *gdata);
+
+// key_handler.c
+int	key_handler(int key, t_gdata *gdata);
+
+// rendering/render_screen.c
+int	render_screen(void *param);
 
 #endif
