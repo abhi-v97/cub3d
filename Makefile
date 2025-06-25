@@ -3,6 +3,7 @@ NAME = cub3D
 SRC_DIR = src
 BONUS_DIR = srcb
 OBJ_DIR = obj
+INC_DIR = inc
 
 LIBFT_DIR = libft
 LIBFT = ${LIBFT_DIR}/libft.a
@@ -37,13 +38,13 @@ CFLAGS = -Wall -Wextra -Werror -O0
 all: ${NAME}
 
 ${NAME}: ${LIBFT} ${LIBMLX} ${OBJS}
-	${CC} ${OBJS} -I. ${LIBFT} -o $@ -Lminilibx-linux -lmlx -lXext -lX11 -lm 
+	${CC} ${OBJS} -o $@ -I${INC_DIR} -L${LIBFT_DIR} -lft -L${LIBMLX_DIR} -lmlx -lXext -lX11 -lm 
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c | ${OBJ_DIR}
-	${CC} ${CFLAGS} -c $< -o $@ 
+	${CC} ${CFLAGS} -I${INC_DIR} -c $< -o $@ 
 
 ${BONUS_DIR}/%.o:${BONUS_DIR}/%.c | ${OBJ_DIR}
-	${CC} ${CFLAGS} -c $< -o $@
+	${CC} ${CFLAGS} -I${INC_DIR} -c $< -o $@
 
 ${OBJ_DIR}:
 	mkdir -p ${TMP_OBJ_DIRS}
