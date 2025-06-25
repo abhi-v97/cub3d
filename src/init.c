@@ -16,6 +16,8 @@ void	init_data(t_gdata *gdata)
 {
 	gdata->map = NULL;
 	gdata->map_height = 0;
+	gdata->player.pos.x = 0.0;
+	gdata->player.pos.y = 0.0;
 	gdata->player_direction = 0;
 	gdata->map_width = 0;
 	gdata->texture_c = 0;

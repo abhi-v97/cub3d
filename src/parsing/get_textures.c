@@ -65,9 +65,8 @@ static char	*set_texture_path(t_gdata *data, char *buffer)
 	len = i;
 	while (buffer[len] && !is_blank(buffer[len] && buffer[len] != '\n'))
 		len++;
-	result = (char *) malloc(sizeof(char) * (len - i));
+	result = ft_strndup(buffer + i, len - i - 1);
 	if (!result)
 		return (NULL);
-	result = ft_strndup(buffer + i, len - i - 1);
 	return (result);
 }

@@ -28,7 +28,7 @@ int	check_arg(char *file)
 		return (close_fd(&fd), ft_error("Failed to open file"), 1);
 	if (check_ext(file))
 		return (close_fd(&fd), ft_error("Wrong extension"), 1);
-	return (0);
+	return (close(fd), 0);
 }
 
 // checks if file provided is a directory or not

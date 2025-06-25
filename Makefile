@@ -68,6 +68,9 @@ ${LIBMLX_DIR}:
 #bonus: ${LIBFT} ${BONUS_OBJS}
 #	${CC} ${BONUS_OBJS} -o fractol -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
 
+v valgrind: ${NAME}
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./cub3D "map.cub"
+
 clean:
 	${RM} ${OBJ_DIR}
 	make -C ${LIBFT_DIR} clean

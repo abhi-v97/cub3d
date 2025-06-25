@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 	if (argc > 1 && check_arg(argv[1])) // change this later to only accept 1 arg
 		exit(1);
 
-	printf("player pos now: %f\n", gdata.player.pos.x);
+	// printf("player pos now: %f\n", gdata.player.pos.x);
 	printf("This is the amazing cub3D!\n");
 	if (!init_graphics(&gdata))
 		return (1);
@@ -93,6 +93,8 @@ static void	print_map_info(t_gdata *data)
 void	free_data(t_gdata *data)
 {
 	int		i;
+
+	close_fd(&data->file_fd);
 	if (data->texture_n)
 		free(data->texture_n);
 	if (data->texture_w)
