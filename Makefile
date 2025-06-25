@@ -13,7 +13,7 @@ LIBMLX = ${LIBMLX_DIR}/libmlx.a
 
 # TO GET THE ALL SOURCE FILES (TEMPORARILY), UNTIL THE PROJECT BECOMES MORE STABLE
 TMP_SRC_DIRS = ${shell find $(SRC_DIR) -type d}
-TMP_OBJ_DIRS = ${TMP_SRC_DIRS:${SRC_DIR}/%=${OBJ_DIR}/%}
+TMP_OBJ_DIRS = ${subst ${SRC_DIR},${OBJ_DIR},${TMP_SRC_DIRS}}
 TMP_FILES = ${wildcard ${addsuffix /*, ${TMP_SRC_DIRS}}}
 SRC = ${filter %.c, $(TMP_FILES)}
 
@@ -76,6 +76,7 @@ clean:
 fclean: clean
 	${RM} ${NAME}
 	${RM} ${LIBFT}
+	${RM} ${LIBMLX}
 
 re: fclean all
 
