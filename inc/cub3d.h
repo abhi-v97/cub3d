@@ -20,7 +20,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
-# include "mlx.h"
+# include "../minilibx-linux/mlx.h"
 
 # define EMLXERR 1
 # define EMLXWINERR 2
@@ -138,6 +138,7 @@ void	ft_error(char *msg);
 
 // utils.c
 int		is_blank(char c);
+void	close_fd(int *fd);
 
 // init.c
 void	init_data(t_gdata *gdata);

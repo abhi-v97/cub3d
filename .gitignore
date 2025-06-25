@@ -5,3 +5,8 @@ cub3D
 obj/
 
 .vscode/
+
+# lsp
+compile_commands.json
+
+.cache/

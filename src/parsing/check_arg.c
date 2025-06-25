@@ -25,9 +25,9 @@ int	check_arg(char *file)
 		return (ft_error("File is a directory"), 1);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (close(fd), ft_error("Failed to open file"), 1);
+		return (close_fd(&fd), ft_error("Failed to open file"), 1);
 	if (check_ext(file))
-		return (close(fd), ft_error("Wrong extension"), 1);
+		return (close_fd(&fd), ft_error("Wrong extension"), 1);
 	return (0);
 }
 
@@ -39,8 +39,8 @@ static int	is_dir(char *file)
 
 	fd = open(file, O_DIRECTORY);
 	if (fd >= 0)
-		return (close(fd), 1);
-	return (close(fd), 0);
+		return (close_fd(&fd), 1);
+	return (close_fd(&fd), 0);
 }
 
 // checks if the file has .cub extension

@@ -57,7 +57,7 @@ static int	line_count(t_gdata *data, char *file)
 			count++;
 		}
 	}
-	return (close(fd), count);
+	return (close_fd(&fd), count);
 }
 
 // copy contents of map file into map array
@@ -102,11 +102,10 @@ static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row)
 		return ;
 	ft_memset(map[row], ' ', data->map_width);
 	ft_memcpy(map[row], buffer, ft_strlen(buffer));
+	map[row][data->map_width] = '\0';
 	nl_char = ft_strchr(map[row], '\n');
 	if (nl_char)
-		*nl_char = ' ';
-	map[row][data->map_width] = '\0';
-	
+		*nl_char = ' ';	
 	// i = 0;
 	// while (map[row][i] != '\0')
 	// {

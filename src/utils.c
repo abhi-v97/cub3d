@@ -20,3 +20,12 @@ int	is_blank(char c)
 		return (1);
 	return (0);
 }
+
+// wrapper func to safely close a fd and set fd value to -1
+void	close_fd(int *fd)
+{
+	if (*fd == -1)
+		return ;
+	close(*fd);
+	*fd = -1;
+}
