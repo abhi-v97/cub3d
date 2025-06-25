@@ -34,6 +34,7 @@ CFLAGS = -Wall -Wextra -Werror -O0
 # -O3 -Ofast -march=native
 # -Wall -Wextra -Werror
 
+all: ${NAME}
 
 ${NAME}: ${LIBFT} ${LIBMLX} ${OBJS}
 	${CC} ${OBJS} -I. ${LIBFT} -o $@ -Lminilibx-linux -lmlx -lXext -lX11 -lm 
@@ -41,7 +42,7 @@ ${NAME}: ${LIBFT} ${LIBMLX} ${OBJS}
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c | ${OBJ_DIR}
 	${CC} ${CFLAGS} -c $< -o $@ 
 
-${OBJ_DIR}/%.o:${BONUS_DIR}/%.c | ${OBJ_DIR}
+${BONUS_DIR}/%.o:${BONUS_DIR}/%.c | ${OBJ_DIR}
 	${CC} ${CFLAGS} -c $< -o $@
 
 ${OBJ_DIR}:
@@ -62,8 +63,6 @@ ${LIBMLX}: | ${LIBMLX_DIR}
 
 ${LIBMLX_DIR}:
 	mkdir -p $@
-
-all: ${NAME}
 
 #bonus: ${LIBFT} ${BONUS_OBJS}
 #	${CC} ${BONUS_OBJS} -o fractol -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
