@@ -50,13 +50,13 @@ ${OBJ_DIR}:
 ${LIBFT}: | ${LIBFT_DIR}
 	git submodule update --init ${LIBFT_DIR}
 	@echo "compiling libft"
-	make bonus -C libft/
+	make bonus -C ${LIBFT_DIR}
 
 ${LIBFT_DIR}:
 	mkdir -p $@
 
 ${LIBMLX}: | ${LIBMLX_DIR}
-	git submodule update --init ${LIBMLXDIR}
+	git submodule update --init ${LIBMLX_DIR}
 	make -C ${LIBMLX_DIR}
 #	cd minilibx-linux && ./configure
 
@@ -70,12 +70,12 @@ all: ${NAME}
 
 clean:
 	${RM} ${OBJ_DIR}
-	make -C libft clean
-	make -C minilibx-linux clean
+	make -C ${LIBFT_DIR} clean
+	make -C ${LIBMLX_DIR} clean
 
 fclean: clean
 	${RM} ${NAME}
-	${RM} libft/libft.a
+	${RM} ${LIBFT}
 
 re: fclean all
 
