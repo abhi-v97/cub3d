@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "cub3d.h"
 
 t_pos	player_get_pos_from_map(t_gdata *gdata)
 {

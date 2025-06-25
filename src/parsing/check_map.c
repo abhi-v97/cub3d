@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "cub3d.h"
 
 static int	check_horizontal(char *map);
 static int	check_vertical(char **map, int map_height);

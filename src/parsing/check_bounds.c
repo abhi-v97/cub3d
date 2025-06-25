@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "cub3d.h"
 
 static int	check_missing_wall(t_gdata *data, char **map, int i, int j);
 

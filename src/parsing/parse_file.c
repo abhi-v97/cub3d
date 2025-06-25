@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/cub3d.h"
+#include "cub3d.h"
 #include <fcntl.h>
 
 static int	line_count(t_gdata *data, char *file);

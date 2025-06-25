@@ -20,7 +20,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
-# include "../minilibx-linux/mlx.h"
+# include "mlx.h"
 
 # define EMLXERR 1
 # define EMLXWINERR 2
