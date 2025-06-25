@@ -108,11 +108,4 @@ static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row)
 	nl_char = ft_strchr(map[row], '\n');
 	if (nl_char)
 		*nl_char = ' ';	
-	// i = 0;
-	// while (map[row][i] != '\0')
-	// {
-	// 	if (map[row][i] == ' ')
-	// 		map[row][i] = ' ';
-	// 	i++;
-	// }
 }

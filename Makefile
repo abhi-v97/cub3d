@@ -69,7 +69,7 @@ ${LIBMLX_DIR}:
 #	${CC} ${BONUS_OBJS} -o fractol -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
 
 v valgrind: ${NAME}
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./cub3D "map.cub"
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./cub3D "test.cub"
 
 clean:
 	${RM} ${OBJ_DIR}

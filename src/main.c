@@ -78,12 +78,12 @@ static void	print_map_info(t_gdata *data)
 	printf("map_height:\t\t%i\n", data->map_height);
 	printf("map_width:\t\t%i\n", data->map_width);
 	printf("\nTexture info:\n");
-	printf("north:\t\t%s\n", data->texture_n);
-	printf("south:\t\t%s\n", data->texture_s);
-	printf("west:\t\t%s\n", data->texture_w);
-	printf("east:\t\t%s\n", data->texture_e);
-	printf("floor:\t\t%s\n", data->texture_f);
-	printf("ceil:\t\t%s\n", data->texture_c);
+	printf("north:\t\t%s\n", data->texture->north);
+	printf("south:\t\t%s\n", data->texture->south);
+	printf("west:\t\t%s\n", data->texture->west);
+	printf("east:\t\t%s\n", data->texture->east);
+	printf("floor:\t\t%s\n", data->texture->floor);
+	printf("ceil:\t\t%s\n", data->texture->ceiling);
 	printf("\nMap:\n");
 	i = 0;
 	while (data->map[i])
@@ -95,18 +95,18 @@ void	free_data(t_gdata *data)
 	int		i;
 
 	close_fd(&data->file_fd);
-	if (data->texture_n)
-		free(data->texture_n);
-	if (data->texture_w)
-		free(data->texture_w);
-	if (data->texture_s)
-		free(data->texture_s);
-	if (data->texture_e)
-		free(data->texture_e);
-	if (data->texture_f)
-		free(data->texture_f);
-	if (data->texture_c)
-		free(data->texture_c);
+	if (data->texture->north)
+		free(data->texture->north);
+	if (data->texture->west)
+		free(data->texture->west);
+	if (data->texture->south)
+		free(data->texture->south);
+	if (data->texture->east)
+		free(data->texture->east);
+	if (data->texture->floor)
+		free(data->texture->floor);
+	if (data->texture->ceiling)
+		free(data->texture->ceiling);
 	i = 0;
 	while (data->map && data->map[i])
 		free(data->map[i++]);
@@ -118,4 +118,5 @@ void	free_data(t_gdata *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
+	free(data->texture);
 }

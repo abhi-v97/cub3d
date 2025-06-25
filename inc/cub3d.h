@@ -79,6 +79,16 @@ typedef struct s_player
 	int		dir;
 }	t_player;
 
+typedef struct s_texture
+{
+	char		*north;
+	char		*west;
+	char		*south;
+	char		*east;
+	char		*floor;
+	char		*ceiling;
+}	t_texture;
+
 
 // player_direction: used to set starting direction of player
 // add player_direction to s_player later, if it makes sense
@@ -87,21 +97,16 @@ typedef struct s_gdata
 {
 	void		*mlx;
 	char		**map;
-	char		*texture_n;
-	char		*texture_w;
-	char		*texture_s;
-	char		*texture_e;
-	char		*texture_f;
-	char		*texture_c;
 	int			file_fd;
 	int			player_direction;
 	int			map_height;
 	int			map_width;
 	void		*win;
-	t_canvas	cnvs;
 	int			ww;
 	int			wh;
 	int			exit_code;
+	t_texture	*texture;
+	t_canvas	cnvs;
 	t_player	player;
 }	t_gdata;
 

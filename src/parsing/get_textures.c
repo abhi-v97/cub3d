@@ -13,8 +13,9 @@
 
 #include "../../inc/cub3d.h"
 
-static int	set_texture_info(t_gdata *data, char *str);
-static char	*set_texture_path(t_gdata *data, char *buffer);
+static int	set_texture_info(t_texture *t, char *buffer);
+static char	*set_texture_path(char *buffer);
+// static int	check_textures_valid(t_texture *t);
 
 int	get_textures(t_gdata *data, char *buffer)
 {
@@ -26,39 +27,37 @@ int	get_textures(t_gdata *data, char *buffer)
 	if (!buffer[i] || buffer[i] == '\n')
 		return (0);
 	if (buffer[i] && buffer[i + 1])
-		return (set_texture_info(data, buffer + i));
+		return (set_texture_info(data->texture, buffer + i));
 	return (0);
 }
 
-static int	set_texture_info(t_gdata *data, char *buffer)
+static int	set_texture_info(t_texture *t, char *buffer)
 {
-	(void) data;
 	if (ft_strchr("01", buffer[0]))
 		return (1);
 	else if (buffer[0] == 'N' && buffer[1] == 'O')
-		data->texture_n = set_texture_path(data, buffer + 2);
+		t->north = set_texture_path(buffer + 2);
 	else if (buffer[0] == 'W' && buffer[1] == 'E')
-		data->texture_w = set_texture_path(data, buffer + 2);
+		t->west = set_texture_path(buffer + 2);
 	else if (buffer[0] == 'S' && buffer[1] == 'O')
-		data->texture_s = set_texture_path(data, buffer + 2);
+		t->south = set_texture_path(buffer + 2);
 	else if (buffer[0] == 'E' && buffer[1] == 'A')
-		data->texture_e = set_texture_path(data, buffer + 2);
+		t->east = set_texture_path(buffer + 2);
 	else if (buffer[0] == 'F' && buffer[1] == ' ')
-		data->texture_f = set_texture_path(data, buffer + 2);
+		t->floor = set_texture_path(buffer + 2);
 	else if (buffer[0] == 'C' && buffer[1] == ' ')
-		data->texture_c = set_texture_path(data, buffer + 2);
+		t->ceiling = set_texture_path(buffer + 2);
 	else
 	 	return (1);
 	return (0);
 }
 
-static char	*set_texture_path(t_gdata *data, char *buffer)
+static char	*set_texture_path(char *buffer)
 {
 	int		i;
 	int		len;
 	char	*result;
 
-	(void) data;
 	i = 0;
 	while (buffer[i] && is_blank(buffer[i]))
 		i++;
@@ -70,3 +69,13 @@ static char	*set_texture_path(t_gdata *data, char *buffer)
 		return (NULL);
 	return (result);
 }
+
+// static int	check_textures_valid(t_texture *t)
+// {
+// 	int		fd;
+// 	int		i;
+
+// 	if (!t->north || !t->west || !t->south || !t->east || !t->floor || !t->ceiling)
+// 		return (ft_error("missing textures!"), 1);
+// 	return (0);
+// }

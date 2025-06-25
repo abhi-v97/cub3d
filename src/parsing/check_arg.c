@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <fcntl.h>
 
 static int	is_dir(char *file);
 static int	check_ext(char *file);
@@ -22,7 +23,7 @@ int	check_arg(char *file)
 	int		fd;
 
 	if (is_dir(file))
-		return (ft_error("File is a directory"), 1);
+		return (1);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (close_fd(&fd), ft_error("Failed to open file"), 1);
@@ -39,7 +40,7 @@ static int	is_dir(char *file)
 
 	fd = open(file, O_DIRECTORY);
 	if (fd >= 0)
-		return (close_fd(&fd), 1);
+		return (close_fd(&fd), ft_error("File is a directory"), 1);
 	return (close_fd(&fd), 0);
 }
 
