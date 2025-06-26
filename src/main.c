@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/25 14:33:11 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:20:10 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,28 @@ int	main(int argc, char **argv)
 	if (argc > 1 && check_arg(argv[1])) // change this later to only accept 1 arg
 		exit(1);
 	printf("This is the amazing cub3D!\n");
-	if (!init_all(&gdata))
-		return (cleanup(&gdata), gdata.exit_code);
+	init_gdata(&gdata);
 	parse_file(&gdata, argv[1]);
 	check_map(&gdata);
 	print_map_info(&gdata);
-	t_pos	p = player_get_pos_from_map(&gdata);
-	printf("Player X = %f, Y = %f\n", p.x, p.y);
-	mlx_key_hook(gdata.win, key_handler, &gdata);
+
+	if (!init_graphics(&gdata))
+		return (cleanup(&gdata), gdata.exit_code);
+
+	gdata.player.pos = player_get_pos_from_map(&gdata);
+
+	printf("PLAYER X = %f, Y = %f, ANGLE = %f\n",
+		gdata.player.pos.x, gdata.player.pos.y, gdata.player.pos.angle);
+
 	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.display);
+
+	mlx_hook(gdata.win, 2, 1L<<0, key_press, gdata.display);
+	mlx_hook(gdata.win, 3, 1L<<1, key_release, gdata.display);
+	//mlx_key_hook(gdata.win, key_handler, &gdata);
+
 	mlx_loop_hook(gdata.display, render_screen, &gdata);
 	mlx_loop(gdata.display);
+	cleanup(&gdata);
 	return (0);
 }
 

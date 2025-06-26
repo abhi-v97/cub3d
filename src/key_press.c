@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   key_press.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 14:27:15 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/26 13:16:45 by aistok           ###   ########.fr       */
+/*   Created: 2025/06/26 12:14:09 by aistok            #+#    #+#             */
+/*   Updated: 2025/06/26 14:48:47 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    cleanup(t_gdata *gdata)
+int	key_press(int key, t_gdata *gdata)
 {
-	if (gdata->canvas.img)
-		mlx_destroy_image(gdata->display, gdata->canvas.img);
-	if (gdata->win)
-		mlx_destroy_window(gdata->display, gdata->win);
-	if (gdata->display)
-	{
-		mlx_destroy_display(gdata->display);
-		free(gdata->display);
-	}
-	//TO-DO: cleanup gdata and any malloced stuff that it has !!!
+	if (key == k_DOWN)
+		gdata->keys[KEY_DOWN] = true;
+	else if (key == k_UP)
+		gdata->keys[KEY_UP] = true;
+	else if (key == k_RIGHT)
+		gdata->keys[KEY_RIGHT] = true;
+	else if (key == k_LEFT)
+		gdata->keys[KEY_LEFT] = true;
+	return (1);
 }

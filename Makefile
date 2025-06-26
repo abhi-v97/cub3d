@@ -68,6 +68,9 @@ ${LIBMLX_DIR}:
 #bonus: ${LIBFT} ${BONUS_OBJS}
 #	${CC} ${BONUS_OBJS} -o fractol -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
 
+run:
+	./${NAME} map.cub
+
 clean:
 	${RM} ${OBJ_DIR}
 	make -C ${LIBFT_DIR} clean
@@ -80,4 +83,8 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+rec:
+	${RM} ${OBJ_DIR}
+	make all
+
+.PHONY: all clean fclean re run

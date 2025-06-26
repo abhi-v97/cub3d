@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/25 14:31:17 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/26 14:45:22 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@
 # define EAST 3
 # define WEST 4
 
+# define KEY_COUNT 5
+# define KEY_UP 0
+# define KEY_DOWN 1
+# define KEY_LEFT 2
+# define KEY_RIGHT 3
+# define KEY_ESC 4
+
 /*
  *	bpp - bit per pixel
  *	ll	- line length
@@ -75,6 +82,7 @@ typedef struct s_pos
 {
 	double	x;
 	double	y;
+	double	angle;
 }	t_pos;
 
 /*
@@ -88,7 +96,6 @@ typedef struct s_pos
 typedef struct s_player
 {
 	t_pos	pos;
-	double	angle;
 }	t_player;
 
 /*
@@ -105,11 +112,14 @@ typedef struct s_gdata
 	int			player_direction;
 	int			map_height;
 	int			map_width;
+	int			wall_width;
+	int			wall_height;
 	void		*win;
-	t_canvas	cnvs;
+	t_canvas	canvas;
 	int			ww;
 	int			wh;
 	int			exit_code;
+	int			keys[KEY_COUNT];
 	t_player	player;
 }	t_gdata;
 
@@ -145,7 +155,8 @@ void	ft_error(char *msg);
 int		is_blank(char c);
 
 // init.c
-bool	init_all(t_gdata *gdata);
+void	init_gdata(t_gdata *gdata);
+bool	init_graphics(t_gdata *gdata);
 
 // cleanup.c
 void    cleanup(t_gdata *gdata);
@@ -155,9 +166,13 @@ void	put_pixel(t_canvas *cdata, int x, int y, int color);
 
 // player_get_pos.c
 t_pos	player_get_pos_from_map(t_gdata *gdata);
+double	pos_nsew_to_angle(char c);
+t_pos	pos_init_to_invalid_pos(void);
+t_pos	pos_set_to(double x, double y, double angle);
 
-// key_handler.c
 int	key_handler(int key, t_gdata *gdata);
+int	key_press(int key, t_gdata *gdata);
+int	key_release(int key, t_gdata *gdata);
 
 // rendering/render_screen.c
 int	render_screen(void *param);
