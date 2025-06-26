@@ -112,7 +112,6 @@ typedef struct s_texture
  *	gdata - Game data
  *
  *	player_direction: used to set starting direction of player
- *	should probably make a separate struct for player and link it here
  */
 typedef struct s_gdata
 {
