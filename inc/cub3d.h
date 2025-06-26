@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/23 18:44:46 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/26 14:45:22 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,16 @@
 # include <errno.h>
 # include "../minilibx-linux/mlx.h"
 
-# define EMLXERR 1
-# define EMLXWINERR 2
+# define EMLXERR 500
+# define EMLXWINERR 501
+
+# ifndef W_WIDTH
+#  define W_WIDTH 800
+# endif
+
+# ifndef W_HEIGHT
+#  define W_HEIGHT 600
+# endif
 
 # define k_ESC 65307
 # define k_LEFT 65361
@@ -43,10 +51,17 @@
 # define k_W 119
 # define k_X 120
 
-# define DN 1
-# define DS 2
-# define DE 3
-# define DW 4
+# define NORTH 1
+# define SOUTH 2
+# define EAST 3
+# define WEST 4
+
+# define KEY_COUNT 5
+# define KEY_UP 0
+# define KEY_DOWN 1
+# define KEY_LEFT 2
+# define KEY_RIGHT 3
+# define KEY_ESC 4
 
 /*
  *	bpp - bit per pixel
@@ -67,16 +82,20 @@ typedef struct s_pos
 {
 	double	x;
 	double	y;
+	double	angle;
 }	t_pos;
 
 /*
  *	(x, y)	position of the player on the map and in the "game"
- *	dir		direction the player is facing (DN | DS | DE | DW)
+ *	angle	direction the player is looking at:
+ *			angle 0 faces NORTH (precisely)
+ *			angle 90 faces EAST (precisely)
+ *			angle 180 faces SOUTH (precisely)
+ *			angle 270 faces WEST (precisely)
  */
 typedef struct s_player
 {
 	t_pos	pos;
-	int		dir;
 }	t_player;
 
 typedef struct s_texture
@@ -89,10 +108,12 @@ typedef struct s_texture
 	char		*ceiling;
 }	t_texture;
 
-
-// player_direction: used to set starting direction of player
-// add player_direction to s_player later, if it makes sense
-// separate texture struct?
+/*
+ *	gdata - Game data
+ *
+ *	player_direction: used to set starting direction of player
+ *	should probably make a separate struct for player and link it here
+ */
 typedef struct s_gdata
 {
 	void		*mlx;
@@ -101,10 +122,13 @@ typedef struct s_gdata
 	int			player_direction;
 	int			map_height;
 	int			map_width;
+	int			wall_width;
+	int			wall_height;
 	void		*win;
 	int			ww;
 	int			wh;
 	int			exit_code;
+	int			keys[KEY_COUNT];
 	t_texture	*texture;
 	t_canvas	cnvs;
 	t_player	player;
@@ -146,12 +170,27 @@ int		is_blank(char c);
 void	close_fd(int *fd);
 
 // init.c
-void	init_data(t_gdata *gdata);
+void	init_gdata(t_gdata *gdata);
 bool	init_graphics(t_gdata *gdata);
 
-// player_get_pos.c
-t_pos	player_get_pos_from_map(t_gdata *gdata);
-int		player_outside_map(t_gdata *data, t_pos pos);
+// cleanup.c
+void    cleanup(t_gdata *gdata);
 
+// put_pixel.c
+void	put_pixel(t_canvas *cdata, int x, int y, int color);
+
+// player_get_pos.c
+int		player_outside_map(t_gdata *data, t_pos pos);
+t_pos	player_get_pos_from_map(t_gdata *gdata);
+double	pos_nsew_to_angle(char c);
+t_pos	pos_init_to_invalid_pos(void);
+t_pos	pos_set_to(double x, double y, double angle);
+
+int	key_handler(int key, t_gdata *gdata);
+int	key_press(int key, t_gdata *gdata);
+int	key_release(int key, t_gdata *gdata);
+
+// render/render_screen.c
+int	render_screen(void *param);
 
 #endif

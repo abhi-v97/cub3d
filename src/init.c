@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:34:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/23 18:49:33 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/26 14:05:35 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	init_textures(t_texture *t);
 
-void	init_data(t_gdata *gdata)
+void	init_gdata(t_gdata *gdata)
 {
 	gdata->map = NULL;
 	gdata->map_height = 0;
@@ -41,7 +41,7 @@ bool	init_graphics(t_gdata *gdata)
 		&gdata->cnvs.ll, &gdata->cnvs.endian);
 	gdata->cnvs.w = gdata->ww;
 	gdata->cnvs.h = gdata->wh;
-	init_data(gdata);
+	init_gdata(gdata);
 	return (true);
 }
 

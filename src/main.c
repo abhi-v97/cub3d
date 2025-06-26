@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/23 18:47:55 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:20:10 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,16 @@ int	rendering_function(void *param)
 	return (1);
 }
 
-int	key_handler(int key, t_gdata *gdata)
-{
-	(void) gdata;
-
-	if (key == k_ESC)
-		mlx_loop_end(gdata->mlx);
-	return (1);
-}
-
 int	main(int argc, char **argv)
 {
 	t_gdata		gdata;
 
-	(void) argc;
-	(void) argv;
 	if (argc > 1 && check_arg(argv[1])) // change this later to only accept 1 arg
 		exit(1);
 
 	// printf("player pos now: %f\n", gdata.player.pos.x);
 	printf("This is the amazing cub3D!\n");
-	if (!init_graphics(&gdata))
-		return (1);
+	init_gdata(&gdata);
 	parse_file(&gdata, argv[1]);
 	check_map(&gdata);
 	print_map_info(&gdata);
@@ -61,7 +49,6 @@ int	main(int argc, char **argv)
 		return (ft_error("Player out of bounds!"), 1);
 	printf("Player X = %f, Y = %f\n", gdata.player.pos.x, gdata.player.pos.y);
 	// TODO: remove exit before merging
-	free_data(&gdata);
 	exit(0);
 	mlx_key_hook(gdata.win, key_handler, &gdata);
 	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.mlx);
@@ -88,35 +75,4 @@ static void	print_map_info(t_gdata *data)
 	i = 0;
 	while (data->map[i])
 		printf("\t%s\n", data->map[i++]);
-}
-
-void	free_data(t_gdata *data)
-{
-	int		i;
-
-	close_fd(&data->file_fd);
-	if (data->texture->north)
-		free(data->texture->north);
-	if (data->texture->west)
-		free(data->texture->west);
-	if (data->texture->south)
-		free(data->texture->south);
-	if (data->texture->east)
-		free(data->texture->east);
-	if (data->texture->floor)
-		free(data->texture->floor);
-	if (data->texture->ceiling)
-		free(data->texture->ceiling);
-	i = 0;
-	while (data->map && data->map[i])
-		free(data->map[i++]);
-	free(data->map);
-	if (data->mlx)
-	{
-		mlx_destroy_image(data->mlx, data->cnvs.img);
-		mlx_destroy_window(data->mlx, data->win);
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-	}
-	free(data->texture);
 }

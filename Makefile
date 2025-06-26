@@ -41,10 +41,10 @@ ${NAME}: ${LIBFT} ${LIBMLX} ${OBJS}
 	${CC} ${OBJS} -o $@ -I${INC_DIR} -L${LIBFT_DIR} -lft -L${LIBMLX_DIR} -lmlx -lXext -lX11 -lm 
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c | ${OBJ_DIR}
-	${CC} ${CFLAGS} -I${INC_DIR} -c $< -o $@ 
+	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -c $< -o $@ 
 
 ${BONUS_DIR}/%.o:${BONUS_DIR}/%.c | ${OBJ_DIR}
-	${CC} ${CFLAGS} -I${INC_DIR} -c $< -o $@
+	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -c $< -o $@
 
 ${OBJ_DIR}:
 	mkdir -p ${TMP_OBJ_DIRS}
@@ -68,6 +68,9 @@ ${LIBMLX_DIR}:
 #bonus: ${LIBFT} ${BONUS_OBJS}
 #	${CC} ${BONUS_OBJS} -o fractol -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
 
+run:
+	./${NAME} map.cub
+
 v valgrind: ${NAME}
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./cub3D "test.cub"
 
@@ -83,4 +86,8 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+rec:
+	${RM} ${OBJ_DIR}
+	make all
+
+.PHONY: all clean fclean re run
