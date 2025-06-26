@@ -13,7 +13,6 @@
 #include "cub3d.h"
 
 static void		print_map_info(t_gdata *data);
-void	free_data(t_gdata *data);
 
 int	rendering_function(void *param)
 {
@@ -34,10 +33,10 @@ int	main(int argc, char **argv)
 {
 	t_gdata		gdata;
 
-	if (argc > 1 && check_arg(argv[1])) // change this later to only accept 1 arg
+	if (argc < 2)
+		return (printf("need a map!\n"), 1);
+	if (check_arg(argv[1]))
 		exit(1);
-
-	// printf("player pos now: %f\n", gdata.player.pos.x);
 	printf("This is the amazing cub3D!\n");
 	init_gdata(&gdata);
 	parse_file(&gdata, argv[1]);
@@ -48,8 +47,6 @@ int	main(int argc, char **argv)
 	if (gdata.player.pos.x > 0 && gdata.player.pos.y > 0 && player_outside_map(&gdata, gdata.player.pos))
 		return (ft_error("Player out of bounds!"), 1);
 	printf("Player X = %f, Y = %f\n", gdata.player.pos.x, gdata.player.pos.y);
-	// TODO: remove exit before merging
-	exit(0);
 	mlx_key_hook(gdata.win, key_handler, &gdata);
 	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.mlx);
 	mlx_loop_hook(gdata.mlx, rendering_function, &gdata);
