@@ -75,22 +75,22 @@ t_pos	pos_set_to(double x, double y, double angle)
 
 // function to check if player is placed outside map, for whatever reason
 // if the player is adjacent to a space, it has to be out of bounds
-int player_outside_map(t_gdata *data, t_pos pos)
+int	player_outside_map(t_gdata *data, t_pos pos)
 {
-	int		x;
-	int		y;
+	int		i;
+	int		j;
 
-	x = (int)pos.x;
-	y = (int)pos.y;
-	if (!data->map && x > data->map_width && y > data->map_height && !data->map[x][y])
+	i = (int)pos.y;
+	j = (int)pos.x;
+	if (!data->map && i > data->map_width && j > data->map_height && !data->map[i][j])
 		return (1);
-	if (y > 0 && (data->map[x][y - 1] == ' '))
+	if (j > 0 && (data->map[i][j - 1] == ' '))
 		return (1);
-	if (x > 0 && (data->map[x - 1][y] == ' '))
+	if (i > 0 && (data->map[i - 1][j] == ' '))
 		return (1);
-	if (data->map[x + 1] && data->map[x + 1][y] == ' ')
+	if (data->map[i + 1] && data->map[i + 1][j] == ' ')
 		return (1);
-	if (data->map[y + 1] && data->map[x][y + 1] == ' ')
+	if (data->map[j + 1] && data->map[i][j + 1] == ' ')
 		return (1);
 	return (0);
 }

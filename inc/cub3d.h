@@ -170,8 +170,7 @@ int		is_blank(char c);
 void	close_fd(int *fd);
 
 // init.c
-void	init_gdata(t_gdata *gdata);
-bool	init_graphics(t_gdata *gdata);
+int		init_gdata(t_gdata *gdata);
 
 // cleanup.c
 void    cleanup(t_gdata *gdata);

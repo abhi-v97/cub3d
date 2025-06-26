@@ -52,6 +52,14 @@ static int	set_texture_info(t_texture *t, char *buffer)
 	return (0);
 }
 
+// this function copies path of texture file from buffer into result
+// i: whitespace amount
+// texture file specifier (NO, WE, etc) and the path itself
+// len: length of the path plus whitespace
+// ft_strndup(buffer + i, len - i - 1)
+// buffer + i tells strndup to begin copying from where the whitespace ends
+// len - i - 1: len - i to subtract the whitespace chars from len, and 
+// another -1 to subtract the '/n' char from gnl
 static char	*set_texture_path(char *buffer)
 {
 	int		i;
