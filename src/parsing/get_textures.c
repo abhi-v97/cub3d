@@ -27,7 +27,7 @@ int	get_textures(t_gdata *data, char *buffer)
 	if (!buffer[i] || buffer[i] == '\n')
 		return (0);
 	if (buffer[i] && buffer[i + 1])
-		return (set_texture_info(data->texture, buffer + i));
+		return (set_texture_info(data->texture_path, buffer + i));
 	return (0);
 }
 

@@ -51,10 +51,22 @@
 # define k_W 119
 # define k_X 120
 
-# define NORTH 1
-# define SOUTH 2
-# define EAST 3
-# define WEST 4
+// # define NORTH 1
+// # define SOUTH 2
+// # define EAST 3
+// # define WEST 4
+
+// replaced macros with enum as you can iterate over this
+// North = 0, West = 1, and so on
+typedef enum e_cardinal
+{
+	NORTH,
+	WEST,
+	SOUTH,
+	EAST,
+	FLOOR,
+	CEILING,
+}	t_cardinal;
 
 # define KEY_COUNT 5
 # define KEY_UP 0
@@ -98,6 +110,15 @@ typedef struct s_player
 	t_pos	pos;
 }	t_player;
 
+typedef struct s_img
+{
+	void	*img;
+	int		*address;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+}	t_img;
+
 typedef struct s_texture
 {
 	char		*north;
@@ -106,6 +127,7 @@ typedef struct s_texture
 	char		*east;
 	char		*floor;
 	char		*ceiling;
+	int			size;
 }	t_texture;
 
 /*
@@ -128,7 +150,9 @@ typedef struct s_gdata
 	int			wh;
 	int			exit_code;
 	int			keys[KEY_COUNT];
-	t_texture	*texture;
+	int			**texture;
+	t_img		*test;
+	t_texture	*texture_path;
 	t_canvas	cnvs;
 	t_player	player;
 }	t_gdata;

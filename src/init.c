@@ -23,12 +23,12 @@ int	init_gdata(t_gdata *gdata)
 	gdata->player.pos.y = 0.0;
 	gdata->player_direction = 0;
 	gdata->map_width = 0;
-	gdata->texture = (t_texture *) malloc(sizeof(t_texture));
-	if (!gdata->texture)
+	gdata->texture_path = (t_texture *) malloc(sizeof(t_texture));
+	if (!gdata->texture_path)
 		return (1);
-	init_textures(gdata->texture);
+	init_textures(gdata->texture_path);
 	if (!init_graphics(gdata))
-		return (free(gdata->texture), 1);
+		return (free(gdata->texture_path), 1);
 	return (0);
 }
 

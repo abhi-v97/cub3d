@@ -34,21 +34,21 @@ static void	free_data(t_gdata *data)
 	int		i;
 
 	close_fd(&data->file_fd);
-	if (data->texture->north)
-		free(data->texture->north);
-	if (data->texture->west)
-		free(data->texture->west);
-	if (data->texture->south)
-		free(data->texture->south);
-	if (data->texture->east)
-		free(data->texture->east);
-	if (data->texture->floor)
-		free(data->texture->floor);
-	if (data->texture->ceiling)
-		free(data->texture->ceiling);
+	if (data->texture_path->north)
+		free(data->texture_path->north);
+	if (data->texture_path->west)
+		free(data->texture_path->west);
+	if (data->texture_path->south)
+		free(data->texture_path->south);
+	if (data->texture_path->east)
+		free(data->texture_path->east);
+	if (data->texture_path->floor)
+		free(data->texture_path->floor);
+	if (data->texture_path->ceiling)
+		free(data->texture_path->ceiling);
 	i = 0;
 	while (data->map && data->map[i])
 		free(data->map[i++]);
 	free(data->map);
-	free(data->texture);
+	free(data->texture_path);
 }
