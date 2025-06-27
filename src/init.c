@@ -40,8 +40,8 @@ static bool	init_graphics(t_gdata *gdata)
 	if (!gdata->win)
 		return (free(gdata->mlx), false);
 	gdata->cnvs.img = mlx_new_image(gdata->mlx, gdata->ww, gdata->wh);
-	gdata->cnvs.addr = mlx_get_data_addr(gdata->cnvs.img, &gdata->cnvs.bpp, \
-		&gdata->cnvs.ll, &gdata->cnvs.endian);
+	gdata->cnvs.addr = mlx_get_data_addr(gdata->cnvs.img, &gdata->cnvs.bpp,
+			&gdata->cnvs.ll, &gdata->cnvs.endian);
 	gdata->cnvs.w = gdata->ww;
 	gdata->cnvs.h = gdata->wh;
 	return (true);

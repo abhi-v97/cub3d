@@ -31,17 +31,19 @@ void	print_map_info(t_gdata *data)
 // offset is the x offset to prevent image overlap
 void	test_textures(t_gdata *data, int *texture, int offset)
 {
-	int *pixel_address;
-	int i, j, k;
+	int		*pixel_address;
+	int		i;
+	int		j;
+	int		k;
 
 	pixel_address = (int *)data->cnvs.addr;
-
 	k = 0;
 	while (k < 256 * 256)
 	{
 		i = k % 256;
 		j = k / 256;
-		pixel_address[(i + offset) + (j * 1600)] = texture[i + j * data->tex_size];
+		pixel_address[(i + offset) + (j * 1600)]
+			= texture[i + j * data->tex_size];
 		k++;
 	}
 }

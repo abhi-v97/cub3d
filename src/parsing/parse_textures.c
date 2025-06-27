@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../inc/cub3d.h"
 
 static int	set_texture_info(t_gdata *data, char *buffer);
@@ -46,6 +45,6 @@ static int	set_texture_info(t_gdata *data, char *buffer)
 	else if (buffer[0] == 'C' && buffer[1] == ' ')
 		set_textures(data, buffer + 2, CEILING);
 	else
-	 	return (1);
+		return (1);
 	return (0);
 }

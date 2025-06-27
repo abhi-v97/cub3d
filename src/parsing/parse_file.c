@@ -20,7 +20,8 @@ static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row);
 // grabs map data from file into char ** array gdata->map
 int	parse_file(t_gdata *gdata, char *file)
 {
-	gdata->map = (char **) malloc(sizeof(char *) * (line_count(gdata, file) + 1));
+	gdata->map = (char **) malloc(sizeof(char *)
+			* (line_count(gdata, file) + 1));
 	if (!gdata->map)
 		return (ft_error(strerror(errno)), 1);
 	gdata->file_fd = open(file, O_RDONLY);
@@ -97,7 +98,6 @@ static void	map_fill(t_gdata *data, char **map, int fd)
 static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row)
 {
 	char	*nl_char;
-	// int		i;
 
 	map[row] = (char *) malloc(sizeof(char *) * (data->map_width + 1));
 	if (!map[row])
@@ -107,5 +107,5 @@ static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row)
 	map[row][data->map_width] = '\0';
 	nl_char = ft_strchr(map[row], '\n');
 	if (nl_char)
-		*nl_char = ' ';	
+		*nl_char = ' ';
 }

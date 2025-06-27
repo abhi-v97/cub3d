@@ -33,21 +33,23 @@ static int	*parse_xpm(t_gdata *data, char *path)
 {
 	t_img	img;
 	int		*array;
-
+	int		i;
+	int		x;
+	int		y;
 
 	init_img(&img);
-	img.img = mlx_xpm_file_to_image(data->mlx, path, &data->tex_size, &data->tex_size);
+	img.img = mlx_xpm_file_to_image(data->mlx,
+			path, &data->tex_size, &data->tex_size);
 	if (img.img == NULL)
-		ft_error("missing texture"), exit(1);
-	img.address = (int *)mlx_get_data_addr(img.img, &img.pixel_bits, &img.size, &img.endian);
-	int	i;
-	
+		(ft_error("missing texture"), exit(1));
+	img.address = (int *)mlx_get_data_addr(img.img,
+			&img.pixel_bits, &img.size, &img.endian);
 	array = ft_calloc(sizeof(int), data->tex_size * data->tex_size);
 	i = 0;
 	while (i < data->tex_size * data->tex_size)
 	{
-		int x = i % data->tex_size;
-		int y = i / data->tex_size;
+		x = i % data->tex_size;
+		y = i / data->tex_size;
 		array[x + y * data->tex_size] = img.address[x + y * data->tex_size];
 		i++;
 	}

@@ -44,11 +44,12 @@ void	render_player(t_gdata *gdata)
 
 int	render_screen(void *param)
 {
-	t_gdata	*gd = param;
+	t_gdata	*gd;
 	int		limit;
 	int		*data;
 	int		i;
 
+	gd = (t_gdata *)param;
 	data = (int *)gd->cnvs.addr;
 	limit = gd->cnvs.w * gd->cnvs.h;
 	i = 0;

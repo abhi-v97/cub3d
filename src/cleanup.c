@@ -14,7 +14,7 @@
 
 static void	free_data(t_gdata *data);
 
-void    cleanup(t_gdata *gdata)
+void	cleanup(t_gdata *gdata)
 {
 	if (gdata->cnvs.img)
 		mlx_destroy_image(gdata->mlx, gdata->cnvs.img);
