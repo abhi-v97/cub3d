@@ -150,8 +150,10 @@ typedef struct s_gdata
 	int			wh;
 	int			exit_code;
 	int			keys[KEY_COUNT];
-	int			**texture;
-	t_img		*test;
+	t_img		*t_north;
+	t_img		*t_west;
+	t_img		*t_south;
+	t_img		*t_east;
 	t_texture	*texture_path;
 	t_canvas	cnvs;
 	t_player	player;
@@ -208,11 +210,18 @@ double	pos_nsew_to_angle(char c);
 t_pos	pos_init_to_invalid_pos(void);
 t_pos	pos_set_to(double x, double y, double angle);
 
-int	key_handler(int key, t_gdata *gdata);
-int	key_press(int key, t_gdata *gdata);
-int	key_release(int key, t_gdata *gdata);
+int		key_handler(int key, t_gdata *gdata);
+int		key_press(int key, t_gdata *gdata);
+int		key_release(int key, t_gdata *gdata);
 
 // render/render_screen.c
-int	render_screen(void *param);
+int		render_screen(void *param);
+
+// render/texture.c
+void	load_textures(t_gdata *data);
+
+// debug.c
+void	print_map_info(t_gdata *data);
+void	test_textures(t_gdata *data, t_img *texture, int offset);
 
 #endif
