@@ -1,7 +1,7 @@
- NO 255,0,0
- SO 0,255,0
- WE 0,0,255
- EA 255,0,255
+ NO textures/Orange.xpm
+ SO textures/pink.xpm
+ WE textures/yelow.xpm
+ EA textures/Grey.xpm
  
  F 220,100,0
  C 225,30,0

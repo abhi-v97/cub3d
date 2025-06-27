@@ -29,3 +29,10 @@ void	close_fd(int *fd)
 	close(*fd);
 	*fd = -1;
 }
+
+int	is_num(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}

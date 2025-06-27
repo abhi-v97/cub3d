@@ -34,12 +34,11 @@ int	main(int argc, char **argv)
 		return (ft_error("Player out of bounds!"), 1);
 	printf("Player X = %f, Y = %f\n", gdata.player.pos.x, gdata.player.pos.y);
 	
-	load_textures(&gdata);
-
 	mlx_key_hook(gdata.win, key_handler, &gdata);
 	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.mlx);
 	mlx_loop_hook(gdata.mlx, rendering_function, &gdata);
 	mlx_loop(gdata.mlx);
+	cleanup(&gdata);
 	return (0);
 }
 
@@ -54,10 +53,10 @@ static int	rendering_function(void *param)
 		data[i++] = 0x00c8c8c8;
 
 	// dummy code used to test textures
-	test_textures(gd, gd->t_north, 100);
-	test_textures(gd, gd->t_west, 400);
-	test_textures(gd, gd->t_south, 700);
-	test_textures(gd, gd->t_east, 1000);
+	test_textures(gd, gd->textures[NORTH], 100);
+	test_textures(gd, gd->textures[WEST], 400);
+	test_textures(gd, gd->textures[SOUTH], 700);
+	test_textures(gd, gd->textures[EAST], 1000);
 
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->cnvs.img, 0, 0);
 	

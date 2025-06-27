@@ -115,7 +115,7 @@ typedef struct s_img
 	void	*img;
 	int		*address;
 	int		pixel_bits;
-	int		size_line;
+	int		size;
 	int		endian;
 }	t_img;
 
@@ -150,11 +150,9 @@ typedef struct s_gdata
 	int			wh;
 	int			exit_code;
 	int			keys[KEY_COUNT];
-	t_img		*t_north;
-	t_img		*t_west;
-	t_img		*t_south;
-	t_img		*t_east;
-	t_texture	*texture_path;
+	int			tex_size;
+	int			**textures;
+	int			*tex_rgb;
 	t_canvas	cnvs;
 	t_player	player;
 }	t_gdata;
@@ -171,6 +169,8 @@ char	*get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
+int		ft_atoi(const char *str);
+char	**ft_split(char const *s, char c);
 
 // parsing/check_arg.c
 int		check_arg(char *file);
@@ -184,8 +184,11 @@ int		check_map(t_gdata *data);
 // parsing/check_bounds.c
 int		check_map_bounds(t_gdata *data, char **map, int map_height);
 
-// parsing/get_textures.c
-int		get_textures(t_gdata *data, char *buffer);
+// parsing/parse_textures.c
+int		parse_texture_data(t_gdata *data, char *buffer);
+
+// parsing/set_textures.c
+void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
 
 // error.c
 void	ft_error(char *msg);
@@ -193,6 +196,7 @@ void	ft_error(char *msg);
 // utils.c
 int		is_blank(char c);
 void	close_fd(int *fd);
+int		is_num(char c);
 
 // init.c
 int		init_gdata(t_gdata *gdata);
@@ -222,6 +226,6 @@ void	load_textures(t_gdata *data);
 
 // debug.c
 void	print_map_info(t_gdata *data);
-void	test_textures(t_gdata *data, t_img *texture, int offset);
+void	test_textures(t_gdata *data, int *texture, int offset);
 
 #endif

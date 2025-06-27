@@ -12,7 +12,6 @@
 
 #include "cub3d.h"
 
-static void	init_textures(t_texture *t);
 static bool	init_graphics(t_gdata *gdata);
 
 int	init_gdata(t_gdata *gdata)
@@ -23,23 +22,11 @@ int	init_gdata(t_gdata *gdata)
 	gdata->player.pos.y = 0.0;
 	gdata->player_direction = 0;
 	gdata->map_width = 0;
-	gdata->texture_path = (t_texture *) malloc(sizeof(t_texture));
-	if (!gdata->texture_path)
-		return (1);
-	init_textures(gdata->texture_path);
+	gdata->tex_rgb = ft_calloc(sizeof(int), 7);
+	gdata->textures = ft_calloc(sizeof(int *), 7);
 	if (!init_graphics(gdata))
-		return (free(gdata->texture_path), 1);
+		return (1);
 	return (0);
-}
-
-static void	init_textures(t_texture *t)
-{
-	t->north = NULL;
-	t->west = NULL;
-	t->south = NULL;
-	t->east = NULL;
-	t->floor = NULL;
-	t->ceiling = NULL;
 }
 
 static bool	init_graphics(t_gdata *gdata)

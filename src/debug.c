@@ -20,12 +20,6 @@ void	print_map_info(t_gdata *data)
 	printf("map_height:\t\t%i\n", data->map_height);
 	printf("map_width:\t\t%i\n", data->map_width);
 	printf("\nTexture info:\n");
-	printf("north:\t\t%s\n", data->texture_path->north);
-	printf("south:\t\t%s\n", data->texture_path->south);
-	printf("west:\t\t%s\n", data->texture_path->west);
-	printf("east:\t\t%s\n", data->texture_path->east);
-	printf("floor:\t\t%s\n", data->texture_path->floor);
-	printf("ceil:\t\t%s\n", data->texture_path->ceiling);
 	printf("\nMap:\n");
 	i = 0;
 	while (data->map[i])
@@ -35,7 +29,7 @@ void	print_map_info(t_gdata *data)
 // debug function
 // used to test if all four textures are appearing on screen correctly
 // offset is the x offset to prevent image overlap
-void	test_textures(t_gdata *data, t_img *texture, int offset)
+void	test_textures(t_gdata *data, int *texture, int offset)
 {
 	int *pixel_address;
 	int i, j, k;
@@ -47,7 +41,7 @@ void	test_textures(t_gdata *data, t_img *texture, int offset)
 	{
 		i = k % 256;
 		j = k / 256;
-		pixel_address[(i + offset) + (j * 1600)] = texture->address[i + j * data->texture_path->size];
+		pixel_address[(i + offset) + (j * 1600)] = texture[i + j * data->tex_size];
 		k++;
 	}
 }

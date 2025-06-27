@@ -84,13 +84,13 @@ int	player_outside_map(t_gdata *data, t_pos pos)
 	j = (int)pos.x;
 	if (!data->map && i > data->map_width && j > data->map_height && !data->map[i][j])
 		return (1);
-	if (j > 0 && (data->map[i][j - 1] == ' '))
+	if (j > 0 && data->map[i][j - 1] == ' ')
 		return (1);
-	if (i > 0 && (data->map[i - 1][j] == ' '))
+	if (i > 0 && data->map[i - 1][j] == ' ')
 		return (1);
 	if (data->map[i + 1] && data->map[i + 1][j] == ' ')
 		return (1);
-	if (data->map[j + 1] && data->map[i][j + 1] == ' ')
+	if (data->map[i][j + 1] && data->map[i][j + 1] == ' ')
 		return (1);
 	return (0);
 }

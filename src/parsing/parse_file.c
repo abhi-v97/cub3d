@@ -70,7 +70,7 @@ static void	map_fill(t_gdata *data, char **map, int fd)
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
-		if (get_textures(data, buffer))
+		if (parse_texture_data(data, buffer))
 			break ;
 		free(buffer);
 		buffer = get_next_line(fd);
