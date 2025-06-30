@@ -1,21 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel.c                                        :+:      :+:    :+:   */
+/*   mouse_click_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 13:55:28 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 18:10:43 by aistok           ###   ########.fr       */
+/*   Created: 2025/06/30 17:51:44 by aistok            #+#    #+#             */
+/*   Updated: 2025/06/30 17:55:12 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "mlx.h"
 
-void	put_pixel(t_canvas *canvas, int x, int y, int color)
+int	mouse_click_handler(int mbutt, int x, int y, void *gdata_ptr)
 {
-	char	*dst;
+	t_gdata *gd;
 
-	dst = canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
-	*(unsigned int *)dst = color;
+	gd = (t_gdata *)gdata_ptr;
+	(void) gd;
+	(void) x;
+	(void) y;
+	if (mbutt == M_SCROLLUP)
+	{
+		//..
+	}
+	else if (mbutt == M_SCRODOWN)
+	{
+		//..
+	}
+	else if (mbutt == M_LEFTBUTT)
+	{
+		//..
+	}
+	else if (mbutt == M_RIGHTBUTT)
+	{
+		//..
+	}
+	else if (mbutt == M_MIDDLEBUTT)
+	{
+		//..
+	}
+	return (1);
 }

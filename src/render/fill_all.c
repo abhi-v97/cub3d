@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel.c                                        :+:      :+:    :+:   */
+/*   fill_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 13:55:28 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 18:10:43 by aistok           ###   ########.fr       */
+/*   Created: 2025/06/30 18:08:50 by aistok            #+#    #+#             */
+/*   Updated: 2025/06/30 18:10:16 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	put_pixel(t_canvas *canvas, int x, int y, int color)
+void	fill_all(t_canvas *canvas, int color)
 {
-	char	*dst;
+	int	x;
+	int	y;
 
-	dst = canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
-	*(unsigned int *)dst = color;
+	x = -1;
+	while (++x < canvas->w)
+	{
+		y = -1;
+		while (++y < canvas->h)
+			put_pixel(canvas, x, y, color);
+	}
 }

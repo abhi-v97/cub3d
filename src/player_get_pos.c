@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:40:45 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/26 14:02:28 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:58:29 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 double	pos_nsew_to_angle(char c);
 t_pos	pos_init_to_invalid_pos(void);
-t_pos	pos_set_to(double x, double y, double angle);
+t_pos	pos_set_to(double x, double y);
 
 t_pos	player_get_pos_from_map(t_gdata *gdata)
 {
@@ -32,8 +32,7 @@ t_pos	player_get_pos_from_map(t_gdata *gdata)
 		while (c)
 		{
 			if (ft_strchr("NSEW", c))
-				return (pos_set_to((double)j, 
-					(double)i, pos_nsew_to_angle(c)));
+				return (pos_set_to((double)j, (double)i));
 			c = map[i][++j];
 		}
 	}
@@ -59,18 +58,16 @@ t_pos	pos_init_to_invalid_pos(void)
 
 	pos.x = -1;
 	pos.y = -1;
-	pos.angle = -1;
 	return (pos);
 }
 
-t_pos	pos_set_to(double x, double y, double angle)
+t_pos	pos_set_to(double x, double y)
 {
 	t_pos	pos;
 
 	pos.x = x;
 	pos.y = y;
-	pos.angle = angle;
-	return (ft_error("Player not found!"), pos);
+	return (pos);
 }
 
 // function to check if player is placed outside map, for whatever reason

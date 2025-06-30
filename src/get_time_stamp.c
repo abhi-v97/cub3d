@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel.c                                        :+:      :+:    :+:   */
+/*   get_time_stamp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 13:55:28 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 18:10:43 by aistok           ###   ########.fr       */
+/*   Created: 2025/06/30 18:05:35 by aistok            #+#    #+#             */
+/*   Updated: 2025/06/30 18:06:21 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include <stdlib.h>
+#include <sys/time.h>
 
-void	put_pixel(t_canvas *canvas, int x, int y, int color)
+int	get_time_stamp()
 {
-	char	*dst;
+	static struct timeval	tv;
 
-	dst = canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
-	*(unsigned int *)dst = color;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000 + tv.tv_usec);
 }

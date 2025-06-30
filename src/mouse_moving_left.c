@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel.c                                        :+:      :+:    :+:   */
+/*   mouse_moving_left.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 13:55:28 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 18:10:43 by aistok           ###   ########.fr       */
+/*   Created: 2025/06/30 18:19:58 by aistok            #+#    #+#             */
+/*   Updated: 2025/06/30 21:46:59 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	put_pixel(t_canvas *canvas, int x, int y, int color)
+bool	mouse_moving_left(t_gdata *gd)
 {
-	char	*dst;
+	t_ipos	mouse_current_pos;
 
-	dst = canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
-	*(unsigned int *)dst = color;
+	mlx_mouse_get_pos(gd->mlx, gd->win, &mouse_current_pos.x, &mouse_current_pos.y);
+	mlx_mouse_move(gd->mlx, gd->win, gd->mpos_at_start.x, gd->mpos_at_start.y);
+	if (gd->mpos_at_start.x - mouse_current_pos.x < 0)
+	{
+		return (true);
+	}
+	return (false);
 }
