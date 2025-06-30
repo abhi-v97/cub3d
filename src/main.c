@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/26 16:20:10 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:11:09 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	main(int argc, char **argv)
 	if (gdata.player.pos.x > 0 && gdata.player.pos.y > 0 && player_outside_map(&gdata, gdata.player.pos))
 		return (ft_error("Player out of bounds!"), 1);
 	printf("Player X = %f, Y = %f\n", gdata.player.pos.x, gdata.player.pos.y);
-	
-	mlx_key_hook(gdata.win, key_handler, &gdata);
+	mlx_hook(gdata.win, 2, 1L<<0, key_press, &gdata);
+	mlx_hook(gdata.win, 3, 1L<<1, key_release, &gdata);
 	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.mlx);
 	mlx_loop_hook(gdata.mlx, rendering_function, &gdata);
 	mlx_loop(gdata.mlx);

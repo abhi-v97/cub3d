@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/26 14:45:22 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:13:05 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,14 @@ typedef enum e_cardinal
 	CEILING,
 }	t_cardinal;
 
-# define KEY_COUNT 5
+# define KEY_COUNT 7
 # define KEY_UP 0
 # define KEY_DOWN 1
 # define KEY_LEFT 2
 # define KEY_RIGHT 3
-# define KEY_ESC 4
+# define KEY_A 4
+# define KEY_D 5
+# define KEY_ESC 6
 
 /*
  *	bpp - bit per pixel
@@ -133,12 +135,7 @@ typedef struct s_gdata
 	int			player_direction;
 	int			map_height;
 	int			map_width;
-	int			wall_width;
-	int			wall_height;
 	void		*win;
-	int			ww;
-	int			wh;
-	int			exit_code;
 	int			keys[KEY_COUNT];
 	int			tex_size;
 	int			**textures;
@@ -204,7 +201,6 @@ double	pos_nsew_to_angle(char c);
 t_pos	pos_init_to_invalid_pos(void);
 t_pos	pos_set_to(double x, double y, double angle);
 
-int		key_handler(int key, t_gdata *gdata);
 int		key_press(int key, t_gdata *gdata);
 int		key_release(int key, t_gdata *gdata);
 

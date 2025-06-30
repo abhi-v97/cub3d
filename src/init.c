@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:34:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/26 14:05:35 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/30 17:07:08 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,16 @@ int	init_gdata(t_gdata *gdata)
 
 static bool	init_graphics(t_gdata *gdata)
 {
-	gdata->ww = 1600;
-	gdata->wh = 900;
 	gdata->mlx = mlx_init();
 	if (!gdata->mlx)
 		return (false);
-	gdata->win = mlx_new_window(gdata->mlx, gdata->ww, gdata->wh, "cub3D");
+	gdata->win = mlx_new_window(gdata->mlx, W_WIDTH, W_HEIGHT, "cub3D");
 	if (!gdata->win)
 		return (free(gdata->mlx), false);
-	gdata->cnvs.img = mlx_new_image(gdata->mlx, gdata->ww, gdata->wh);
+	gdata->cnvs.img = mlx_new_image(gdata->mlx, W_WIDTH, W_HEIGHT);
 	gdata->cnvs.addr = mlx_get_data_addr(gdata->cnvs.img, &gdata->cnvs.bpp,
 			&gdata->cnvs.ll, &gdata->cnvs.endian);
-	gdata->cnvs.w = gdata->ww;
-	gdata->cnvs.h = gdata->wh;
+	gdata->cnvs.w = W_WIDTH;
+	gdata->cnvs.h = W_HEIGHT;
 	return (true);
 }
