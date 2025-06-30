@@ -13,7 +13,6 @@
 #include "cub3d.h"
 
 // returns 1 if char is empty space
-// currently unused?
 int	is_blank(char c)
 {
 	if (c == ' ' || (c <= '\r' && c >= '\t'))

@@ -74,8 +74,8 @@ static int	check_vertical(char **map, int map_height)
 	return (0);
 }
 
-// checks if map has any invalid characters
-// allowed chars: 01NSWE, empty space represented by ' '
+// checks if map has any invalid characters allowed chars: 01NSWE, empty space
+// represented by ' '
 static int	check_invalid_char(t_gdata *data, char **map, int map_height)
 {
 	int		i;

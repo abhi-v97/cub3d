@@ -176,7 +176,7 @@ int		check_map_bounds(t_gdata *data, char **map, int map_height);
 int		parse_texture_data(t_gdata *data, char *buffer);
 
 // parsing/set_textures.c
-void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
+int		set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
 
 // error.c
 void	ft_error(char *msg);

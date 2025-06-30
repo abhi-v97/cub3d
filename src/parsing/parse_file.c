@@ -24,7 +24,7 @@ int	parse_file(t_gdata *gdata, char *file)
 		return (1);
 	gdata->map = (char **) ft_calloc(sizeof(char *), gdata->map_height + 1);
 	if (!gdata->map)
-		return (ft_error(strerror(errno)), 1);
+		return (perror("Error: Cub3d"), 1);
 	gdata->file_fd = open(file, O_RDONLY);
 	if (gdata->file_fd < 0)
 		ft_error(strerror(errno));
@@ -43,7 +43,7 @@ static int	line_count(t_gdata *data, char *file)
 	count = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_error(strerror(errno)), 0);
+		return (perror("Error: Cub3d"), 0);
 	else
 	{
 		buffer = get_next_line(fd);

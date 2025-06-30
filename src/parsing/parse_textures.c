@@ -35,18 +35,17 @@ static int	set_texture_info(t_gdata *data, char *buffer)
 	if (ft_strchr("01", buffer[0]))
 		return (1);
 	else if (buffer[0] == 'N' && buffer[1] == 'O')
-		set_textures(data, buffer + 2, NORTH);
+		return (set_textures(data, buffer + 2, NORTH), 0);
 	else if (buffer[0] == 'W' && buffer[1] == 'E')
-		set_textures(data, buffer + 2, WEST);
+		return (set_textures(data, buffer + 2, WEST), 0);
 	else if (buffer[0] == 'S' && buffer[1] == 'O')
-		set_textures(data, buffer + 2, SOUTH);
+		return (set_textures(data, buffer + 2, SOUTH), 0);
 	else if (buffer[0] == 'E' && buffer[1] == 'A')
-		set_textures(data, buffer + 2, EAST);
+		return (set_textures(data, buffer + 2, EAST), 0);
 	else if (buffer[0] == 'F' && buffer[1] == ' ')
-		set_textures(data, buffer + 2, FLOOR);
+		return (set_textures(data, buffer + 2, FLOOR), 0);
 	else if (buffer[0] == 'C' && buffer[1] == ' ')
-		set_textures(data, buffer + 2, CEILING);
+		return (set_textures(data, buffer + 2, CEILING), 0);
 	else
 		return (1);
-	return (0);
 }

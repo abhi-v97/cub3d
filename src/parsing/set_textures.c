@@ -17,18 +17,22 @@ static void		init_img(t_img *img);
 static char		*get_texture_path(char *buffer);
 static int		set_rgb(char *path);
 
-void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
+int	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
 {
 	char	*path;
 
-	if (data->textures[wall_dir])
-		free(data->textures[wall_dir]);
+	if (data->textures[wall_dir] || data->tex_rgb[wall_dir])
+		return (0);
 	path = get_texture_path(buffer);
 	if (path && ft_strchr(path, '/'))
+	{
 		data->textures[wall_dir] = parse_xpm(data, path);
+		if (!data->textures[wall_dir])
+			return (free(path), 1);
+	}
 	else if (path && (path[0] >= '0' && path[0] <= '9'))
 		data->tex_rgb[wall_dir] = set_rgb(path);
-	free(path);
+	return (free(path), 0);
 }
 
 static int	*parse_xpm(t_gdata *data, char *path)
@@ -43,7 +47,7 @@ static int	*parse_xpm(t_gdata *data, char *path)
 	img.img = mlx_xpm_file_to_image(data->mlx,
 			path, &data->tex_size, &data->tex_size);
 	if (img.img == NULL)
-		(ft_error("missing texture"), exit(1));
+		return (ft_error("missing texture"), NULL);
 	img.address = (int *)mlx_get_data_addr(img.img,
 			&img.pixel_bits, &img.size, &img.endian);
 	array = ft_calloc(sizeof(int), data->tex_size * data->tex_size);
