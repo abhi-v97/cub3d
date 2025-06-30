@@ -21,6 +21,8 @@ void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
 {
 	char	*path;
 
+	if (data->textures[wall_dir])
+		free(data->textures[wall_dir]);
 	path = get_texture_path(buffer);
 	if (path && ft_strchr(path, '/'))
 		data->textures[wall_dir] = parse_xpm(data, path);

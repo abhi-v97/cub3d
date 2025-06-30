@@ -14,6 +14,7 @@
 
 static int	set_texture_info(t_gdata *data, char *buffer);
 
+// checks if a line isn't blank, then attempts to set texture data
 int	parse_texture_data(t_gdata *data, char *buffer)
 {
 	int		i;
@@ -28,6 +29,7 @@ int	parse_texture_data(t_gdata *data, char *buffer)
 	return (0);
 }
 
+// checks if the string matches the correct specifier for a texture
 static int	set_texture_info(t_gdata *data, char *buffer)
 {
 	if (ft_strchr("01", buffer[0]))

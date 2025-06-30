@@ -25,7 +25,8 @@ int	main(int argc, char **argv)
 		exit(1);
 	printf("This is the amazing cub3D!\n");
 	init_gdata(&gdata);
-	parse_file(&gdata, argv[1]);
+	if (parse_file(&gdata, argv[1]))
+		(cleanup(&gdata), exit(1)); // double check this, make sure mem is freed correctly
 	check_map(&gdata);
 	print_map_info(&gdata);
 	gdata.player.pos = player_get_pos_from_map(&gdata);

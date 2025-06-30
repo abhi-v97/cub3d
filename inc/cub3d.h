@@ -119,21 +119,11 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
-typedef struct s_texture
-{
-	char		*north;
-	char		*west;
-	char		*south;
-	char		*east;
-	char		*floor;
-	char		*ceiling;
-	int			size;
-}	t_texture;
-
 /*
  *	gdata - Game data
  *
- *	player_direction: used to set starting direction of player
+ *	player_direction: used to set starting direction of player, and to verify
+ *	that only one player exists in a map
  */
 typedef struct s_gdata
 {

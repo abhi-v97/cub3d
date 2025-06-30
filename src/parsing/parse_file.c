@@ -14,7 +14,7 @@
 #include <fcntl.h>
 
 static int	line_count(t_gdata *data, char *file);
-static void	map_fill(t_gdata *data, char **map, int fd);
+static int	map_fill(t_gdata *data, char **map, int fd);
 static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row);
 
 // grabs map data from file into char ** array gdata->map
@@ -27,8 +27,7 @@ int	parse_file(t_gdata *gdata, char *file)
 	gdata->file_fd = open(file, O_RDONLY);
 	if (gdata->file_fd < 0)
 		ft_error(strerror(errno));
-	map_fill(gdata, gdata->map, gdata->file_fd);
-	return (0);
+	return (map_fill(gdata, gdata->map, gdata->file_fd));
 }
 
 // gets number of lines in map file
@@ -62,7 +61,8 @@ static int	line_count(t_gdata *data, char *file)
 }
 
 // copy contents of map file into map array
-static void	map_fill(t_gdata *data, char **map, int fd)
+// first while loop checks for texture data, breaks once it hits the map
+static int	map_fill(t_gdata *data, char **map, int fd)
 {
 	char	*buffer;
 	int		row;
@@ -80,13 +80,14 @@ static void	map_fill(t_gdata *data, char **map, int fd)
 	{
 		copy_buffer(data, buffer, map, row);
 		if (!map[row])
-			return (free(map), ft_error(strerror(errno)));
+			return (free(map), ft_error(strerror(errno)), 1);
 		row++;
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	map[row] = NULL;
 	data->map_height = row;
+	return (0);
 }
 
 // normalises each map line to have the same width

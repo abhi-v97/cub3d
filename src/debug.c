@@ -19,7 +19,6 @@ void	print_map_info(t_gdata *data)
 
 	printf("map_height:\t\t%i\n", data->map_height);
 	printf("map_width:\t\t%i\n", data->map_width);
-	printf("\nTexture info:\n");
 	printf("\nMap:\n");
 	i = 0;
 	while (data->map[i])

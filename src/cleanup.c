@@ -35,7 +35,7 @@ static void	free_data(t_gdata *data)
 
 	close_fd(&data->file_fd);
 	i = 0;
-	while (data->map && data->map[i])
+	while (data->map && i < data->map_height)
 		free(data->map[i++]);
 	i = 0;
 	while (i < 7)
