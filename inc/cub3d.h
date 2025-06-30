@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <math.h>
 # include "../minilibx-linux/mlx.h"
 
 # define EMLXERR 500
@@ -190,6 +191,7 @@ int		init_gdata(t_gdata *gdata);
 
 // cleanup.c
 void    cleanup(t_gdata *gdata);
+void	free_array(char **array);
 
 // put_pixel.c
 void	put_pixel(t_canvas *cdata, int x, int y, int color);

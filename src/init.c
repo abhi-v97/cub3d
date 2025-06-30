@@ -18,10 +18,10 @@ int	init_gdata(t_gdata *gdata)
 {
 	gdata->map = NULL;
 	gdata->map_height = 0;
+	gdata->map_width = 0;
 	gdata->player.pos.x = 0.0;
 	gdata->player.pos.y = 0.0;
 	gdata->player_direction = 0;
-	gdata->map_width = 0;
 	gdata->tex_rgb = ft_calloc(sizeof(int), 7);
 	gdata->textures = ft_calloc(sizeof(int *), 7);
 	if (!init_graphics(gdata))

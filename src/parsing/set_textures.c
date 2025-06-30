@@ -100,23 +100,18 @@ static int	set_rgb(char *path)
 	int		r;
 	int		g;
 	int		b;
-	int		i;
 
 	r = 0;
 	g = 0;
 	b = 0;
 	array = ft_split(path, ',');
-	if (!array)
-		return (r + (g << 8) + (b << 16));
+	if (!array || (array && !array[0]) || (array && !array[1]))
+		return (free_array(array), (r << 16) + (g << 8) + b);
 	if (array[0])
 		r = ft_atoi(array[0]);
 	if (array[1])
 		g = ft_atoi(array[1]);
 	if (array[2])
 		b = ft_atoi(array[2]);
-	i = 0;
-	while (array && array[i])
-		free(array[i++]);
-	free(array);
-	return ((r << 16) + (g << 8) + b);
+	return (free_array(array), (r << 16) + (g << 8) + b);
 }

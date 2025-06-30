@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <fcntl.h>
 
 static int	line_count(t_gdata *data, char *file);
 static int	map_fill(t_gdata *data, char **map, int fd);
@@ -20,8 +19,10 @@ static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row);
 // grabs map data from file into char ** array gdata->map
 int	parse_file(t_gdata *gdata, char *file)
 {
-	gdata->map = (char **) malloc(sizeof(char *)
-			* (line_count(gdata, file) + 1));
+	gdata->map_height = line_count(gdata, file);
+	if (!gdata->map_height)
+		return (1);
+	gdata->map = (char **) ft_calloc(sizeof(char *), gdata->map_height + 1);
 	if (!gdata->map)
 		return (ft_error(strerror(errno)), 1);
 	gdata->file_fd = open(file, O_RDONLY);
@@ -38,23 +39,24 @@ static int	line_count(t_gdata *data, char *file)
 	int		fd;
 	int		count;
 	char	*buffer;
-	int		buffer_len;
 
 	count = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		ft_error(strerror(errno));
+		return (ft_error(strerror(errno)), 0);
 	else
 	{
 		buffer = get_next_line(fd);
 		while (buffer)
 		{
-			buffer_len = ft_strlen(buffer);
-			if (buffer_len > data->map_width)
-				data->map_width = buffer_len - 1;
+			if (ft_strchr(buffer, '1') || ft_strchr(buffer, '0'))
+			{
+				if ((int)ft_strlen(buffer) > data->map_width)
+					data->map_width = ft_strlen(buffer) - 1;
+				count++;
+			}
 			free(buffer);
 			buffer = get_next_line(fd);
-			count++;
 		}
 	}
 	return (close_fd(&fd), count);
@@ -80,7 +82,7 @@ static int	map_fill(t_gdata *data, char **map, int fd)
 	{
 		copy_buffer(data, buffer, map, row);
 		if (!map[row])
-			return (free(map), ft_error(strerror(errno)), 1);
+			return (free_array(map), free(buffer), perror("Error: Cub3d"), 1);
 		row++;
 		free(buffer);
 		buffer = get_next_line(fd);

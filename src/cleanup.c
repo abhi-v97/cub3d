@@ -29,14 +29,21 @@ void	cleanup(t_gdata *gdata)
 	free_data(gdata);
 }
 
+void	free_array(char **array)
+{
+	int		i;
+	
+	i = 0;
+	while (array && array[i])
+		free(array[i++]);
+	free(array);
+}
+
 static void	free_data(t_gdata *data)
 {
 	int		i;
 
 	close_fd(&data->file_fd);
-	i = 0;
-	while (data->map && i < data->map_height)
-		free(data->map[i++]);
 	i = 0;
 	while (i < 7)
 	{
@@ -44,7 +51,8 @@ static void	free_data(t_gdata *data)
 			free(data->textures[i]);
 		i++;
 	}
+	if (data->map)
+		free_array(data->map);
 	free(data->textures);
 	free(data->tex_rgb);
-	free(data->map);
 }
