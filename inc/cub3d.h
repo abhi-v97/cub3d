@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include <errno.h>
 # include <math.h>
 # include "mlx.h"
@@ -31,21 +33,21 @@
 #  define W_HEIGHT 600
 # endif
 
-# define k_ESC 65307
-# define k_LEFT 65361
-# define k_UP 65362
-# define k_RIGHT 65363
-# define k_DOWN 65364
-# define k_A 97
-# define k_D 100
-# define k_S 115
-# define k_W 119
+// unneccessary, these macros are already defined in X11/keysym.h
+// # define k_ESC 65307
+// # define k_LEFT 65361
+// # define k_UP 65362
+// # define k_RIGHT 65363
+// # define k_DOWN 65364
+// # define k_A 97
+// # define k_D 100
+// # define k_S 115
+// # define k_W 119
 
-// replaced macros with enum as you can iterate over this
 // North = 0, West = 1, and so on
 typedef enum e_cardinal
 {
-	NORTH = 0,
+	NORTH,
 	WEST,
 	SOUTH,
 	EAST,
@@ -55,7 +57,7 @@ typedef enum e_cardinal
 
 typedef enum e_direction_elements
 {
-	DIRX = 0,
+	DIRX,
 	DIRY,
 	PLANEX,
 	PLANEY

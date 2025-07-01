@@ -49,11 +49,11 @@ void handle_key_presses(t_gdata *gd) {
 		double facing_dir = atan2(gd->dir.y, gd->dir.x);
 		double cos_val = cos(facing_dir + M_PI_2);
 		double sin_val = sin(facing_dir + M_PI_2);
-		if (gd->map[(int)gd->player.pos.y]
-							 [(int)(gd->player.pos.x + cos_val * moveSpeed)] == false)
+		// if (gd->map[(int)gd->player.pos.y]
+							//  [(int)(gd->player.pos.x + cos_val * moveSpeed)] == false)
 			gd->player.pos.x += cos_val * moveSpeed;
-		if (gd->map[(int)(gd->player.pos.y + sin_val * moveSpeed)]
-							 [(int)gd->player.pos.x] == false)
+		// if (gd->map[(int)(gd->player.pos.y + sin_val * moveSpeed)]
+							//  [(int)gd->player.pos.x] == false)
 			gd->player.pos.y += sin_val * moveSpeed;
 	}
 
@@ -61,11 +61,11 @@ void handle_key_presses(t_gdata *gd) {
 		double facing_dir = atan2(gd->dir.y, gd->dir.x);
 		double cos_val = cos(facing_dir - M_PI_2);
 		double sin_val = sin(facing_dir - M_PI_2);
-		if (gd->map[(int)gd->player.pos.y]
-							 [(int)(gd->player.pos.x + cos_val * moveSpeed)] == false)
+		// if (gd->map[(int)gd->player.pos.y]
+							//  [(int)(gd->player.pos.x + cos_val * moveSpeed)] == false)
 			gd->player.pos.x += cos_val * moveSpeed;
-		if (gd->map[(int)(gd->player.pos.y + sin_val * moveSpeed)]
-							 [(int)gd->player.pos.x] == false)
+		// if (gd->map[(int)(gd->player.pos.y + sin_val * moveSpeed)]
+							//  [(int)gd->player.pos.x] == false)
 			gd->player.pos.y += sin_val * moveSpeed;
 	}
 
@@ -93,35 +93,35 @@ void handle_key_presses(t_gdata *gd) {
 }
 
 int key_press(int key, t_gdata *gd) {
-	if (key == k_DOWN || key == k_S)
+	if (key == XK_Down || key == XK_s)
 		gd->keys[KEY_DOWN] = true;
-	else if (key == k_UP || key == k_W)
+	else if (key == XK_Up || key == XK_w)
 		gd->keys[KEY_UP] = true;
-	else if (key == k_RIGHT)
+	else if (key == XK_Right)
 		gd->keys[KEY_RIGHT] = true;
-	else if (key == k_LEFT)
+	else if (key == XK_Left)
 		gd->keys[KEY_LEFT] = true;
-	else if (key == k_D)
+	else if (key == XK_d)
 		gd->keys[KEY_D] = true;
-	else if (key == k_A)
+	else if (key == XK_a)
 		gd->keys[KEY_A] = true;
 	return (1);
 }
 
 int key_release(int key, t_gdata *gd) {
-	if (key == k_ESC)
+	if (key == XK_Escape)
 		mlx_loop_end(gd->mlx);
-	else if (key == k_DOWN || key == k_S)
+	else if (key == XK_Down || key == XK_s)
 		gd->keys[KEY_DOWN] = false;
-	else if (key == k_UP || key == k_W)
+	else if (key == XK_Up || key == XK_w)
 		gd->keys[KEY_UP] = false;
-	else if (key == k_RIGHT)
+	else if (key == XK_Right)
 		gd->keys[KEY_RIGHT] = false;
-	else if (key == k_LEFT)
+	else if (key == XK_Left)
 		gd->keys[KEY_LEFT] = false;
-	else if (key == k_D)
+	else if (key == XK_d)
 		gd->keys[KEY_D] = false;
-	else if (key == k_A)
+	else if (key == XK_a)
 		gd->keys[KEY_A] = false;
 	return (1);
 }
