@@ -49,6 +49,5 @@ static bool	init_graphics(t_gdata *gdata)
 	gdata->canvas.w = W_WIDTH;
 	gdata->canvas.h = W_HEIGHT;
 	mlx_mouse_move(gdata->mlx, gdata->win, gdata->win_center.x, gdata->win_center.y);
-	mlx_mouse_get_pos(gdata->mlx, gdata->win, &gdata->mpos_at_start.x, &gdata->mpos_at_start.y);
 	return (true);
 }

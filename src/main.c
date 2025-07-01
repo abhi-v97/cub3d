@@ -32,6 +32,7 @@ int	main(int argc, char **argv)
 	if (gdata.player.pos.x > 0 && gdata.player.pos.y > 0 && player_outside_map(&gdata, gdata.player.pos))
 		return (ft_error("Player out of bounds!"), 1);
 	printf("Player X = %f, Y = %f\n", gdata.player.pos.x, gdata.player.pos.y);
+	printf("mouse x = %i, y = %i\n", gdata.mpos_at_start.x, gdata.mpos_at_start.y);
 	//mlx_mouse_hook(gdata.win, mouse_click_handler, &gdata);
 	mlx_hook(gdata.win, 2, 1L<<0, key_press, &gdata);
 	mlx_hook(gdata.win, 3, 1L<<1, key_release, &gdata);

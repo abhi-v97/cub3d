@@ -213,8 +213,10 @@ double	pos_nsew_to_angle(char c);
 t_pos	pos_init_to_invalid_pos(void);
 t_pos	pos_set_to(double x, double y);
 
+// key_events.c
 int		key_press(int key, t_gdata *gdata);
 int		key_release(int key, t_gdata *gdata);
+void	handle_key_presses(t_gdata *data);
 
 // render/render_screen.c
 int		render_screen(void *param);
