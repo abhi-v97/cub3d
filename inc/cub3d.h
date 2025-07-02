@@ -33,17 +33,6 @@
 #  define W_HEIGHT 600
 # endif
 
-// unneccessary, these macros are already defined in X11/keysym.h
-// # define k_ESC 65307
-// # define k_LEFT 65361
-// # define k_UP 65362
-// # define k_RIGHT 65363
-// # define k_DOWN 65364
-// # define k_A 97
-// # define k_D 100
-// # define k_S 115
-// # define k_W 119
-
 // North = 0, West = 1, and so on
 typedef enum e_cardinal
 {
