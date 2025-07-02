@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/02 05:49:13 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/02 16:22:43 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,15 @@ typedef struct s_img
 	int		size;
 	int		endian;
 }	t_img;
+
+typedef struct s_ray
+{
+	int		side_hit;
+	t_pos	dir;
+	t_pos	delta_dist;
+	t_pos	side_dist;
+	t_pos	step;
+}	t_ray;
 
 /*
  *	gdata - Game data
