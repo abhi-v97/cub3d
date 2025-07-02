@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/02 05:29:14 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/02 05:43:55 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ int	parse_file(t_gdata *gdata, char *file)
 static int	line_count(t_gdata *data, char *file)
 {
 	int		fd;
-	int		count;
+	size_t	count;
 	char	*buffer;
-	size_t	buffer_len;
 
 	count = 0;
 	fd = open(file, O_RDONLY);
@@ -54,12 +53,12 @@ static int	line_count(t_gdata *data, char *file)
 		buffer = get_next_line(fd);
 		while (buffer)
 		{
-			buffer_len = ft_strlen(buffer);
-			if (buffer_has_map_data(buffer, buffer_len))
+			count = ft_strlen(buffer);
+			if (buffer_has_map_data(buffer, count))
 			{
-				buffer_len = map_line_trim_end(buffer, buffer_len);
-				if (buffer_len > (size_t)data->map_width)
-					data->map_width = buffer_len;
+				count = map_line_trim_end(buffer, count);
+				if (count > (size_t)data->map_width)
+					data->map_width = count;
 			}
 			free(buffer);
 			buffer = get_next_line(fd);
