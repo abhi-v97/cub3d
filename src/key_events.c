@@ -13,82 +13,70 @@
 #include "cub3d.h"
 #include <stdbool.h>
 
+/*
+ *	the constant values in move_speed are in squares/second
+ *	and for the rot_speed in radians/second
+ */
 void handle_key_presses(t_gdata *gd) {
-	double moveSpeed =
-			gd->frame_time * 5.0 * 8; // the constant value is in squares/second
-	double rotSpeed =
-			gd->frame_time * 3.0 * 4; // the constant value is in radians/second
+	double move_speed = gd->frame_time * 5.0 * 8;
+	double rot_speed = gd->frame_time * 3.0 * 4;
 
 	// move forward if no wall in front of you
 	if (gd->keys[KEY_UP]) {
-		// if (gd->map[(int)gd->player.pos.y]
-		//[(int)(gd->player.pos.x + gd->dir.x * moveSpeed)] == false)
-		gd->player.pos.x += gd->dir.x * moveSpeed;
-		// if (gd->map[(int)(gd->player.pos.y + gd->dir.y * moveSpeed)]
-		//[(int)gd->player.pos.x] == false)
-		gd->player.pos.y += gd->dir.y * moveSpeed;
-		// if (gd->map[(int)(gd->player.pos.y + gd->dir.y * moveSpeed)]
-		//[(int)(gd->player.pos.x)] == false)
-		// gd->player.pos.y += gd->dir.y * moveSpeed;
-		// if (gd->map[(int)gd->player.pos.y]
-		//[(int)(gd->player.pos.x + gd->dir.y * moveSpeed)] == false)
-		// gd->player.pos.y += gd->dir.y * moveSpeed;
+		if (gd->map[(int)gd->player.pos.y][(int)(gd->player.pos.x + gd->dir.x * move_speed)] != MAP_WALL)
+			gd->player.pos.x += gd->dir.x * move_speed;
+		if (gd->map[(int)(gd->player.pos.y + gd->dir.y * move_speed)][(int)gd->player.pos.x] != MAP_WALL)
+			gd->player.pos.y += gd->dir.y * move_speed;
 	}
 
 	// move backwards if no wall behind you
 	if (gd->keys[KEY_DOWN]) {
-		// if (gd->map[(int)gd->player.pos.y]
-		//[(int)(gd->player.pos.x - gd->dir.x * moveSpeed)] == false)
-		gd->player.pos.x -= gd->dir.x * moveSpeed;
-		// if (gd->map[(int)(gd->player.pos.y - gd->dir.y * moveSpeed)]
-		//[(int)gd->player.pos.x] == false)
-		gd->player.pos.y -= gd->dir.y * moveSpeed;
+		if (gd->map[(int)gd->player.pos.y][(int)(gd->player.pos.x - gd->dir.x * move_speed)] != MAP_WALL)
+			gd->player.pos.x -= gd->dir.x * move_speed;
+		if (gd->map[(int)(gd->player.pos.y - gd->dir.y * move_speed)][(int)gd->player.pos.x] != MAP_WALL)
+			gd->player.pos.y -= gd->dir.y * move_speed;
 	}
 
 	if (gd->keys[KEY_A]) {
 		double facing_dir = atan2(gd->dir.y, gd->dir.x);
 		double cos_val = cos(facing_dir + M_PI_2);
 		double sin_val = sin(facing_dir + M_PI_2);
-		// if (gd->map[(int)gd->player.pos.y]
-							//  [(int)(gd->player.pos.x + cos_val * moveSpeed)] == false)
-			gd->player.pos.x += cos_val * moveSpeed;
-		// if (gd->map[(int)(gd->player.pos.y + sin_val * moveSpeed)]
-							//  [(int)gd->player.pos.x] == false)
-			gd->player.pos.y += sin_val * moveSpeed;
+		if (gd->map[(int)gd->player.pos.y][(int)(gd->player.pos.x + cos_val * move_speed)] != MAP_WALL)
+			gd->player.pos.x += cos_val * move_speed;
+		if (gd->map[(int)(gd->player.pos.y + sin_val * move_speed)][(int)gd->player.pos.x] != MAP_WALL)
+			gd->player.pos.y += sin_val * move_speed;
 	}
 
 	if (gd->keys[KEY_D]) {
 		double facing_dir = atan2(gd->dir.y, gd->dir.x);
 		double cos_val = cos(facing_dir - M_PI_2);
 		double sin_val = sin(facing_dir - M_PI_2);
-		// if (gd->map[(int)gd->player.pos.y]
-							//  [(int)(gd->player.pos.x + cos_val * moveSpeed)] == false)
-			gd->player.pos.x += cos_val * moveSpeed;
-		// if (gd->map[(int)(gd->player.pos.y + sin_val * moveSpeed)]
-							//  [(int)gd->player.pos.x] == false)
-			gd->player.pos.y += sin_val * moveSpeed;
+		if (gd->map[(int)gd->player.pos.y][(int)(gd->player.pos.x + cos_val * move_speed)] != MAP_WALL)
+			gd->player.pos.x += cos_val * move_speed;
+		if (gd->map[(int)(gd->player.pos.y + sin_val * move_speed)][(int)gd->player.pos.x] != MAP_WALL)
+			gd->player.pos.y += sin_val * move_speed;
 	}
 
 	// rotate to the right
 	if (gd->keys[KEY_RIGHT] || mouse_moving_right(gd)) {
 		// both camera direction and camera plane must be rotated
 		double oldDirX = gd->dir.x;
-		gd->dir.x = gd->dir.x * cos(-rotSpeed) - gd->dir.y * sin(-rotSpeed);
-		gd->dir.y = oldDirX * sin(-rotSpeed) + gd->dir.y * cos(-rotSpeed);
+		gd->dir.x = gd->dir.x * cos(-rot_speed) - gd->dir.y * sin(-rot_speed);
+		gd->dir.y = oldDirX * sin(-rot_speed) + gd->dir.y * cos(-rot_speed);
 		double oldPlaneX = gd->plane.x;
-		gd->plane.x = gd->plane.x * cos(-rotSpeed) - gd->plane.y * sin(-rotSpeed);
-		gd->plane.y = oldPlaneX * sin(-rotSpeed) + gd->plane.y * cos(-rotSpeed);
+		gd->plane.x = gd->plane.x * cos(-rot_speed) - gd->plane.y * sin(-rot_speed);
+		gd->plane.y = oldPlaneX * sin(-rot_speed) + gd->plane.y * cos(-rot_speed);
 	}
 
 	// rotate to the left
 	if (gd->keys[KEY_LEFT] || mouse_moving_left(gd)) {
 		// both camera direction and camera plane must be rotated
 		double oldDirX = gd->dir.x;
-		gd->dir.x = gd->dir.x * cos(rotSpeed) - gd->dir.y * sin(rotSpeed);
-		gd->dir.y = oldDirX * sin(rotSpeed) + gd->dir.y * cos(rotSpeed);
+		gd->dir.x = gd->dir.x * cos(rot_speed) - gd->dir.y * sin(rot_speed);
+		gd->dir.y = oldDirX * sin(rot_speed) + gd->dir.y * cos(rot_speed);
 		double oldPlaneX = gd->plane.x;
-		gd->plane.x = gd->plane.x * cos(rotSpeed) - gd->plane.y * sin(rotSpeed);
-		gd->plane.y = oldPlaneX * sin(rotSpeed) + gd->plane.y * cos(rotSpeed);
+		gd->plane.x = gd->plane.x * cos(rot_speed) - gd->plane.y * sin(rot_speed);
+		gd->plane.y = oldPlaneX * sin(rot_speed) + gd->plane.y * cos(rot_speed);
 	}
 }
 

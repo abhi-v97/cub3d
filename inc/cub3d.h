@@ -68,6 +68,11 @@ typedef enum e_direction_elements
 # define M_SCROLLUP 4
 # define M_SCRODOWN 5
 
+# define RAY_HIT_N_OR_S 0
+# define RAY_HIT_E_OR_W 1
+# define MAP_EMPTY_SPACE '0'
+# define MAP_WALL '1'
+
 /*
  *	bpp - bit per pixel
  *	ll	- line length
