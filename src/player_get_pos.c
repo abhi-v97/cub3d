@@ -31,7 +31,7 @@ t_pos	player_get_pos_from_map(t_gdata *gdata)
 		while (c)
 		{
 			if (ft_strchr("NSEW", c))
-				return (pos_set_to((double)j, (double)i));
+				return (pos_set_to(0.5 + j, 0.5 + i));
 			c = map[i][++j];
 		}
 	}
