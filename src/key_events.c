@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:14:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 17:13:19 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/02 15:19:49 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,33 @@ void handle_key_presses(t_gdata *gd) {
 	double rot_speed = gd->frame_time * 3.0 * 4;
 
 	// move forward if no wall in front of you
-	if (gd->keys[KEY_UP]) {
-		if (gd->map[(int)gd->player.pos.y][(int)(gd->player.pos.x + gd->dir.x * move_speed)] != MAP_WALL)
+	if (gd->keys[KEY_UP])
+	{
+		int x;
+		int y;
+
+		x = (int)(gd->player.pos.x + gd->dir.x * move_speed);
+		y = (int)(gd->player.pos.y);
+		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.x += gd->dir.x * move_speed;
-		if (gd->map[(int)(gd->player.pos.y + gd->dir.y * move_speed)][(int)gd->player.pos.x] != MAP_WALL)
+		x = (int)(gd->player.pos.x);
+		y = (int)(gd->player.pos.y + gd->dir.y * move_speed);
+		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.y += gd->dir.y * move_speed;
 	}
 
 	// move backwards if no wall behind you
 	if (gd->keys[KEY_DOWN]) {
-		if (gd->map[(int)gd->player.pos.y][(int)(gd->player.pos.x - gd->dir.x * move_speed)] != MAP_WALL)
+		int x;
+		int y;
+
+		x = (int)(gd->player.pos.x - gd->dir.x * move_speed);
+		y = (int)(gd->player.pos.y);
+		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.x -= gd->dir.x * move_speed;
-		if (gd->map[(int)(gd->player.pos.y - gd->dir.y * move_speed)][(int)gd->player.pos.x] != MAP_WALL)
+		x = (int)(gd->player.pos.x);
+		y = (int)(gd->player.pos.y - gd->dir.y * move_speed);
+		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.y -= gd->dir.y * move_speed;
 	}
 
@@ -41,9 +56,16 @@ void handle_key_presses(t_gdata *gd) {
 		double facing_dir = atan2(gd->dir.y, gd->dir.x);
 		double cos_val = cos(facing_dir + M_PI_2);
 		double sin_val = sin(facing_dir + M_PI_2);
-		if (gd->map[(int)gd->player.pos.y][(int)(gd->player.pos.x + cos_val * move_speed)] != MAP_WALL)
+		int x;
+		int y;
+
+		x = (int)(gd->player.pos.x + cos_val * move_speed);
+		y = (int)(gd->player.pos.y);
+		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.x += cos_val * move_speed;
-		if (gd->map[(int)(gd->player.pos.y + sin_val * move_speed)][(int)gd->player.pos.x] != MAP_WALL)
+		x = (int)(gd->player.pos.x);
+		y = (int)(gd->player.pos.y + sin_val * move_speed);
+		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.y += sin_val * move_speed;
 	}
 
@@ -51,9 +73,16 @@ void handle_key_presses(t_gdata *gd) {
 		double facing_dir = atan2(gd->dir.y, gd->dir.x);
 		double cos_val = cos(facing_dir - M_PI_2);
 		double sin_val = sin(facing_dir - M_PI_2);
-		if (gd->map[(int)gd->player.pos.y][(int)(gd->player.pos.x + cos_val * move_speed)] != MAP_WALL)
+		int x;
+		int y;
+
+		x = (int)(gd->player.pos.x + cos_val * move_speed);
+		y = (int)(gd->player.pos.y);
+		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.x += cos_val * move_speed;
-		if (gd->map[(int)(gd->player.pos.y + sin_val * move_speed)][(int)gd->player.pos.x] != MAP_WALL)
+		x = (int)(gd->player.pos.x);
+		y = (int)(gd->player.pos.y + sin_val * move_speed);
+		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.y += sin_val * move_speed;
 	}
 
