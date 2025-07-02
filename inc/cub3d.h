@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/02 05:10:34 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/02 05:49:13 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,5 +232,9 @@ bool	mouse_moving_right(t_gdata *gd);
 int		mouse_click_handler(int mbutt, int x, int y, void *gdata_ptr);
 
 int		get_time_stamp();
+
+// map_functions.c
+char	map_get(t_gdata *gd, int x, int y);
+void	map_set(t_gdata *gd, int x, int y, char c);
 
 #endif
