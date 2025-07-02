@@ -12,7 +12,6 @@
 
 #include "cub3d.h"
 
-double	pos_nsew_to_angle(char c);
 t_pos	pos_init_to_invalid_pos(void);
 t_pos	pos_set_to(double x, double y);
 
@@ -37,19 +36,6 @@ t_pos	player_get_pos_from_map(t_gdata *gdata)
 		}
 	}
 	return (pos_init_to_invalid_pos());
-}
-
-double	pos_nsew_to_angle(char c)
-{
-	if (c == 'N')
-		return (0);
-	else if (c == 'E')
-		return (90);
-	else if (c == 'S')
-		return (180);
-	else if (c == 'W')
-		return (270);
-	return (-1);
 }
 
 t_pos	pos_init_to_invalid_pos(void)

@@ -220,9 +220,6 @@ int		key_press(int key, t_gdata *gdata);
 int		key_release(int key, t_gdata *gdata);
 void	handle_key_presses(t_gdata *data);
 
-// render/render_screen.c
-int		render_screen(void *param);
-
 // render/texture.c
 void	load_textures(t_gdata *data); //TO-DO: check for this, as there is no such file?
 
