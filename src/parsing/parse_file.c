@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/02 05:16:33 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/02 05:29:14 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ static size_t	map_line_trim_end(char *buffer, size_t buffer_len);
 int	parse_file(t_gdata *gdata, char *file)
 {
 	gdata->map_height = line_count(gdata, file);
+	printf("line %d\n", __LINE__);
 	if (!gdata->map_height)
 		return (1);
+	printf("line %d\n", __LINE__);
 	gdata->map = (char **) ft_calloc(sizeof(char *), gdata->map_height + 1);
 	if (!gdata->map)
 		return (perror("Error: Cub3d"), 1);
@@ -56,7 +58,7 @@ static int	line_count(t_gdata *data, char *file)
 			if (buffer_has_map_data(buffer, buffer_len))
 			{
 				buffer_len = map_line_trim_end(buffer, buffer_len);
-				if (buffer_len > data->map_width)
+				if (buffer_len > (size_t)data->map_width)
 					data->map_width = buffer_len;
 			}
 			free(buffer);
