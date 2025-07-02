@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_press.c                                        :+:      :+:    :+:   */
+/*   mouse_moving_left.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 12:14:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 17:13:19 by aistok           ###   ########.fr       */
+/*   Created: 2025/06/30 18:19:58 by aistok            #+#    #+#             */
+/*   Updated: 2025/06/30 21:46:59 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	key_press(int key, t_gdata *gd)
+bool	mouse_moving_left(t_gdata *gd)
 {
-	if (key == k_DOWN || key == k_S)
-		gd->keys[KEY_DOWN] = true;
-	else if (key == k_UP || key == k_W)
-		gd->keys[KEY_UP] = true;
-	else if (key == k_RIGHT)
-		gd->keys[KEY_RIGHT] = true;
-	else if (key == k_LEFT)
-		gd->keys[KEY_LEFT] = true;
-	else if (key == k_D)
-		gd->keys[KEY_D] = true;
-	else if (key == k_A)
-		gd->keys[KEY_A] = true;
-	return (1);
+	t_ipos	mouse_current_pos;
+
+	mlx_mouse_get_pos(gd->mlx, gd->win, &mouse_current_pos.x, &mouse_current_pos.y);
+	mlx_mouse_move(gd->mlx, gd->win, gd->mpos_at_start.x, gd->mpos_at_start.y);
+	if (gd->mpos_at_start.x - mouse_current_pos.x < 0)
+	{
+		return (true);
+	}
+	return (false);
 }

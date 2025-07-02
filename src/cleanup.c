@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:27:15 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/26 13:16:45 by aistok           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:10:16 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	free_data(t_gdata *data);
 
 void	cleanup(t_gdata *gdata)
 {
-	if (gdata->cnvs.img)
-		mlx_destroy_image(gdata->mlx, gdata->cnvs.img);
+	if (gdata->canvas.img)
+		mlx_destroy_image(gdata->mlx, gdata->canvas.img);
 	if (gdata->win)
 		mlx_destroy_window(gdata->mlx, gdata->win);
 	if (gdata->mlx)

@@ -1,32 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_release.c                                      :+:      :+:    :+:   */
+/*   mouse_click_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/26 12:25:20 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 17:13:21 by aistok           ###   ########.fr       */
+/*   Created: 2025/06/30 17:51:44 by aistok            #+#    #+#             */
+/*   Updated: 2025/06/30 17:55:12 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "mlx.h"
 
-int	key_release(int key, t_gdata *gd)
+int	mouse_click_handler(int mbutt, int x, int y, void *gdata_ptr)
 {
-	if (key == k_ESC)
-		mlx_loop_end(gd->mlx);
-	else if (key == k_DOWN || key == k_S)
-		gd->keys[KEY_DOWN] = false;
-	else if (key == k_UP || key == k_W)
-		gd->keys[KEY_UP] = false;
-	else if (key == k_RIGHT)
-		gd->keys[KEY_RIGHT] = false;
-	else if (key == k_LEFT)
-		gd->keys[KEY_LEFT] = false;
-	else if (key == k_D)
-		gd->keys[KEY_D] = false;
-	else if (key == k_A)
-		gd->keys[KEY_A] = false;
+	t_gdata *gd;
+
+	gd = (t_gdata *)gdata_ptr;
+	(void) gd;
+	(void) x;
+	(void) y;
+	if (mbutt == M_SCROLLUP)
+	{
+		//..
+	}
+	else if (mbutt == M_SCRODOWN)
+	{
+		//..
+	}
+	else if (mbutt == M_LEFTBUTT)
+	{
+		//..
+	}
+	else if (mbutt == M_RIGHTBUTT)
+	{
+		//..
+	}
+	else if (mbutt == M_MIDDLEBUTT)
+	{
+		//..
+	}
 	return (1);
 }

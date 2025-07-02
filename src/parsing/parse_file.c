@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025-06-21 20:08:21 by abhi             ###   ########.fr       */
+/*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
+/*   Updated: 2025/07/02 05:16:33 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	line_count(t_gdata *data, char *file);
-static int	map_fill(t_gdata *data, char **map, int fd);
-static void	copy_buffer(t_gdata *data, char *buffer, char **map, int row);
+static int		line_count(t_gdata *data, char *file);
+static int		map_fill(t_gdata *data, char **map, int fd);
+static void		copy_buffer(t_gdata *data, char *buffer, char **map, int row);
+static int		buffer_has_map_data(char *buffer, size_t buffer_len);
+static size_t	map_line_trim_end(char *buffer, size_t buffer_len);
 
 // grabs map data from file into char ** array gdata->map
 int	parse_file(t_gdata *gdata, char *file)
@@ -39,6 +41,7 @@ static int	line_count(t_gdata *data, char *file)
 	int		fd;
 	int		count;
 	char	*buffer;
+	size_t	buffer_len;
 
 	count = 0;
 	fd = open(file, O_RDONLY);
@@ -49,17 +52,48 @@ static int	line_count(t_gdata *data, char *file)
 		buffer = get_next_line(fd);
 		while (buffer)
 		{
-			if (ft_strchr(buffer, '1') || ft_strchr(buffer, '0'))
+			buffer_len = ft_strlen(buffer);
+			if (buffer_has_map_data(buffer, buffer_len))
 			{
-				if ((int)ft_strlen(buffer) > data->map_width)
-					data->map_width = ft_strlen(buffer) - 1;
-				count++;
+				buffer_len = map_line_trim_end(buffer, buffer_len);
+				if (buffer_len > data->map_width)
+					data->map_width = buffer_len;
 			}
 			free(buffer);
 			buffer = get_next_line(fd);
 		}
 	}
 	return (close_fd(&fd), count);
+}
+
+static int	buffer_has_map_data(char *buffer, size_t buffer_len)
+{
+	size_t	i;
+
+	if (!buffer)
+		return (0);
+	i = 0;
+	while (i < buffer_len)
+	{
+		if (!ft_strchr(MAP_ALLOWED_CHARS, buffer[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+// trim new lines '\n' and spaces ' ' starting from the end of the buffer,
+// which that contains map data
+//
+// return new size of trimmed buffer
+static size_t	map_line_trim_end(char *buffer, size_t len)
+{
+	while (len > 1 && (buffer[len - 1] == '\n' || buffer[len - 1] == ' '))
+	{
+		buffer[len - 1] = '\0';
+		len--;
+	}
+	return (ft_strlen(buffer));
 }
 
 // copy contents of map file into map array

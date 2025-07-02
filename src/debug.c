@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-27 14:19:50 by abhi              #+#    #+#             */
-/*   Updated: 2025-06-27 14:19:50 by abhi             ###   ########.fr       */
+/*   Created: 2025/06/27 14:19:50 by abhi              #+#    #+#             */
+/*   Updated: 2025/06/30 18:10:16 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	test_textures(t_gdata *data, int *texture, int offset)
 	int		j;
 	int		k;
 
-	pixel_address = (int *)data->cnvs.addr;
+	pixel_address = (int *)data->canvas.addr;
 	k = 0;
 	while (k < 256 * 256)
 	{
