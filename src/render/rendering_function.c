@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:16 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 23:26:29 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/02 04:57:26 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ void player_set_direction(t_gdata *gd) {
 	gd->plane.y = direction_consts[cardinal][PLANEY];
 	printf("dir.x = %f, dir.y = %f\n", gd->dir.x, gd->dir.y);				 // degub
 	printf("plane.x = %f, plane.y = %f\n", gd->plane.x, gd->plane.y); // degub
+}
+
+char	map_get(t_gdata *gd, int x, int y)
+{
+	return (gd->map[x][y]);
+}
+
+void	map_set(t_gdata *gd, int x, int y, char c)
+{
+	gd->map[x][y] = c;
 }
 
 int rendering_function(void *param) {
@@ -138,7 +148,7 @@ int rendering_function(void *param) {
 				side = 1;
 			}
 			// Check if ray has hit a wall
-			if (gd->map[map_pos.y][map_pos.x] > '0')
+			if (map_get(gd, map_pos.x, map_pos.y) == MAP_WALL)
 				hit = 1;
 		}
 		// Calculate distance projected on camera direction. This is the shortest
@@ -167,7 +177,7 @@ int rendering_function(void *param) {
 			drawEnd = W_HEIGHT - 1;
 
 		// choose wall color
-		int color = 0x00FF00FF;
+		int color = 0x000FFFF;
 		/*
 		switch (gd->map[map_pos.x][map_pos.y])
 		{
