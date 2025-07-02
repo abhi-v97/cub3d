@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:40:45 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 17:58:29 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/02 16:09:43 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ t_pos	player_get_pos_from_map(t_gdata *gdata)
 
 	map = gdata->map;
 	i = -1;
-	while (++i < gdata->map_height)
+	while (++i < gdata->map_width)
 	{
 		j = 0;
 		c = map[i][j];
 		while (c)
 		{
 			if (ft_strchr("NSEW", c))
-				return (pos_set_to(0.5 + j, 0.5 + i));
+				return (pos_set_to(0.5 + i, 0.5 + j));
 			c = map[i][++j];
 		}
 	}
@@ -63,8 +63,8 @@ int	player_outside_map(t_gdata *data, t_pos pos)
 	int		i;
 	int		j;
 
-	i = (int)pos.y;
-	j = (int)pos.x;
+	i = (int)pos.x;
+	j = (int)pos.y;
 	if (!data->map && i > data->map_width && j > data->map_height && !data->map[i][j])
 		return (1);
 	if (j > 0 && data->map[i][j - 1] == ' ')
