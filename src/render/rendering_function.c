@@ -203,15 +203,16 @@ int	rendering_function(void *param)
 		map_pos.x = (int)gd->player.pos.x;
 		map_pos.y = (int)gd->player.pos.y;
 		ray = ray_create(gd, x, map_pos);
-		int color = 0x0000FF00;
+		// int color = 0x0000FF00;
 		if (ray_hits_map(gd, &ray, &map_pos))
 		{
-			if (ray.side_hit == RAY_HIT_E_OR_W)
-				color = color / 2;
+			// if (ray.side_hit == RAY_HIT_E_OR_W)
+				// color = color / 2;
 			ray.line_height = line_height(gd, &ray);
 			// put_ver_line(&gd->canvas, x, 
 				// calc_line_start_y(l_height), calc_line_end_y(l_height), color);
-			texture_func(gd, ray, x, calc_line_start_y(ray.line_height), calc_line_end_y(ray.line_height));
+			texture_func(gd, ray, x, calc_line_start_y(ray.line_height),
+					calc_line_end_y(ray.line_height));
 		}
 	}
 	update_frame_time(gd);
