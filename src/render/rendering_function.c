@@ -141,18 +141,17 @@ int	ray_hits_map(t_gdata *gd, t_ray *ray, t_ipos *map_pos)
 }
 
 //	Returns: height of line to draw on screen
-int	line_height(t_gdata *gd, const t_ray *ray)
+int	line_height(t_gdata *gd, t_ray *ray)
 {
-	double	perp_wall_dist;
 	int		line_height;
 
 	(void) gd;
 	if (ray->side_hit == RAY_HIT_N_OR_S)
-		perp_wall_dist = (ray->side_dist.x - ray->delta_dist.x);
+		ray->perp_dist = (ray->side_dist.x - ray->delta_dist.x);
 	else
-		perp_wall_dist = (ray->side_dist.y - ray->delta_dist.y);
+		ray->perp_dist = (ray->side_dist.y - ray->delta_dist.y);
 
-	line_height = (int)(W_HEIGHT / perp_wall_dist);
+	line_height = (int)(W_HEIGHT / ray->perp_dist);
 	return (line_height);
 }
 
@@ -209,9 +208,10 @@ int	rendering_function(void *param)
 		{
 			if (ray.side_hit == RAY_HIT_E_OR_W)
 				color = color / 2;
-			int l_height = line_height(gd, &ray);
-			put_ver_line(&gd->canvas, x, \
-				calc_line_start_y(l_height), calc_line_end_y(l_height), color);
+			ray.line_height = line_height(gd, &ray);
+			// put_ver_line(&gd->canvas, x, 
+				// calc_line_start_y(l_height), calc_line_end_y(l_height), color);
+			texture_func(gd, ray, x, calc_line_start_y(ray.line_height), calc_line_end_y(ray.line_height));
 		}
 	}
 	update_frame_time(gd);

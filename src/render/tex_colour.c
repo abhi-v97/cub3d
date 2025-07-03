@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "cub3d.h"
+#include "cub3d.h"
 
 // // side: 0 if NS, 1 if WE
 // int	get_colour(t_gdata *data, int side)
@@ -31,3 +31,50 @@
 // 	if (side == 1 && ray_dir_y < 0)
 // 		tex_x = data->tex_size - tex_x - 1;
 // }
+
+static int	get_texture_dir(t_ray *ray)
+{
+	if (ray->side_hit == RAY_HIT_E_OR_W)
+	{
+		if (ray->dir.y < 0)
+			return NORTH;
+		else
+			return SOUTH;
+	}
+	else
+	{
+		if (ray->dir.x < 0)
+			return WEST;
+		else
+		 	return EAST;
+	}
+}
+
+// step: how much to increase texture coordinates per pixel
+void	texture_func(t_gdata *data, t_ray ray, int x, int draw_start, int draw_end)
+{
+	int		y;
+	int		tex_pos;
+	int		step;
+	int		color;
+	int		dir = get_texture_dir(&ray);
+	int		tex_y;
+
+	double wall_x;
+	if (dir == RAY_HIT_E_OR_W)
+		wall_x = data->player.pos.y + ray.perp_dist * ray.dir.y;
+	else
+		wall_x = data->player.pos.x + ray.perp_dist * ray.dir.x;
+	wall_x -= floor(wall_x);
+
+	y = draw_start;
+	step = (1 * data->tex_size / ray.line_height);
+	tex_pos = (draw_start - W_HEIGHT / 2 + ray.line_height / 2) * step;
+	while (y < draw_end)
+	{
+		tex_y = tex_pos & (data->tex_size - 1);
+		tex_pos += step;
+		color = data->textures[dir][data->tex_size * tex_y + x];
+		put_pixel(&data->canvas, x, y++, color);
+	}
+}

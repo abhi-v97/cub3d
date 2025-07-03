@@ -121,6 +121,8 @@ typedef struct s_img
 typedef struct s_ray
 {
 	int		side_hit;
+	int		line_height;
+	double	perp_dist;
 	t_pos	dir;
 	t_pos	delta_dist;
 	t_pos	side_dist;
@@ -235,6 +237,9 @@ void	test_textures(t_gdata *data, int *texture, int offset);
 // render/rendering_function.c
 int		rendering_function(void *param);
 void	player_set_direction(t_gdata *gd);
+
+// render/tex_colour.c
+void	texture_func(t_gdata *data, t_ray ray, int x, int draw_start, int draw_end);
 
 bool	mouse_moving_left(t_gdata *gd);
 bool	mouse_moving_right(t_gdata *gd);
