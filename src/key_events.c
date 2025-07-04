@@ -87,7 +87,8 @@ void handle_key_presses(t_gdata *gd) {
 	}
 
 	// rotate to the right
-	if (gd->keys[KEY_RIGHT] || mouse_moving_right(gd)) {
+	// if (gd->keys[KEY_RIGHT] || mouse_moving_right(gd)) {
+	if (gd->keys[KEY_RIGHT]) {
 		// both camera direction and camera plane must be rotated
 		double oldDirX = gd->dir.x;
 		gd->dir.x = gd->dir.x * cos(-rot_speed) - gd->dir.y * sin(-rot_speed);
@@ -98,7 +99,8 @@ void handle_key_presses(t_gdata *gd) {
 	}
 
 	// rotate to the left
-	if (gd->keys[KEY_LEFT] || mouse_moving_left(gd)) {
+	// if (gd->keys[KEY_LEFT] || mouse_moving_left(gd)) {
+	if (gd->keys[KEY_LEFT]) {
 		// both camera direction and camera plane must be rotated
 		double oldDirX = gd->dir.x;
 		gd->dir.x = gd->dir.x * cos(rot_speed) - gd->dir.y * sin(rot_speed);
@@ -107,6 +109,12 @@ void handle_key_presses(t_gdata *gd) {
 		gd->plane.x = gd->plane.x * cos(rot_speed) - gd->plane.y * sin(rot_speed);
 		gd->plane.y = oldPlaneX * sin(rot_speed) + gd->plane.y * cos(rot_speed);
 	}
+}
+
+void	debug_print(t_gdata *data)
+{
+	printf("dir x =%f\n", data->dir.x);
+	printf("dir y =%f\n", data->dir.y);
 }
 
 int key_press(int key, t_gdata *gd) {
@@ -122,6 +130,8 @@ int key_press(int key, t_gdata *gd) {
 		gd->keys[KEY_D] = true;
 	else if (key == XK_a)
 		gd->keys[KEY_A] = true;
+	else if (key == XK_p)
+		debug_print(gd);
 	return (1);
 }
 

@@ -37,7 +37,7 @@ int	rendering_function(void *param)
 
 void player_set_direction(t_gdata *gd) {
 
-	t_cardinal cardinal;
+	t_cardinal cardinal = NORTH;
 	static const double direction_consts[][4] = {
 			{-1, 0, 0, 0.66}, {1, 0, 0, -0.66}, {0, 1, 0.66, 0}, {0, -1, -0.66, 0}};
 
