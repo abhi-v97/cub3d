@@ -46,3 +46,10 @@ void	test_textures(t_gdata *data, int *texture, int offset)
 		k++;
 	}
 }
+
+// hooked to the P key, use it to print any var in data struct
+void	debug_print(t_gdata *data)
+{
+	printf("dir x =%f\n", data->dir.x);
+	printf("dir y =%f\n", data->dir.y);
+}

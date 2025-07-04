@@ -233,6 +233,7 @@ void	load_textures(t_gdata *data); //TO-DO: check for this, as there is no such 
 // debug.c
 void	print_map_info(t_gdata *data);
 void	test_textures(t_gdata *data, int *texture, int offset);
+void	debug_print(t_gdata *data);
 
 // render/rendering_function.c
 int		rendering_function(void *param);
