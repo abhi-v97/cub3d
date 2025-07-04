@@ -188,46 +188,6 @@ void	update_frame_time(t_gdata *gd)
 	// printf("FPS = %f\n", 1.0 / gd->frame_time); //FPS counter
 }
 
-static int	nbrdigits(long n)
-{
-	int	number_of_digits;
-
-	if (n < 0)
-		n = -n;
-	number_of_digits = 0;
-	while ((n / 10) > 0)
-	{
-		number_of_digits ++;
-		n = n / 10;
-	}
-	return (number_of_digits + 1);
-}
-
-char	*ft_itoa(int n)
-{
-	long	num;
-	int		len;
-	char	*nbr;
-
-	num = n;
-	len = nbrdigits(num) + (num < 0);
-	nbr = malloc(len + 1);
-	if (!nbr)
-		return (NULL);
-	nbr[len] = 0;
-	if (num < 0)
-	{
-		nbr[0] = '-';
-		num = -num;
-	}
-	while (--len >= (n < 0))
-	{
-		nbr[len] = (num % 10) + '0';
-		num /= 10;
-	}
-	return (nbr);
-}
-
 int	rendering_function(void *param)
 {
 	t_gdata *gd;
