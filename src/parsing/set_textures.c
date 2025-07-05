@@ -59,8 +59,7 @@ static int	*parse_xpm(t_gdata *data, char *path)
 		array[x + y * data->tex_size] = img.addr[x + y * data->tex_size];
 		i++;
 	}
-	mlx_destroy_image(data->mlx, img.img);
-	return (array);
+	return (mlx_destroy_image(data->mlx, img.img), array);
 }
 
 static void	init_img(t_canvas *img)

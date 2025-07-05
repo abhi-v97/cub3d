@@ -23,9 +23,13 @@ int	init_gdata(t_gdata *gdata)
 	gdata->player.pos.y = 0.0;
 	gdata->player_direction = 0;
 	gdata->tex_rgb = ft_calloc(sizeof(int), 7);
+	if (!gdata->tex_rgb)
+		return (1);
 	gdata->textures = ft_calloc(sizeof(int *), 7);
-	memset(gdata->keys, 0, KEY_COUNT * sizeof(int));
-	memset(gdata->mbutt, 0, M_BUTT_COUNT * sizeof(int));
+	if (!gdata->textures)
+		return (free(gdata->tex_rgb), 1);
+	ft_memset(gdata->keys, 0, KEY_COUNT * sizeof(int));
+	ft_memset(gdata->mbutt, 0, M_BUTT_COUNT * sizeof(int));
 	gdata->win_center.x = W_WIDTH / 2;
 	gdata->win_center.y = W_HEIGHT / 2;
 	gdata->time = 0;

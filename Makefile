@@ -73,7 +73,7 @@ run:
 	./${NAME} map.cub
 
 v valgrind: ${NAME}
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "map.cub"
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "maps/good/map.cub"
 
 clean:
 	${RM} ${OBJ_DIR}

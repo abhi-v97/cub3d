@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <stdio.h>
 
 static int		line_count(t_gdata *data, char *file);
 static int		map_fill(t_gdata *data, char **map, int fd);
@@ -22,16 +23,14 @@ static size_t	map_line_trim_end(char *buffer, size_t buffer_len);
 int	parse_file(t_gdata *gdata, char *file)
 {
 	gdata->map_height = line_count(gdata, file);
-	printf("line %d\n", __LINE__);
-	if (!gdata->map_height)
+	if (!gdata->map_height || !gdata->map_width)
 		return (1);
-	printf("line %d\n", __LINE__);
 	gdata->map = (char **) ft_calloc(sizeof(char *), gdata->map_height + 1);
 	if (!gdata->map)
 		return (perror("Error: Cub3d"), 1);
 	gdata->file_fd = open(file, O_RDONLY);
 	if (gdata->file_fd < 0)
-		ft_error(strerror(errno));
+		return (perror("Error: Cub3d"), free(gdata->map), 1);
 	return (map_fill(gdata, gdata->map, gdata->file_fd));
 }
 
@@ -58,7 +57,7 @@ static int	line_count(t_gdata *data, char *file)
 			{
 				count = map_line_trim_end(buffer, count);
 				if (count > (size_t)data->map_width)
-					data->map_width = count;
+				data->map_width = count;
 			}
 			free(buffer);
 			buffer = get_next_line(fd);
@@ -67,6 +66,7 @@ static int	line_count(t_gdata *data, char *file)
 	return (close_fd(&fd), count);
 }
 
+// if i < 2, the buffer is likely an empty new line, skip over it
 static int	buffer_has_map_data(char *buffer, size_t buffer_len)
 {
 	size_t	i;
@@ -80,6 +80,8 @@ static int	buffer_has_map_data(char *buffer, size_t buffer_len)
 			return (0);
 		i++;
 	}
+	if (i < 2)
+		return (0);
 	return (1);
 }
 
@@ -95,6 +97,21 @@ static size_t	map_line_trim_end(char *buffer, size_t len)
 		len--;
 	}
 	return (ft_strlen(buffer));
+}
+
+// Only checks NWSE for now
+int	validate_textures(t_gdata *data)
+{
+	t_cardinal	dir;
+
+	dir = 0;
+	while (dir <= WEST)
+	{
+		if (!data->textures[dir] && !data->tex_rgb[dir])
+			return (ft_error("Missing texture!"), 1);
+		dir++;
+	}
+	return (0);
 }
 
 // copy contents of map file into map array
@@ -116,18 +133,19 @@ static int	map_fill(t_gdata *data, char **map, int fd)
 	while (buffer)
 	{
 		copy_buffer(data, buffer, map, row);
-		if (!map[row])
-			return (free_array(map), free(buffer), perror("Error: Cub3d"), 1);
-		row++;
+		if (!map[row++])
+			return (free(buffer), perror("Error: Cub3d"), 1);
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	map[row] = NULL;
 	data->map_height = row;
+	if (validate_textures(data))
+		return (free(buffer), 1);
 	return (0);
 }
 
-// normalises each map line to have the same width
+// normalises each map e line to have the same width
 // empty gaps are represented by a ' ' sign
 // actually, it doesn't need to be a dash, it can just be a
 // space character. so once we no longer need to print the

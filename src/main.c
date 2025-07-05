@@ -20,12 +20,12 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		return (printf("need a map!\n"), 1);
 	if (check_arg(argv[1]))
-		exit(1);
-	printf("This is the amazing cub3D!\n");
-	init_gdata(&gdata);
-	if (parse_file(&gdata, argv[1]))
 		return (1);
-	check_map(&gdata);
+	printf("This is the amazing cub3D!\n");
+	if (init_gdata(&gdata) || parse_file(&gdata, argv[1]))
+		return (cleanup(&gdata), 1);
+	if (check_map(&gdata))
+		return (cleanup(&gdata), 1);
 	print_map_info(&gdata);
 	gdata.player.pos = player_get_pos_from_map(&gdata); //TO-DO: need to move this to an init function
 	player_set_direction(&gdata); //TO-DO: need to move this to an init function
