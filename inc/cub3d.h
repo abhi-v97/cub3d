@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/02 16:22:43 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/05 18:35:30 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,6 @@
 #  define W_HEIGHT 600
 # endif
 
-// North = 0, West = 1, and so on
-typedef enum e_cardinal
-{
-	NORTH = 0,
-	SOUTH,
-	EAST,
-	WEST,
-	FLOOR,
-	CEILING,
-}	t_cardinal;
-
-typedef enum e_direction_elements
-{
-	DIRX,
-	DIRY,
-	PLANEX,
-	PLANEY
-}	t_direction_elements;
-
 # define KEY_COUNT 7
 # define KEY_UP 0
 # define KEY_DOWN 1
@@ -74,6 +55,24 @@ typedef enum e_direction_elements
 # define MAP_ALLOWED_CHARS "01NSEW \n"
 # define MAP_EMPTY_SPACE '0'
 # define MAP_WALL '1'
+
+typedef enum e_cardinal
+{
+	NORTH = 0,
+	SOUTH,
+	EAST,
+	WEST,
+	FLOOR,
+	CEILING,
+}	t_cardinal;
+
+typedef enum e_direction_elements
+{
+	DIRX,
+	DIRY,
+	PLANEX,
+	PLANEY
+}	t_direction_elements;
 
 /*
  *	bpp - bit per pixel
