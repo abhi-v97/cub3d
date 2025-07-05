@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:34:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 22:16:25 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/05 19:13:32 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	init_graphics(t_gdata *gdata)
 	if (!gdata->win)
 		return (free(gdata->mlx), false);
 	gdata->canvas.img = mlx_new_image(gdata->mlx, W_WIDTH, W_HEIGHT);
-	gdata->canvas.addr = mlx_get_data_addr(gdata->canvas.img, &gdata->canvas.bpp,
+	gdata->canvas.addr = (int *)mlx_get_data_addr(gdata->canvas.img, &gdata->canvas.bpp,
 			&gdata->canvas.ll, &gdata->canvas.endian);
 	gdata->canvas.w = W_WIDTH;
 	gdata->canvas.h = W_HEIGHT;

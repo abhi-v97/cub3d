@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 13:55:28 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 18:10:43 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/05 19:18:41 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ void	put_pixel(t_canvas *canvas, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
+	dst = (char *)canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
 	*(unsigned int *)dst = color;
 }

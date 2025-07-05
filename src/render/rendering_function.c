@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:16 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/02 16:37:31 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/05 19:13:43 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	rendering_function(void *param)
 {
 				t_gdata *gd = param;
 
-				int *data = (int *)gd->canvas.addr;
+				int *data = gd->canvas.addr;
 				int i = 0;
 				while (i < (int)(gd->canvas.w * gd->canvas.h))
 								data[i++] = 0x00c8c8c8;

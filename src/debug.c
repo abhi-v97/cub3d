@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:19:50 by abhi              #+#    #+#             */
-/*   Updated: 2025/06/30 18:10:16 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/05 19:13:09 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	test_textures(t_gdata *data, int *texture, int offset)
 	int		j;
 	int		k;
 
-	pixel_address = (int *)data->canvas.addr;
+	pixel_address = data->canvas.addr;
 	k = 0;
 	while (k < 256 * 256)
 	{

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   set_textures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-27 16:48:18 by abhi              #+#    #+#             */
-/*   Updated: 2025-06-27 16:48:18 by abhi             ###   ########.fr       */
+/*   Created: 2025/06/27 16:48:18 by abhi              #+#    #+#             */
+/*   Updated: 2025/07/05 19:17:00 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 static int		*parse_xpm(t_gdata *data, char *path);
-static void		init_img(t_img *img);
+static void		init_img(t_canvas *img);
 static char		*get_texture_path(char *buffer);
 static int		set_rgb(char *path);
 
@@ -37,38 +37,40 @@ int	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
 
 static int	*parse_xpm(t_gdata *data, char *path)
 {
-	t_img	img;
-	int		*array;
-	int		i;
-	int		x;
-	int		y;
+	t_canvas	img;
+	int			*array;
+	int			i;
+	int			x;
+	int			y;
 
 	init_img(&img);
 	img.img = mlx_xpm_file_to_image(data->mlx,
 			path, &data->tex_size, &data->tex_size);
 	if (img.img == NULL)
 		return (ft_error("missing texture"), NULL);
-	img.address = (int *)mlx_get_data_addr(img.img,
-			&img.pixel_bits, &img.size, &img.endian);
+	img.addr = (int *)mlx_get_data_addr(img.img,
+			&img.bpp, &img.ll, &img.endian);
 	array = ft_calloc(sizeof(int), data->tex_size * data->tex_size);
 	i = 0;
 	while (i < data->tex_size * data->tex_size)
 	{
 		x = i % data->tex_size;
 		y = i / data->tex_size;
-		array[x + y * data->tex_size] = img.address[x + y * data->tex_size];
+		array[x + y * data->tex_size] = img.addr[x + y * data->tex_size];
 		i++;
 	}
 	mlx_destroy_image(data->mlx, img.img);
 	return (array);
 }
 
-static void	init_img(t_img *img)
+static void	init_img(t_canvas *img)
 {
 	img->img = NULL;
-	img->address = NULL;
-	img->pixel_bits = 0;
-	img->size = 0;
+	img->addr = NULL;
+	img->bpp = 0;
+	img->w = 0;
+	img->h = 0;
+	img->ll = 0;
 	img->endian = 0;
 }
 

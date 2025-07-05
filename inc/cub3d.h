@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/05 18:35:30 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/05 19:18:56 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef enum e_direction_elements
 typedef struct s_canvas
 {
 	void	*img;
-	char	*addr;
+	int		*addr;
 	int		bpp;
 	int		ll;
 	int		endian;
@@ -108,15 +108,6 @@ typedef struct s_player
 {
 	t_pos	pos;
 }	t_player;
-
-typedef struct s_img
-{
-	void	*img;
-	int		*address;
-	int		pixel_bits;
-	int		size;
-	int		endian;
-}	t_img;
 
 typedef struct s_ray
 {
