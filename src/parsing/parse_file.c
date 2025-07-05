@@ -11,13 +11,12 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 
 static int		line_count(t_gdata *data, char *file);
 static int		map_fill(t_gdata *data, char **map, int fd);
 static void		copy_buffer(t_gdata *data, char *buffer, char **map, int row);
-static int		buffer_has_map_data(char *buffer, size_t buffer_len);
-static size_t	map_line_trim_end(char *buffer, size_t buffer_len);
+static int		buffer_has_map_data(char *buffer);
+// static size_t	map_line_trim_end(char *buffer, size_t buffer_len);
 
 // grabs map data from file into char ** array gdata->map
 int	parse_file(t_gdata *gdata, char *file)
@@ -34,13 +33,11 @@ int	parse_file(t_gdata *gdata, char *file)
 	return (map_fill(gdata, gdata->map, gdata->file_fd));
 }
 
-// gets number of lines in map file
-// also calculates and stores the biggest line found as
-// the map_width, which is used to malloc each string in map array
+// count: number of lines to allocate for gdata->map
 static int	line_count(t_gdata *data, char *file)
 {
 	int		fd;
-	size_t	count;
+	int		count;
 	char	*buffer;
 
 	count = 0;
@@ -52,12 +49,11 @@ static int	line_count(t_gdata *data, char *file)
 		buffer = get_next_line(fd);
 		while (buffer)
 		{
-			count = ft_strlen(buffer);
-			if (buffer_has_map_data(buffer, count))
+			if (buffer_has_map_data(buffer))
 			{
-				count = map_line_trim_end(buffer, count);
-				if (count > (size_t)data->map_width)
-				data->map_width = count;
+				if ((int)ft_strlen(buffer) > data->map_width)
+					data->map_width = ft_strlen(buffer) - 1;
+				count++;
 			}
 			free(buffer);
 			buffer = get_next_line(fd);
@@ -67,14 +63,14 @@ static int	line_count(t_gdata *data, char *file)
 }
 
 // if i < 2, the buffer is likely an empty new line, skip over it
-static int	buffer_has_map_data(char *buffer, size_t buffer_len)
+static int	buffer_has_map_data(char *buffer)
 {
 	size_t	i;
 
 	if (!buffer)
 		return (0);
 	i = 0;
-	while (i < buffer_len)
+	while (buffer[i])
 	{
 		if (!ft_strchr(MAP_ALLOWED_CHARS, buffer[i]))
 			return (0);
@@ -83,20 +79,6 @@ static int	buffer_has_map_data(char *buffer, size_t buffer_len)
 	if (i < 2)
 		return (0);
 	return (1);
-}
-
-// trim new lines '\n' and spaces ' ' starting from the end of the buffer,
-// which that contains map data
-//
-// return new size of trimmed buffer
-static size_t	map_line_trim_end(char *buffer, size_t len)
-{
-	while (len > 1 && (buffer[len - 1] == '\n' || buffer[len - 1] == ' '))
-	{
-		buffer[len - 1] = '\0';
-		len--;
-	}
-	return (ft_strlen(buffer));
 }
 
 // Only checks NWSE for now
