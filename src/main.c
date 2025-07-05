@@ -6,12 +6,11 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/06/30 22:08:28 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/05 19:44:50 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <linux/limits.h>	//TO-DO: is this needed?
 
 int	main(int argc, char **argv)
 {
@@ -33,7 +32,6 @@ int	main(int argc, char **argv)
 		return (ft_error("Player out of bounds!"), 1);
 	printf("Player X = %f, Y = %f\n", gdata.player.pos.x, gdata.player.pos.y);
 	printf("mouse x = %i, y = %i\n", gdata.mpos_at_start.x, gdata.mpos_at_start.y);
-	//mlx_mouse_hook(gdata.win, mouse_click_handler, &gdata);
 	mlx_hook(gdata.win, 2, 1L<<0, key_press, &gdata);
 	mlx_hook(gdata.win, 3, 1L<<1, key_release, &gdata);
 	mlx_hook(gdata.win, 17, 0, mlx_loop_end, gdata.mlx);
