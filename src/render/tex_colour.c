@@ -33,7 +33,7 @@ void	texture_func(t_gdata *data, t_ray ray, int x, int draw_start, int draw_end)
 	wall_x -= floor(wall_x);
 
 	tex_x = (int)(wall_x * data->tex_size);
-	if ((ray.side_hit == 0 && ray.dir.x < 0) || (ray.side_hit == 1 && ray.dir.y < 0))
+	if ((ray.side_hit == 0 && ray.dir.x > 0) || (ray.side_hit == 1 && ray.dir.y < 0))
 		tex_x = data->tex_size - tex_x - 1;
 
 	y = draw_start;
