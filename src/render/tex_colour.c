@@ -52,14 +52,14 @@ static int	get_texture_dir(t_ray *ray)
 {
 	if (ray->side_hit == RAY_HIT_E_OR_W)
 	{
-		if (ray->dir.x < 0)
+		if (ray->dir.y < 0)
 			return WEST;
 		else
 			return EAST;
 	}
 	else
 	{
-		if (ray->dir.y < 0)
+		if (ray->dir.x < 0)
 			return NORTH;
 		else
 			return SOUTH;
