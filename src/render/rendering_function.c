@@ -182,10 +182,36 @@ int	calc_line_end_y(int line_height)
 //		frameTime is the time this frame has taken to generate (in seconds)
 void	update_frame_time(t_gdata *gd)
 {
+	static char		temp[10];
+	int				fps;
+	static int		fps_time;
+	int				i;
+	int				int_temp;
+
+	i = 0;
 	gd->old_time = gd->time;
 	gd->time = get_time_stamp();
 	gd->frame_time = (gd->time - gd->old_time) / 10000000.0;
-	// printf("FPS = %f\n", 1.0 / gd->frame_time); //FPS counter
+	if (fps_time == 0)
+		fps_time = gd->old_time;
+	if ((gd->time - fps_time) > 1000000)
+	{
+		fps = (1 / gd->frame_time);
+		int_temp = fps;
+		while (int_temp)
+		{
+			int_temp /= 10;
+			i++;
+		}
+		temp[i--] = '\0';
+		while (fps)
+		{
+			temp[i--] = (fps % 10) + '0';
+			fps /= 10;
+		}
+		fps_time = gd->time;
+	}
+	mlx_string_put(gd->mlx, gd->win, 10, 10, 0xFF00, temp);
 }
 
 int	rendering_function(void *param)
@@ -215,9 +241,8 @@ int	rendering_function(void *param)
 					calc_line_end_y(ray.line_height));
 		}
 	}
-	update_frame_time(gd);
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);	
-	mlx_string_put(gd->mlx, gd->win, 10, 10, 0xFF00, ft_itoa((int)(1.0 / gd->frame_time)));
+	update_frame_time(gd);
 	handle_key_presses(gd);
 	return (1);
 }
