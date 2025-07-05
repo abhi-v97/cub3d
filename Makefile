@@ -12,9 +12,10 @@ LIBMLX_DIR = minilibx-linux
 LIBMLX = ${LIBMLX_DIR}/libmlx.a
 
 # TO GET THE ALL SOURCE FILES (TEMPORARILY), UNTIL THE PROJECT BECOMES MORE STABLE
-TMP_SRC_DIRS = ${shell find $(SRC_DIR) -type d}
+TMP_SRC_DIRS = ${shell find ${SRC_DIR} -type d}
 TMP_OBJ_DIRS = ${subst ${SRC_DIR},${OBJ_DIR},${TMP_SRC_DIRS}}
 TMP_FILES = ${wildcard ${addsuffix /*, ${TMP_SRC_DIRS}}}
+TMP_INC_FILES = ${shell find ${INC_DIR} -name "*.h"}
 SRC = ${filter %.c, $(TMP_FILES)}
 
 #SRC =	src/main.c src/error.c src/utils.c \
@@ -37,13 +38,13 @@ CFLAGS = -Wall -Wextra -Werror -O0
 
 all: ${NAME}
 
-${NAME}: ${LIBFT} ${LIBMLX} ${OBJS}
+${NAME}: ${LIBFT} ${LIBMLX} ${OBJS} ${TMP_INC_FILES}
 	${CC} ${OBJS} -o $@ -I${INC_DIR} -L${LIBFT_DIR} -lft -L${LIBMLX_DIR} -lmlx -lXext -lX11 -lm 
 
-${OBJ_DIR}/%.o:${SRC_DIR}/%.c | ${OBJ_DIR}
+${OBJ_DIR}/%.o:${SRC_DIR}/%.c ${TMP_INC_FILES} | ${OBJ_DIR}
 	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -c $< -o $@ 
 
-${BONUS_DIR}/%.o:${BONUS_DIR}/%.c | ${OBJ_DIR}
+${BONUS_DIR}/%.o:${BONUS_DIR}/%.c ${TMP_INC_FILES} | ${OBJ_DIR}
 	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -c $< -o $@
 
 ${OBJ_DIR}:

@@ -70,6 +70,7 @@ typedef enum e_direction_elements
 
 # define RAY_HIT_N_OR_S 0
 # define RAY_HIT_E_OR_W 1
+
 # define MAP_ALLOWED_CHARS "01NSEW \n"
 # define MAP_EMPTY_SPACE '0'
 # define MAP_WALL '1'
