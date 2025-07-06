@@ -93,7 +93,7 @@ static char	*get_texture_path(char *buffer)
 	len = i;
 	while (buffer[len] && !is_blank(buffer[len] && buffer[len] != '\n'))
 		len++;
-	if (buffer[len] == '\0' || len < 2)
+	if (buffer[i] == '\0')
 		return (NULL);
 	result = ft_strndup(buffer + i, len - i - 1);
 	if (!result)
