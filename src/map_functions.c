@@ -14,10 +14,10 @@
 
 char	map_get(t_gdata *gd, int x, int y)
 {
-	return (gd->map[x][y]);
+	return (gd->map[y][x]);
 }
 
 void	map_set(t_gdata *gd, int x, int y, char c)
 {
-	gd->map[x][y] = c;
+	gd->map[y][x] = c;
 }

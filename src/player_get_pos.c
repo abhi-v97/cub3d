@@ -19,20 +19,19 @@ t_pos	player_get_pos_from_map(t_gdata *gdata)
 {
 	char	**map;
 	char	c;
-	int		i;
-	int		j;
+	int		row;
+	int		col;
 
 	map = gdata->map;
-	i = -1;
-	while (++i < gdata->map_width)
+	row = -1;
+	while (++row < gdata->map_height)
 	{
-		j = 0;
-		c = map[i][j];
-		while (c)
+		col = -1;
+		while (++col < gdata->map_width)
 		{
-			if (ft_strchr("NSEW", c))
-				return (pos_set_to(0.5 + i, 0.5 + j));
-			c = map[i][++j];
+			c = map[row][col];
+			if (c != '\0' && ft_strchr("NSEW", c))
+				return (pos_set_to(0.5 + col, 0.5 + row));
 		}
 	}
 	return (pos_init_to_invalid_pos());
@@ -60,20 +59,21 @@ t_pos	pos_set_to(double x, double y)
 // if the player is adjacent to a space, it has to be out of bounds
 int	player_outside_map(t_gdata *data, t_pos pos)
 {
-	int		i;
-	int		j;
+	int		row;
+	int		col;
 
-	i = (int)pos.x;
-	j = (int)pos.y;
-	if (!data->map && i > data->map_width && j > data->map_height && !data->map[i][j])
+	col = (int)pos.x;
+	row = (int)pos.y;
+	if (!data->map || row >= data->map_height
+		|| col >= data->map_width || !data->map[row][col])
 		return (1);
-	if (j > 0 && data->map[i][j - 1] == ' ')
+	if (col > 0 && data->map[row][col - 1] == ' ')
 		return (1);
-	if (i > 0 && data->map[i - 1][j] == ' ')
+	if (col > 0 && data->map[row - 1][col] == ' ')
 		return (1);
-	if (data->map[i + 1] && data->map[i + 1][j] == ' ')
+	if (data->map[row + 1] && data->map[row + 1][col] == ' ')
 		return (1);
-	if (data->map[i][j + 1] && data->map[i][j + 1] == ' ')
+	if (data->map[row][col + 1] && data->map[row][col + 1] == ' ')
 		return (1);
 	return (0);
 }
