@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/06 12:58:55 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/06 13:12:18 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@
 
 # define EMLXINIT 600
 # define EMLXWINCREATE 601
-
 
 # define KEY_COUNT 7
 # define KEY_UP 0
@@ -191,7 +190,7 @@ int		check_arg(t_gdata *gd, char *file_name);
 // parsing/parse_file.c
 int		parse_file_has_error(t_gdata *gdata, char *file_name);
 
-// parsing/check_map.c
+// parsing/check_map_error.c
 int		check_map_error(t_gdata *data);
 
 // parsing/check_map_bounds_missing.c

@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:14:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/02 15:19:49 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/06 13:10:40 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	handle_key_presses(t_gdata *gd)
 	double		rot_speed;
 
 	move_speed = gd->frame_time * 5.0 * 8;
-	rot_speed = gd->frame_time * 3.0 * 4;
+	rot_speed = gd->frame_time * 3.0 * 8;
 	if (gd->keys[KEY_UP])
 		move_player(gd, gd->dir.x, gd->dir.y, move_speed);
 	if (gd->keys[KEY_DOWN])
