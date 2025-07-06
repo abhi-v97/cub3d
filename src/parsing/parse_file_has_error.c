@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/06 12:43:47 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/06 13:02:44 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	parse_file_has_error(t_gdata *gd, char *file_name)
 		return (gd->exit_status = EINVMAPHEIGHT);
 	gd->map = (char **) ft_calloc(sizeof(char *), gd->map_height + 1);
 	if (!gd->map)
-		return (perror("Error: Cub3d"), gd->exit_status = ENOMEM);
+		return (perror("Error: Cub3D"), gd->exit_status = ENOMEM);
 	gd->file_fd = open(file_name, O_RDONLY);
 	if (gd->file_fd < 0)
 		return (ft_error(strerror(errno)),

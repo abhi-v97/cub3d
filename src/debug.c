@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:19:50 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/06 12:15:40 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/06 12:59:18 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	debug_show_vars_after_init(t_gdata *gd)
 {
 	printf("Player X = %f, Y = %f\n",
 		gd->player.pos.x, gd->player.pos.y);
-	printf("mouse x = %i, y = %i\n",
-		gd->mpos_at_start.x, gd->mpos_at_start.y);
 }
 
 // debug function

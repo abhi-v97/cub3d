@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/06 12:46:19 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/06 12:58:55 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,26 +148,24 @@ typedef struct s_ray
 typedef struct s_gdata
 {
 	void		*mlx;
-	char		**map;
+	void		*win;
+	t_canvas	canvas;
 	int			file_fd;
-	int			player_direction;
+	char		**map;
 	int			map_height;
 	int			map_width;
-	void		*win;
-	int			keys[KEY_COUNT];
-	int			mbutt[M_BUTT_COUNT];
-	t_ipos		mpos_at_start;
 	int			tex_size;
 	int			**textures;
 	int			*tex_rgb;
+	t_player	player;
+	int			player_direction;
+	int			keys[KEY_COUNT];
 	t_ipos		win_center;
 	t_pos		dir;
 	t_pos		plane;
 	double		time;
 	double		old_time;
 	double		frame_time;
-	t_canvas	canvas;
-	t_player	player;
 	int			exit_status;
 }	t_gdata;
 
