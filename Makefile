@@ -26,7 +26,7 @@ OBJS = ${SRC:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
 BONUS =
 BONUS_OBJS = ${BONUS:${BONUS_DIR}/%.c=${OBJ_DIR}/%.o}
 
-CC = gcc -g
+CC = gcc -g -O0
 RM = rm -rf
 
 CFLAGS = -Wall -Wextra -Werror -O0

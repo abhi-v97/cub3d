@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/05 19:18:56 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/06 12:46:19 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,25 @@
 # ifndef W_HEIGHT
 #  define W_HEIGHT 600
 # endif
+
+# define EFILEISDIR	500
+# define EFAILOPENFILE 501
+# define EBADFILEEXT 502
+# define EINVALARGCOUNT 502
+
+# define EINVMAPHEIGHT 530
+# define EMAPHBORDERERR 531
+# define EMAPVBORDERERR 532
+# define EMAPEMPTY 533
+# define EMAPINVCHAR 533
+# define EMAPTOOMANYPLAYERS 534
+# define EMAPNOPLAYERS 535
+# define EMAPPLAYEROUTOFBOUNDS 536
+# define EMAPWALLMISSING 537
+
+# define EMLXINIT 600
+# define EMLXWINCREATE 601
+
 
 # define KEY_COUNT 7
 # define KEY_UP 0
@@ -149,6 +168,7 @@ typedef struct s_gdata
 	double		frame_time;
 	t_canvas	canvas;
 	t_player	player;
+	int			exit_status;
 }	t_gdata;
 
 // libft funcs
@@ -168,22 +188,24 @@ char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
 
 // parsing/check_arg.c
-int		check_arg(char *file);
+int		check_arg(t_gdata *gd, char *file_name);
 
 // parsing/parse_file.c
-int		parse_file(t_gdata *gdata, char *file);
+int		parse_file_has_error(t_gdata *gdata, char *file_name);
 
 // parsing/check_map.c
-int		check_map(t_gdata *data);
+int		check_map_error(t_gdata *data);
 
-// parsing/check_bounds.c
-int		check_map_bounds(t_gdata *data, char **map, int map_height);
+// parsing/check_map_bounds_missing.c
+int		check_map_bounds_missing(t_gdata *gd, char **map, int map_height);
 
 // parsing/parse_textures.c
 int		parse_texture_data(t_gdata *data, char *buffer);
 
 // parsing/set_textures.c
 int		set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
+
+int		check_error_in_args_map_or_init(t_gdata *gd, int argc, char **argv);
 
 // error.c
 void	ft_error(char *msg);
@@ -194,7 +216,7 @@ void	close_fd(int *fd);
 int		is_num(char c);
 
 // init.c
-int		init_gdata(t_gdata *gdata);
+int		init_gdata_has_error(t_gdata *gdata);
 
 // cleanup.c
 void    cleanup(t_gdata *gdata);
