@@ -32,7 +32,6 @@ int	check_map_error(t_gdata *gd)
 		return (gd->exit_status);
 	if (check_map_bounds_missing(gd, gd->map, gd->map_height))
 		return (gd->exit_status);
-	printf("Map borders OKAY\n"); //debug
 	return (gd->exit_status = EXIT_SUCCESS);
 }
 
@@ -81,8 +80,11 @@ static bool	check_vertical_border_missing(char **map, int map_height)
 
 // checks if map has any invalid characters
 // allowed chars: 01NSWE and ' ' (empty space)
-//
-// AND sets gd->player_direction to 'N', 'S', 'E' or 'W'
+// else if (ft_strchr("NSWE", map[row][col]) && !gd->player_direction)
+// 	gd->player_direction = map[row][col];
+// else if (ft_strchr("NSWE", map[row][col]) && gd->player_direction)
+// 	return (ft_error("Too many players"),
+// 		gd->exit_status = EMAPTOOMANYPLAYERS);
 static int	check_invalid_char(t_gdata *gd, char **map, int map_height)
 {
 	int		row;
@@ -101,11 +103,6 @@ static int	check_invalid_char(t_gdata *gd, char **map, int map_height)
 			else if (!ft_strchr("01NSWE", map[row][col]))
 				return (ft_error("Invalid character found"),
 					gd->exit_status = EMAPINVCHAR);
-			// else if (ft_strchr("NSWE", map[row][col]) && !gd->player_direction)
-			// 	gd->player_direction = map[row][col];
-			// else if (ft_strchr("NSWE", map[row][col]) && gd->player_direction)
-			// 	return (ft_error("Too many players"),
-			// 		gd->exit_status = EMAPTOOMANYPLAYERS);
 			col++;
 		}
 		row++;
@@ -115,11 +112,12 @@ static int	check_invalid_char(t_gdata *gd, char **map, int map_height)
 
 static bool	check_only_one_player(t_gdata *gd, char **map)
 {
-	bool	player_found = false;
+	bool	player_found;
 	int		row;
 	int		col;
 
 	row = -1;
+	player_found = false;
 	while (++row < gd->map_height)
 	{
 		col = -1;

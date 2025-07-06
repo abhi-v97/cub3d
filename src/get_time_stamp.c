@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
-int	get_time_stamp()
+int	get_time_stamp(void)
 {
 	static struct timeval	tv;
 

@@ -155,26 +155,15 @@ int	line_height(t_gdata *gd, t_ray *ray)
 	return (line_height);
 }
 
-//calculate lowest pixel to fill in current stripe
-int	calc_line_start_y(int line_height)
+// calculates draw_start and draw_end distances for each ray, which is then passed onto the paint_walls function
+void	calc_draw_distance(t_ray *ray)
 {
-	int draw_start;
-
-	draw_start = -line_height / 2 + W_HEIGHT / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	return (draw_start);
-}
-
-//calculate highest pixel to fill in current stripe
-int	calc_line_end_y(int line_height)
-{
-	int	draw_end;
-
-	draw_end = line_height / 2 + W_HEIGHT / 2;
-	if (draw_end >= W_HEIGHT)
-		draw_end = W_HEIGHT - 1;
-	return (draw_end);
+	ray->draw_start = -ray->line_height / 2 + W_HEIGHT / 2;
+	if (ray->draw_start < 0)
+		ray->draw_start = 0;
+	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2;
+	if (ray->draw_end >= W_HEIGHT)
+		ray->draw_end = W_HEIGHT - 1;
 }
 
 //	update gd->frame_time
@@ -235,10 +224,10 @@ int	rendering_function(void *param)
 			// if (ray.side_hit == RAY_HIT_E_OR_W)
 				// color = color / 2;
 			ray.line_height = line_height(gd, &ray);
+			calc_draw_distance(&ray);
 			// put_ver_line(&gd->canvas, x, 
 				// calc_line_start_y(l_height), calc_line_end_y(l_height), color);
-			texture_func(gd, ray, x, calc_line_start_y(ray.line_height),
-					calc_line_end_y(ray.line_height));
+			paint_walls(gd, ray, x);
 		}
 	}
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);	
