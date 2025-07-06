@@ -155,7 +155,8 @@ int	line_height(t_gdata *gd, t_ray *ray)
 	return (line_height);
 }
 
-// calculates draw_start and draw_end distances for each ray, which is then passed onto the paint_walls function
+// calculates draw_start and draw_end distances for each ray, which is then
+// passed onto the paint_walls function
 void	calc_draw_distance(t_ray *ray)
 {
 	ray->draw_start = -ray->line_height / 2 + W_HEIGHT / 2;
@@ -164,43 +165,6 @@ void	calc_draw_distance(t_ray *ray)
 	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2;
 	if (ray->draw_end >= W_HEIGHT)
 		ray->draw_end = W_HEIGHT - 1;
-}
-
-//	update gd->frame_time
-//		timing for input and FPS counter
-//		frameTime is the time this frame has taken to generate (in seconds)
-void	update_frame_time(t_gdata *gd)
-{
-	static char		temp[10];
-	int				fps;
-	static int		fps_time;
-	int				i;
-	int				int_temp;
-
-	i = 0;
-	gd->old_time = gd->time;
-	gd->time = get_time_stamp();
-	gd->frame_time = (gd->time - gd->old_time) / 10000000.0;
-	if (fps_time == 0)
-		fps_time = gd->old_time;
-	if ((gd->time - fps_time) > 1000000)
-	{
-		fps = (1 / gd->frame_time);
-		int_temp = fps;
-		while (int_temp)
-		{
-			int_temp /= 10;
-			i++;
-		}
-		temp[i--] = '\0';
-		while (fps)
-		{
-			temp[i--] = (fps % 10) + '0';
-			fps /= 10;
-		}
-		fps_time = gd->time;
-	}
-	mlx_string_put(gd->mlx, gd->win, 10, 10, 0xFF00, temp);
 }
 
 int	rendering_function(void *param)
