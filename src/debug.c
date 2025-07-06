@@ -6,14 +6,14 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:19:50 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/05 19:13:09 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/06 12:59:18 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // prints map info from t_gdata struct
-void	print_map_info(t_gdata *data)
+void	debug_print_map_info(t_gdata *data)
 {
 	int		i;
 
@@ -25,10 +25,16 @@ void	print_map_info(t_gdata *data)
 		printf("\t*%s*\n", data->map[i++]);
 }
 
+void	debug_show_vars_after_init(t_gdata *gd)
+{
+	printf("Player X = %f, Y = %f\n",
+		gd->player.pos.x, gd->player.pos.y);
+}
+
 // debug function
 // used to test if all four textures are appearing on screen correctly
 // offset is the x offset to prevent image overlap
-void	test_textures(t_gdata *data, int *texture, int offset)
+void	debug_test_textures(t_gdata *data, int *texture, int offset)
 {
 	int		*pixel_address;
 	int		i;

@@ -39,7 +39,7 @@ CFLAGS = -Wall -Wextra -Werror -O0
 all: ${NAME}
 
 ${NAME}: ${LIBFT} ${LIBMLX} ${OBJS} ${TMP_INC_FILES}
-	${CC} ${OBJS} -o $@ -I${INC_DIR} -L${LIBFT_DIR} -lft -L${LIBMLX_DIR} -lmlx -lXext -lX11 -lm 
+	${CC} ${CFLAGS} ${OBJS} -o $@ -I${INC_DIR} -L${LIBFT_DIR} -lft -L${LIBMLX_DIR} -lmlx -lXext -lX11 -lm 
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c ${TMP_INC_FILES} | ${OBJ_DIR}
 	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -c $< -o $@ 
@@ -61,19 +61,18 @@ ${LIBFT_DIR}:
 ${LIBMLX}: | ${LIBMLX_DIR}
 	git submodule update --init ${LIBMLX_DIR}
 	make -C ${LIBMLX_DIR}
-#	cd minilibx-linux && ./configure
 
 ${LIBMLX_DIR}:
 	mkdir -p $@
 
 #bonus: ${LIBFT} ${BONUS_OBJS}
-#	${CC} ${BONUS_OBJS} -o fractol -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
+#	${CC} ${CFLAGS} ${BONUS_OBJS} -o fractol -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
 
 run:
 	./${NAME} map.cub
 
 v valgrind: ${NAME}
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "maps/good/map.cub"
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "map.cub"
 
 clean:
 	${RM} ${OBJ_DIR}
