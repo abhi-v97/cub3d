@@ -22,7 +22,7 @@ void	print_map_info(t_gdata *data)
 	printf("\nMap:\n");
 	i = 0;
 	while (data->map[i])
-		printf("\t%s\n", data->map[i++]);
+		printf("\t*%s*\n", data->map[i++]);
 }
 
 // debug function
