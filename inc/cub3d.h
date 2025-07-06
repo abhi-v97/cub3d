@@ -77,7 +77,7 @@
 
 typedef enum e_cardinal
 {
-	NORTH = 0,
+	NORTH,
 	SOUTH,
 	EAST,
 	WEST,
@@ -92,6 +92,14 @@ typedef enum e_direction_elements
 	PLANEX,
 	PLANEY
 }	t_direction_elements;
+
+typedef struct s_texinfo
+{
+	double	wall_x;
+	double	tex_pos;
+	double	step;
+	int		dir;
+}	t_texinfo;
 
 /*
  *	bpp - bit per pixel
@@ -254,7 +262,7 @@ int		rendering_function(void *param);
 void	player_set_direction(t_gdata *gd);
 
 // render/tex_colour.c
-void	paint_walls(t_gdata *data, t_ray ray, int x);
+void	draw_wall(t_gdata *data, t_ray ray, int x);
 
 bool	mouse_moving_left(t_gdata *gd);
 bool	mouse_moving_right(t_gdata *gd);

@@ -227,7 +227,7 @@ int	rendering_function(void *param)
 			calc_draw_distance(&ray);
 			// put_ver_line(&gd->canvas, x, 
 				// calc_line_start_y(l_height), calc_line_end_y(l_height), color);
-			paint_walls(gd, ray, x);
+			draw_wall(gd, ray, x);
 		}
 	}
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);	
