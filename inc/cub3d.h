@@ -201,6 +201,9 @@ int		check_arg(t_gdata *gd, char *file_name);
 // parsing/parse_file.c
 int		parse_file_has_error(t_gdata *gdata, char *file_name);
 
+// parsing/map_fill.c
+int		map_fill(t_gdata *gd, char **map, int fd);
+
 // parsing/check_map_error.c
 int		check_map_error(t_gdata *data);
 
@@ -227,7 +230,7 @@ int		is_num(char c);
 int		init_gdata_has_error(t_gdata *gdata);
 
 // cleanup.c
-void    cleanup(t_gdata *gdata);
+void	cleanup(t_gdata *gdata);
 void	free_array(char **array);
 
 // put_pixel.c
@@ -249,9 +252,6 @@ int		key_press(int key, t_gdata *gdata);
 int		key_release(int key, t_gdata *gdata);
 void	handle_key_presses(t_gdata *data);
 
-// render/texture.c
-void	load_textures(t_gdata *data); //TO-DO: check for this, as there is no such file?
-
 // debug.c
 void	print_map_info(t_gdata *data);
 void	test_textures(t_gdata *data, int *texture, int offset);
@@ -261,14 +261,14 @@ void	debug_print(t_gdata *data);
 int		rendering_function(void *param);
 void	player_set_direction(t_gdata *gd);
 
-// render/tex_colour.c
+// render/draw_wall.c
 void	draw_wall(t_gdata *data, t_ray ray, int x);
 
 bool	mouse_moving_left(t_gdata *gd);
 bool	mouse_moving_right(t_gdata *gd);
 int		mouse_click_handler(int mbutt, int x, int y, void *gdata_ptr);
 
-int		get_time_stamp();
+int		get_time_stamp(void);
 
 // map_functions.c
 char	map_get(t_gdata *gd, int x, int y);

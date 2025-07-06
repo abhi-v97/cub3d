@@ -35,3 +35,10 @@ int	is_num(char c)
 		return (1);
 	return (0);
 }
+
+// use this function to handle return codes
+int	exit_status(t_gdata *data, int exit_code)
+{
+	data->exit_status = exit_code;
+	return (exit_code);
+}

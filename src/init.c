@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static int	init_graphics_has_error(t_gdata *gd);
+static int	init_mlx_has_error(t_gdata *gd);
 
 int	init_gdata_has_error(t_gdata *gd)
 {
@@ -33,12 +33,13 @@ int	init_gdata_has_error(t_gdata *gd)
 	gd->win_center.y = W_HEIGHT / 2;
 	gd->time = 0;
 	gd->old_time = 0;
-	if (init_graphics_has_error(gd))
+	gd->file_fd = -1;
+	if (init_mlx_has_error(gd))
 		return (free(gd->textures), free(gd->tex_rgb), gd->exit_status);
 	return (gd->exit_status = EXIT_SUCCESS);
 }
 
-static int	init_graphics_has_error(t_gdata *gd)
+static int	init_mlx_has_error(t_gdata *gd)
 {
 	gd->mlx = mlx_init();
 	if (!gd->mlx)
