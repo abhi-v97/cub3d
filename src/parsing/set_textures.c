@@ -47,7 +47,7 @@ static int	*parse_xpm(t_gdata *data, char *path)
 	img.img = mlx_xpm_file_to_image(data->mlx,
 			path, &data->tex_size, &data->tex_size);
 	if (img.img == NULL)
-		return (ft_error("missing texture"), NULL);
+		return (ft_error("failed to init mlx image"), NULL);
 	img.addr = (int *)mlx_get_data_addr(img.img,
 			&img.bpp, &img.ll, &img.endian);
 	array = ft_calloc(sizeof(int), data->tex_size * data->tex_size);
@@ -93,6 +93,8 @@ static char	*get_texture_path(char *buffer)
 	len = i;
 	while (buffer[len] && !is_blank(buffer[len] && buffer[len] != '\n'))
 		len++;
+	if (buffer[len] == '\0' || len < 2)
+		return (NULL);
 	result = ft_strndup(buffer + i, len - i - 1);
 	if (!result)
 		return (NULL);

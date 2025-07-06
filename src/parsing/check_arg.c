@@ -26,10 +26,10 @@ int	check_arg(t_gdata *gd, char *file_name)
 		return (gd->exit_status = EFILEISDIR);
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
-		return (close_fd(&fd),
-			ft_error("Failed to open file"), gd->exit_status = EFAILOPENFILE);
+		return (ft_error("Failed to open file"),
+			gd->exit_status = EFAILOPENFILE);
 	if (check_ext_not_dot_cub(file_name))
-		return (close_fd(&fd),
+		return (close(fd),
 			ft_error("Wrong extension"), gd->exit_status = EBADFILEEXT);
 	return (close(fd), gd->exit_status = EXIT_SUCCESS);
 }

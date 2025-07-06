@@ -12,6 +12,8 @@
 
 #include "cub3d.h"
 
+// is player_outside_map unneccessary? I was not able to make a map that 
+// triggers that line of code, a previous error check flags it first
 int	check_error_in_args_map_or_init(t_gdata *gd, int argc, char **argv)
 {
 	if (argc < 2)
@@ -25,9 +27,9 @@ int	check_error_in_args_map_or_init(t_gdata *gd, int argc, char **argv)
 	if (init_gdata_has_error(gd))
 		return (gd->exit_status);
 	if (parse_file_has_error(gd, argv[1]))
-		return (cleanup(gd), gd->exit_status);
+		return (cleanup(gd), gd->exit_status = 1);
 	if (check_map_error(gd))
-		return (cleanup(gd), gd->exit_status);
+		return (cleanup(gd), gd->exit_status = 1);
 	gd->player.pos = player_get_pos_from_map(gd);
 	player_set_direction(gd);
 	if (gd->player.pos.x > 0 && gd->player.pos.y > 0

@@ -29,7 +29,7 @@ int	check_map_error(t_gdata *gd)
 	if (check_invalid_char(gd, gd->map, gd->map_height))
 		return (gd->exit_status);
 	if (!check_only_one_player(gd, gd->map))
-		return (gd->exit_status);
+		return (ft_error("singleplayer only!"), gd->exit_status);
 	if (check_map_bounds_missing(gd, gd->map, gd->map_height))
 		return (gd->exit_status);
 	return (gd->exit_status = EXIT_SUCCESS);
