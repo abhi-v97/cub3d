@@ -1,0 +1,25 @@
+ NO textures/wolfenstein/eagle.xpm
+ SO textures/wolfenstein/bluestone.xpm
+ WE textures/wolfenstein/purplestone.xpm
+ EA textures/wolfenstein/wood.xpm
+ 
+ F 220,100,0
+ C 225,30,0
+
+      11111111    
+      10000001
+      10000001
+      10000001
+      10000001111
+      10000000001
+      10000001111
+ 11   10000001
+1001  10000001
+10001110000001
+10000000000001
+ 1111110000001
+      10000001
+      10000001
+      10000001
+      100000S1
+      11111111

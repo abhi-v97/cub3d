@@ -18,6 +18,8 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (printf("need a map!\n"), 1);
+	if (argc > 2)
+		return (printf("Too many parapeters!\n"), 1);
 	if (check_arg(argv[1]))
 		exit(1);
 	printf("This is the amazing cub3D!\n");
