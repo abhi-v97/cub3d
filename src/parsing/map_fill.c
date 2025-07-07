@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_fill.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-06 16:19:27 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-06 16:19:27 by abhi             ###   ########.fr       */
+/*   Created: 2025/07/06 16:19:27 by abhi              #+#    #+#             */
+/*   Updated: 2025/07/07 23:39:36 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 	gd->map_height = row;
 	if (missing_textures(gd))
 		return (free(buffer), 1);
-	return (gd->exit_status = EXIT_SUCCESS);
+	return (exit_status(gd, EXIT_SUCCESS));
 }
 
 // normalises each map line to have the same width
@@ -60,14 +60,14 @@ static int	copy_buffer_error(t_gdata *gd, char *buf, char **map, int row)
 
 	map[row] = (char *) malloc(sizeof(char *) * (gd->map_width + 1));
 	if (!map[row])
-		return (gd->exit_status = ENOMEM);
+		return (exit_status(gd, ENOMEM));
 	ft_memset(map[row], ' ', gd->map_width);
 	ft_memcpy(map[row], buf, ft_strlen(buf));
 	map[row][gd->map_width] = '\0';
 	nl_char = ft_strchr(map[row], '\n');
 	if (nl_char)
 		*nl_char = ' ';
-	return (EXIT_SUCCESS);
+	return (exit_status(gd, EXIT_SUCCESS));
 }
 
 // checks if each cardinal direction has a value in gd->textures or
@@ -83,8 +83,8 @@ static int	missing_textures(t_gdata *gd)
 	{
 		if (!gd->textures[dir] && !gd->tex_rgb[dir])
 			return (ft_error("Missing texture!"),
-				gd->exit_status = EMISSINGTEXTURE);
+				exit_status(gd, EMISSINGTEXTURE));
 		dir++;
 	}
-	return (EXIT_SUCCESS);
+	return (exit_status(gd, EXIT_SUCCESS));
 }
