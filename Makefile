@@ -72,7 +72,7 @@ run:
 	./${NAME} map.cub
 
 v valgrind: ${NAME}
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "test.cub"
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "maps/bad/long_invalid_line_inbetween_map.cub"
 
 clean:
 	${RM} ${OBJ_DIR}

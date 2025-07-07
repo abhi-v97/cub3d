@@ -14,7 +14,7 @@
 
 static int		line_count(t_gdata *data, char *file);
 
-static bool		buffer_has_map_data(char *buffer, size_t buffer_len);
+static bool		buffer_has_map_data(char *buffer);
 static void		update_width(t_gdata *gd, char *buffer);
 
 // grabs map data from file into char ** array gd->map
@@ -52,7 +52,7 @@ static int	line_count(t_gdata *gd, char *file)
 		buffer = get_next_line(fd);
 		while (buffer)
 		{
-			if (buffer_has_map_data(buffer, ft_strlen(buffer)))
+			if (buffer_has_map_data(buffer))
 			{
 				update_width(gd, buffer);
 				map_row_count++;
@@ -82,24 +82,20 @@ static void	update_width(t_gdata *gd, char *buffer)
 
 // checks if map is a valid map line, used for the size of gd->map
 // ***
-// does not check the entire buffer, because what if there's a really long
-// invalid line inbetween valid map files? it will skip over it, yet map_fill
-// will still attempt to memcopy it...
-// it will cause a malloc: corrupted top size error, a heap overflow
-// safer to copy that line into the map, then let check_invalid_char detect the
-// bad characters and abort
-// ***
-static bool	buffer_has_map_data(char *buffer, size_t buffer_len)
+// LOGIC: skip over blank space characters. If the next character is a 0 or 1
+// (could just check for 1), it is considered a valid map file
+// if its a texture line, first char after skipping space will be N or S etc
+static bool	buffer_has_map_data(char *buffer)
 {
 	size_t	i;
 
 	if (!buffer)
 		return (0);
 	i = 0;
-	while (i < buffer_len)
-	{
-		if (ft_strchr(MAP_ALLOWED_CHARS, buffer[i++]))
-			return (true);
-	}
-	return (false);
+	while (buffer[i] && buffer[i] == ' ')
+		i++;
+	if (buffer[i] && ft_strchr("01", buffer[i]))
+		return (true);
+	else
+		return (false);
 }
