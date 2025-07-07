@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/06 13:28:11 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/07 22:58:05 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,33 @@
 # include "mlx.h"
 
 # ifndef W_WIDTH
-#  define W_WIDTH 800
+#  define W_WIDTH 1400
 # endif
 
 # ifndef W_HEIGHT
 #  define W_HEIGHT 600
 # endif
 
-# define EFILEISDIR	500
-# define EFAILOPENFILE 501
-# define EBADFILEEXT 502
-# define EINVALARGCOUNT 502
+# define WALL_MAX_CLOSENESS 0.05
 
-# define EINVMAPHEIGHT 530
-# define EMAPHBORDERERR 531
-# define EMAPVBORDERERR 532
-# define EMAPEMPTY 533
-# define EMAPINVCHAR 533
-# define EMAPTOOMANYPLAYERS 534
-# define EMAPNOPLAYERS 535
-# define EMAPPLAYEROUTOFBOUNDS 536
-# define EMAPWALLMISSING 537
-# define EMISSINGTEXTURE 540
+# define EMLXINIT 5
+# define EMLXWINCREATE 6
 
-# define EMLXINIT 600
-# define EMLXWINCREATE 601
+# define EFILEISDIR	10
+# define EFAILOPENFILE 11
+# define EBADFILEEXT 12
+# define EINVALARGCOUNT 13
+
+# define EINVMAPHEIGHT 20
+# define EMAPHBORDERERR 21
+# define EMAPVBORDERERR 22
+# define EMAPEMPTY 23
+# define EMAPINVCHAR 24
+# define EMAPTOOMANYPLAYERS 25
+# define EMAPNOPLAYERS 26
+# define EMAPPLAYEROUTOFBOUNDS 27
+# define EMAPWALLMISSING 28
+# define EMISSINGTEXTURE 29
 
 # define KEY_COUNT 7
 # define KEY_UP 0
@@ -261,12 +263,20 @@ void	debug_print(t_gdata *data);
 int		rendering_function(void *param);
 void	player_set_direction(t_gdata *gd);
 
-// render/draw_wall.c
+// render/...
+int		rendering_function(void *param);
 void	draw_wall(t_gdata *data, t_ray ray, int x);
-
-bool	mouse_moving_left(t_gdata *gd);
-bool	mouse_moving_right(t_gdata *gd);
-int		mouse_click_handler(int mbutt, int x, int y, void *gdata_ptr);
+void	player_set_direction(t_gdata *gd);
+int		line_height(t_gdata *gd, t_ray *ray);
+void	calc_draw_distance(t_ray *ray);
+int		ray_hits_map(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
+void	draw_wall_plain(t_gdata *gd, t_ray *ray, int x, int color);
+void	ray_calc_step_x_and_side_dist_x(t_gdata *gd, t_ray *ray, int map_pos_x);
+void	ray_calc_step_y_and_side_dist_y(t_gdata *gd, t_ray *ray, int map_pos_y);
+t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos);
+void	render_background(t_gdata *gd);
+void	draw_ceiling(t_canvas *canvas, int color);
+void	draw_floor(t_canvas *canvas, int color);
 
 int		get_time_stamp(void);
 
@@ -276,5 +286,7 @@ void	map_set(t_gdata *gd, int x, int y, char c);
 
 // fps.c
 void	update_frame_time(t_gdata *gd);
+
+t_ipos	pos_dtoi(t_pos dpos);
 
 #endif
