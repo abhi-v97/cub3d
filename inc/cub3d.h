@@ -291,5 +291,6 @@ void	update_frame_time(t_gdata *gd);
 
 // BONUS render/minimap.c
 int	**minimap_colours(t_gdata *gd);
+void	render_minimap(t_gdata *gd);
 
 #endif

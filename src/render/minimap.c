@@ -49,7 +49,27 @@ int	**minimap_colours(t_gdata *gd)
 	return (array);
 }
 
-void	draw_block(t_gdata *gd, t_minimap minimap)
+// 400: minimap size squared, 20 * 20
+// change to a macro or precalculate it to save performance
+// function that draws one square block on the minimap, where one square block
+// corresponds to one char on map file
+void	draw_block(t_gdata *gd, t_minimap minimap, int x_offset, int y_offset, int ii, int j)
 {
-	
+	int		i;
+	int		x;
+	int		y;
+
+	i = 0;
+	while (i < 400)
+	{
+		x = i % 20;
+		y = i / 20;
+		put_pixel(&gd->canvas, x + x_offset, y + y_offset, minimap.colour_array[ii][j]);
+		i++;
+	}
+}
+
+void	render_minimap(t_gdata *gd)
+{
+	draw_block(gd, gd->minimap, 0, 20, 1, 1);
 }
