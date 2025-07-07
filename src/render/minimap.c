@@ -84,6 +84,18 @@ int	fetch_colour(t_gdata *gd, int x, int y)
 	return (colour);
 }
 
+
+int	get_colour(t_canvas *canvas, int x, int y)
+{
+	char	*dst;
+	int		orig_colour;
+
+	dst = (char *)canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
+	orig_colour = *(unsigned int *)dst;
+	return (orig_colour);
+}
+
+
 void	render_minimap(t_gdata *gd)
 {
 	int		x;
@@ -95,6 +107,7 @@ void	render_minimap(t_gdata *gd)
 	{
 		while (y < 5)
 		{
+			get_colour(&gd->canvas, x * 20, y * 20);
 			draw_block(gd, x * 20, y * 20, fetch_colour(gd, x, y));
 			y++;
 		}
