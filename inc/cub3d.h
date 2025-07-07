@@ -177,7 +177,17 @@ typedef struct s_gdata
 	double		old_time;
 	double		frame_time;
 	int			exit_status;
+	t_minimap	minimap;
 }	t_gdata;
+
+typedef struct s_minimap
+{
+	int		height;
+	int		width;
+	char	**colour_array;
+}	t_minimap;
+
+
 
 // libft funcs
 size_t	ft_strlen(const char *s);
