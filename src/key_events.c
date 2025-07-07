@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:14:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/06 13:10:40 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/07 22:55:31 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ static void	move_player(t_gdata *gd, double dx, double dy, double move_speed)
 
 	if (dx != 0)
 	{
-		x = (int)(gd->player.pos.x + dx * move_speed);
+		if (dx > 0)
+			x = (int)(gd->player.pos.x + dx * move_speed + WALL_MAX_CLOSENESS);
+		else
+			x = (int)(gd->player.pos.x + dx * move_speed - WALL_MAX_CLOSENESS);
 		y = (int)(gd->player.pos.y);
 		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.x += dx * move_speed;
@@ -94,7 +97,10 @@ static void	move_player(t_gdata *gd, double dx, double dy, double move_speed)
 	if (dy != 0)
 	{
 		x = (int)(gd->player.pos.x);
-		y = (int)(gd->player.pos.y + dy * move_speed);
+		if (dy > 0)
+			y = (int)(gd->player.pos.y + dy * move_speed + WALL_MAX_CLOSENESS);
+		else
+			y = (int)(gd->player.pos.y + dy * move_speed - WALL_MAX_CLOSENESS);
 		if (map_get(gd, x, y) != MAP_WALL)
 			gd->player.pos.y += dy * move_speed;
 	}
