@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/07 22:58:05 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/07 23:45:50 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 # include "mlx.h"
 
 # ifndef W_WIDTH
-#  define W_WIDTH 1400
+#  define W_WIDTH 1024
 # endif
 
 # ifndef W_HEIGHT
-#  define W_HEIGHT 600
+#  define W_HEIGHT 768
 # endif
 
 # define WALL_MAX_CLOSENESS 0.05
@@ -53,6 +53,8 @@
 # define EMAPPLAYEROUTOFBOUNDS 27
 # define EMAPWALLMISSING 28
 # define EMISSINGTEXTURE 29
+# define EMAPTEXINVALIDFILENAME 30
+# define EMAPTEXERROR 31
 
 # define KEY_COUNT 7
 # define KEY_UP 0
@@ -227,6 +229,7 @@ void	ft_error(char *msg);
 int		is_blank(char c);
 void	close_fd(int *fd);
 int		is_num(char c);
+int		exit_status(t_gdata *data, int exit_code);
 
 // init.c
 int		init_gdata_has_error(t_gdata *gdata);

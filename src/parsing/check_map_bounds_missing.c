@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:29:36 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/06 11:38:11 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/07 23:44:41 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	check_map_bounds_missing(t_gdata *gd, char **map, int map_height)
 		{
 			if (map[row][col] == ' ' && check_missing_wall(gd, map, row, col))
 				return (ft_error("Missing wall"),
-					gd->exit_status = EMAPWALLMISSING);
+					exit_status(gd, EMAPWALLMISSING));
 			col++;
 		}
 		row++;
 	}
-	return (gd->exit_status = EXIT_SUCCESS);
+	return (exit_status(gd, EXIT_SUCCESS));
 }
 
 // checks if each empty space is surrounded by a 1 or another empty space
