@@ -149,6 +149,16 @@ typedef struct s_ray
 	t_pos	step;
 }	t_ray;
 
+
+typedef struct s_minimap
+{
+	int		height;
+	int		width;
+	int	**colour_array;
+}	t_minimap;
+
+
+
 /*
  *	gdata - Game data
  *
@@ -179,14 +189,6 @@ typedef struct s_gdata
 	int			exit_status;
 	t_minimap	minimap;
 }	t_gdata;
-
-typedef struct s_minimap
-{
-	int		height;
-	int		width;
-	char	**colour_array;
-}	t_minimap;
-
 
 
 // libft funcs
@@ -286,5 +288,8 @@ void	map_set(t_gdata *gd, int x, int y, char c);
 
 // fps.c
 void	update_frame_time(t_gdata *gd);
+
+// BONUS render/minimap.c
+int	**minimap_colours(t_gdata *gd);
 
 #endif
