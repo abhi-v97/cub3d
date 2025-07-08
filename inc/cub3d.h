@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/08 13:43:53 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/08 13:48:38 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,24 +266,15 @@ void	debug_print(t_gdata *data);
 int		rendering_function(void *param);
 void	player_set_direction(t_gdata *gd);
 
-// render/rendering_function.c
-int		rendering_function(void *param);
-void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
-int		line_height(t_gdata *gd, t_ray *ray);
-void	calc_draw_distance(t_ray *ray);
-
 // render/...
+int		rendering_function(void *param);
 void	draw_wall(t_gdata *data, t_ray ray, int x);
 void	player_set_direction(t_gdata *gd);
 void	draw_wall_plain(t_gdata *gd, t_ray *ray, int x, int color);
 void	render_background(t_gdata *gd);
 void	draw_ceiling(t_canvas *canvas, int color);
 void	draw_floor(t_canvas *canvas, int color);
-
-// render/ray_create.c
 t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos);
-void	ray_calc_step_x_and_side_dist_x(t_gdata *gd, t_ray *ray, int map_pos_x);
-void	ray_calc_step_y_and_side_dist_y(t_gdata *gd, t_ray *ray, int map_pos_y);
 
 int		get_time_stamp(void);
 
