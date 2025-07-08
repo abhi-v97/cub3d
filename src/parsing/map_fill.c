@@ -62,7 +62,7 @@ static int	copy_buffer_error(t_gdata *gd, char *buf, char **map, int row)
 	if (!map[row])
 		return (exit_status(gd, ENOMEM));
 	ft_memset(map[row], ' ', gd->map_width);
-	ft_memcpy(map[row], buf, ft_strlen(buf));
+	ft_memcpy(map[row], buf, gd->map_width);
 	map[row][gd->map_width] = '\0';
 	nl_char = ft_strchr(map[row], '\n');
 	if (nl_char)
