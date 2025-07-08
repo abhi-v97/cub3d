@@ -118,7 +118,7 @@ static bool	check_only_one_player(t_gdata *gd, char **map)
 		col = -1;
 		while (++col < gd->map_width)
 		{
-			if (ft_strchr("NSEW", map[row][col]))
+			if (map[row][col] && ft_strchr("NSEW", map[row][col]))
 			{
 				if (!player_found)
 					player_found = true;

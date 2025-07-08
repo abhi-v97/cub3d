@@ -49,20 +49,22 @@ int	check_map_bounds_missing(t_gdata *gd, char **map, int map_height)
 // checks down space only if map[i + 1] isn't null
 static bool	check_missing_wall(t_gdata *gd, char **map, int row, int col)
 {
-	if (col > 0 && !is_space_or_wall(map[row][col - 1]))
+	if (col > 0 && is_space_or_wall(map[row][col - 1]))
 		return (true);
 	if (col + 1 < gd->map_width
-		&& !is_space_or_wall(map[row][col + 1]))
+		&& is_space_or_wall(map[row][col + 1]))
 		return (true);
-	if (row > 0 && !is_space_or_wall(map[row - 1][col]))
+	if (row > 0 && is_space_or_wall(map[row - 1][col]))
 		return (true);
 	if (row + 1 < gd->map_height
-		&& !is_space_or_wall(map[row + 1][col]))
+		&& is_space_or_wall(map[row + 1][col]))
 		return (true);
 	return (false);
 }
 
 static bool	is_space_or_wall(char c)
-{
-	return (c == ' ' || c == '1');
+{	
+	if (!c)
+		return (false);
+	return (!(c == ' ' || c == '1'));
 }
