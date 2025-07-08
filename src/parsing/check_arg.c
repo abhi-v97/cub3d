@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:43:15 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/06 09:26:09 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/07 23:39:28 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int	check_arg(t_gdata *gd, char *file_name)
 	int		fd;
 
 	if (is_dir(file_name))
-		return (gd->exit_status = EFILEISDIR);
+		return (exit_status(gd, EFILEISDIR));
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 		return (ft_error("Failed to open file"),
-			gd->exit_status = EFAILOPENFILE);
+			exit_status(gd, EFAILOPENFILE));
 	if (check_ext_not_dot_cub(file_name))
 		return (close(fd),
-			ft_error("Wrong extension"), gd->exit_status = EBADFILEEXT);
-	return (close(fd), gd->exit_status = EXIT_SUCCESS);
+			ft_error("Wrong extension"), exit_status(gd, EBADFILEEXT));
+	return (close(fd), exit_status(gd, EXIT_SUCCESS));
 }
 
 // checks if file provided is a directory or not

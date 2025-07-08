@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:33:14 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/06 12:46:35 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/07 23:39:33 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ int	check_map_error(t_gdata *gd)
 	if (!gd->map || check_horizontal_border_missing(gd->map[0])
 		|| check_horizontal_border_missing(gd->map[gd->map_height - 1]))
 		return (ft_error("Map has incorrect horizontal borders"),
-			EMAPHBORDERERR);
+			exit_status(gd, EMAPHBORDERERR));
 	if (check_vertical_border_missing(gd->map, gd->map_height))
 		return (ft_error("Map has incorrect vertical borders"),
-			EMAPVBORDERERR);
+			exit_status(gd, EMAPVBORDERERR));
 	if (check_invalid_char(gd, gd->map, gd->map_height))
 		return (gd->exit_status);
 	if (!check_only_one_player(gd, gd->map))
 		return (ft_error("singleplayer only!"), gd->exit_status);
 	if (check_map_bounds_missing(gd, gd->map, gd->map_height))
 		return (gd->exit_status);
-	return (gd->exit_status = EXIT_SUCCESS);
+	return (exit_status(gd, EXIT_SUCCESS));
 }
 
 // checks the horizontal lines (north and south) 
@@ -80,18 +80,13 @@ static bool	check_vertical_border_missing(char **map, int map_height)
 
 // checks if map has any invalid characters
 // allowed chars: 01NSWE and ' ' (empty space)
-// else if (ft_strchr("NSWE", map[row][col]) && !gd->player_direction)
-// 	gd->player_direction = map[row][col];
-// else if (ft_strchr("NSWE", map[row][col]) && gd->player_direction)
-// 	return (ft_error("Too many players"),
-// 		gd->exit_status = EMAPTOOMANYPLAYERS);
 static int	check_invalid_char(t_gdata *gd, char **map, int map_height)
 {
 	int		row;
 	int		col;
 
 	if (!map || !*map)
-		return (gd->exit_status = EMAPEMPTY);
+		return (exit_status(gd, EMAPEMPTY));
 	row = 1;
 	while (row < map_height - 1)
 	{
@@ -102,12 +97,12 @@ static int	check_invalid_char(t_gdata *gd, char **map, int map_height)
 				;
 			else if (!ft_strchr("01NSWE", map[row][col]))
 				return (ft_error("Invalid character found"),
-					gd->exit_status = EMAPINVCHAR);
+					exit_status(gd, EMAPINVCHAR));
 			col++;
 		}
 		row++;
 	}
-	return (gd->exit_status = EXIT_SUCCESS);
+	return (exit_status(gd, EXIT_SUCCESS));
 }
 
 static bool	check_only_one_player(t_gdata *gd, char **map)
@@ -128,11 +123,11 @@ static bool	check_only_one_player(t_gdata *gd, char **map)
 				if (!player_found)
 					player_found = true;
 				else
-					return (gd->exit_status = EMAPTOOMANYPLAYERS, false);
+					return (exit_status(gd, EMAPTOOMANYPLAYERS), false);
 			}
 		}
 	}
 	if (player_found)
-		return (gd->exit_status = EXIT_SUCCESS, true);
-	return (gd->exit_status = EMAPNOPLAYERS, false);
+		return (exit_status(gd, EXIT_SUCCESS), true);
+	return (exit_status(gd, EMAPNOPLAYERS), false);
 }

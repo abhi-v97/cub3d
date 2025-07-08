@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:34:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/06 13:17:21 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/07 23:39:25 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	init_gdata_has_error(t_gdata *gd)
 	gd->player_direction = 0;
 	gd->tex_rgb = ft_calloc(sizeof(int), 7);
 	if (!gd->tex_rgb)
-		return (gd->exit_status = ENOMEM);
+		return (exit_status(gd, ENOMEM));
 	gd->textures = ft_calloc(sizeof(int *), 7);
 	if (!gd->textures)
-		return (free(gd->tex_rgb), gd->exit_status = ENOMEM);
+		return (free(gd->tex_rgb), exit_status(gd, ENOMEM));
 	memset(gd->keys, 0, KEY_COUNT * sizeof(int));
 	gd->win_center.x = W_WIDTH / 2;
 	gd->win_center.y = W_HEIGHT / 2;
@@ -36,25 +36,25 @@ int	init_gdata_has_error(t_gdata *gd)
 	gd->file_fd = -1;
 	if (init_mlx_has_error(gd))
 		return (free(gd->textures), free(gd->tex_rgb), gd->exit_status);
-	return (gd->exit_status = EXIT_SUCCESS);
+	return (exit_status(gd, EXIT_SUCCESS));
 }
 
 static int	init_mlx_has_error(t_gdata *gd)
 {
 	gd->mlx = mlx_init();
 	if (!gd->mlx)
-		return (gd->exit_status = EMLXINIT);
+		return (exit_status(gd, EMLXINIT));
 	gd->win = mlx_new_window(gd->mlx, W_WIDTH, W_HEIGHT, "cub3D");
 	if (!gd->win)
-		return (mlx_destroy_display(gd->mlx), gd->exit_status = EMLXWINCREATE);
+		return (mlx_destroy_display(gd->mlx), exit_status(gd, EMLXWINCREATE));
 	gd->canvas.img = mlx_new_image(gd->mlx, W_WIDTH, W_HEIGHT);
 	if (!gd->canvas.img)
 		return (mlx_destroy_display(gd->mlx),
 			mlx_destroy_window(gd->mlx, gd->win),
-			gd->exit_status = EMLXWINCREATE);
+			exit_status(gd, EMLXWINCREATE));
 	gd->canvas.addr = (int *)mlx_get_data_addr(gd->canvas.img, &gd->canvas.bpp,
 			&gd->canvas.ll, &gd->canvas.endian);
 	gd->canvas.w = W_WIDTH;
 	gd->canvas.h = W_HEIGHT;
-	return (gd->exit_status = EXIT_SUCCESS);
+	return (exit_status(gd, EXIT_SUCCESS));
 }

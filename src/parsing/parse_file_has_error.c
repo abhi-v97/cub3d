@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/06 13:30:39 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/07 23:39:39 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	parse_file_has_error(t_gdata *gd, char *file_name)
 {
 	gd->map_height = line_count(gd, file_name);
 	if (!gd->map_height || !gd->map_width)
-		return (gd->exit_status = EINVMAPHEIGHT);
+		return (exit_status(gd, EINVMAPHEIGHT));
 	gd->map = (char **) ft_calloc(sizeof(char *), gd->map_height + 1);
 	if (!gd->map)
-		return (perror("Error: Cub3D"), gd->exit_status = ENOMEM);
+		return (perror("Error: Cub3D"), exit_status(gd, ENOMEM));
 	gd->file_fd = open(file_name, O_RDONLY);
 	if (gd->file_fd < 0)
 		return (ft_error(strerror(errno)),
-			free(gd->map), gd->exit_status = EFAILOPENFILE);
+			free(gd->map), exit_status(gd, EFAILOPENFILE));
 	return (map_fill(gd, gd->map, gd->file_fd));
 }
 
@@ -46,7 +46,7 @@ static int	line_count(t_gdata *gd, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (perror("Error: Cub3D"),
-			gd->exit_status = EFAILOPENFILE, map_row_count);
+			exit_status(gd, EFAILOPENFILE), map_row_count);
 	else
 	{
 		buffer = get_next_line(fd);
@@ -61,7 +61,7 @@ static int	line_count(t_gdata *gd, char *file)
 			buffer = get_next_line(fd);
 		}
 	}
-	return (close_fd(&fd), gd->exit_status = EXIT_SUCCESS, map_row_count);
+	return (close_fd(&fd), exit_status(gd, EXIT_SUCCESS), map_row_count);
 }
 
 // used to set gd->map_width to that of the widest part of map
