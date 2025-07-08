@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_wall.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avalsang <avalsang@student.42.fr>          #+#  +:+       +#+        */
+/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-30 15:27:41 by avalsang          #+#    #+#             */
-/*   Updated: 2025-06-30 15:27:41 by avalsang         ###   ########.fr       */
+/*   Created: 2025/06/30 15:27:41 by avalsang          #+#    #+#             */
+/*   Updated: 2025/07/08 13:39:37 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,15 @@ static int	set_texinfo_dir(t_ray *ray)
 	if (ray->side_hit == RAY_HIT_E_OR_W)
 	{
 		if (ray->dir.y < 0)
-			return (WEST);
+			return (NORTH);
 		else
-			return (EAST);
+			return (SOUTH);
 	}
 	else
 	{
 		if (ray->dir.x < 0)
-			return (NORTH);
+			return (WEST);
 		else
-			return (SOUTH);
+			return (EAST);
 	}
 }
