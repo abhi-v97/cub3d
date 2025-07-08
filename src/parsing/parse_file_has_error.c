@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/07 23:39:39 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/08 19:24:30 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int		line_count(t_gdata *data, char *file);
 
 static bool		buffer_has_map_data(char *buffer, size_t buffer_len);
-static void		update_width(t_gdata *gd, char *buffer);
+static void		update_map_width(t_gdata *gd, char *buffer);
 
 // grabs map data from file into char ** array gd->map
 int	parse_file_has_error(t_gdata *gd, char *file_name)
@@ -33,8 +33,8 @@ int	parse_file_has_error(t_gdata *gd, char *file_name)
 	return (map_fill(gd, gd->map, gd->file_fd));
 }
 
-// return: number of lines in map file
-// also calculates and stores the biggest/longest line found
+// return: number of lines the map has (map height) in the .cub file
+// also calculates and stores the biggest/longest map data line found
 // into map_width, which is used to malloc each string in map array
 static int	line_count(t_gdata *gd, char *file)
 {
@@ -54,7 +54,7 @@ static int	line_count(t_gdata *gd, char *file)
 		{
 			if (buffer_has_map_data(buffer, ft_strlen(buffer)))
 			{
-				update_width(gd, buffer);
+				update_map_width(gd, buffer);
 				map_row_count++;
 			}
 			free(buffer);
@@ -66,7 +66,7 @@ static int	line_count(t_gdata *gd, char *file)
 
 // used to set gd->map_width to that of the widest part of map
 // updates gd->map_width if len of current buffer is greater
-static void	update_width(t_gdata *gd, char *buffer)
+static void	update_map_width(t_gdata *gd, char *buffer)
 {
 	size_t	len;
 
@@ -92,14 +92,20 @@ static void	update_width(t_gdata *gd, char *buffer)
 static bool	buffer_has_map_data(char *buffer, size_t buffer_len)
 {
 	size_t	i;
+	int		map_chars_found;
 
 	if (!buffer)
 		return (0);
+	map_chars_found = 0;
 	i = 0;
 	while (i < buffer_len)
 	{
-		if (ft_strchr(MAP_ALLOWED_CHARS, buffer[i++]))
-			return (true);
+		if (ft_strchr("01NSEW", buffer[i++]))
+			map_chars_found++;
+		if (!ft_strchr("01NSEW \n", buffer[i++]))
+			return (false);
 	}
-	return (false);
+	if (!map_chars_found)
+		return (false);
+	return (true);
 }

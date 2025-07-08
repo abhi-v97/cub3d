@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/08 13:48:38 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/08 19:15:53 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@
 # define RAY_HIT_N_OR_S 0
 # define RAY_HIT_E_OR_W 1
 
-# define MAP_ALLOWED_CHARS "01NSEW \n"
 # define MAP_EMPTY_SPACE '0'
 # define MAP_WALL '1'
 
