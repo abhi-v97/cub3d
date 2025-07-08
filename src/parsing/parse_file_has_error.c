@@ -88,22 +88,14 @@ static void	update_map_width(t_gdata *gd, char *buffer)
 static bool	buffer_has_map_data(char *buffer)
 {
 	size_t	i;
-	size_t	buffer_len;
-	int		map_chars_found;
 
 	if (!buffer)
 		return (0);
-	buffer_len = ft_strlen(buffer);
-	map_chars_found = 0;
 	i = 0;
-	while (i < buffer_len)
-	{
-		if (ft_strchr("01NSEW", buffer[i++]))
-			map_chars_found++;
-		if (!ft_strchr("01NSEW \n", buffer[i++]))
-			return (false);
-	}
-	if (!map_chars_found)
+	while (buffer[i] && buffer[i] == ' ')
+		i++;
+	if (buffer[i] && ft_strchr("01", buffer[i]))
+		return (true);
+	else
 		return (false);
-	return (true);
 }
