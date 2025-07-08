@@ -47,6 +47,24 @@ int	**minimap_colours(t_gdata *gd)
 	return (array);
 }
 
+// alpha: 0 (fully bg) to 255 (fully fg)
+int blend(int fg, int bg, int alpha)
+{
+    int r = ((fg >> 16) & 0xFF) * alpha / 255 + ((bg >> 16) & 0xFF) * (255 - alpha) / 255;
+    int g = ((fg >> 8) & 0xFF) * alpha / 255 + ((bg >> 8) & 0xFF) * (255 - alpha) / 255;
+    int b = (fg & 0xFF) * alpha / 255 + (bg & 0xFF) * (255 - alpha) / 255;
+    return (r << 16) | (g << 8) | b;
+}
+
+int	bg_colour(t_canvas *canvas, int x, int y)
+{
+	char	*dst;
+
+	dst = (char *)canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
+	return (*(unsigned int *)dst);
+}
+
+
 // 400: minimap size squared, 20 * 20
 // change to a macro or precalculate it to save performance
 // function that draws one square block on the minimap, where one square block
@@ -62,7 +80,7 @@ void	draw_block(t_gdata *gd, int x_offset, int y_offset, int colour)
 	{
 		x = i % 20 + 20;
 		y = i / 20 + 20;
-		put_pixel(&gd->canvas, x + x_offset, y + y_offset, colour);
+		put_pixel(&gd->canvas, x + x_offset, y + y_offset, blend(colour, bg_colour(&gd->canvas, x + x_offset, y + y_offset), 128));
 		i++;
 	}
 }
@@ -84,18 +102,6 @@ int	fetch_colour(t_gdata *gd, int x, int y)
 	return (colour);
 }
 
-
-int	get_colour(t_canvas *canvas, int x, int y)
-{
-	char	*dst;
-	int		orig_colour;
-
-	dst = (char *)canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
-	orig_colour = *(unsigned int *)dst;
-	return (orig_colour);
-}
-
-
 void	render_minimap(t_gdata *gd)
 {
 	int		x;
@@ -107,8 +113,9 @@ void	render_minimap(t_gdata *gd)
 	{
 		while (y < 5)
 		{
-			get_colour(&gd->canvas, x * 20, y * 20);
+			bg_colour(&gd->canvas, x * 20, y * 20);
 			draw_block(gd, x * 20, y * 20, fetch_colour(gd, x, y));
+			// draw_block(gd, x * 20, y * 20, blend(fetch_colour(gd, x, y), bg_colour(&gd->canvas, x * 20, y * 20), 128));
 			y++;
 		}
 		x++;
