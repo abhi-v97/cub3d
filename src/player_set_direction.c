@@ -18,8 +18,8 @@ void player_set_direction(t_gdata *gd)
 
 	static const
 		double direction_consts[][4] = {
-	{-1, 0, 0, 0.66},
-	{1, 0, 0, -0.66},
+	{-1, 0, 0, -0.66},
+	{1, 0, 0, 0.66},
 	{0, 1, -0.66, 0},
 	{0, -1, 0.66, 0}
 	};
