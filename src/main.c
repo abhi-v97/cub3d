@@ -18,6 +18,7 @@ int	main(int argc, char **argv)
 
 	if (check_error_in_args_map_or_init(&gdata, argc, argv))
 		return (gdata.exit_status);
+	gdata.minimap.colour_array = minimap_colours(&gdata);
 	mlx_hook(gdata.win, KeyPress, KeyPressMask, key_press, &gdata);
 	mlx_hook(gdata.win, KeyRelease, KeyReleaseMask, key_release, &gdata);
 	mlx_hook(gdata.win, DestroyNotify, NoEventMask, mlx_loop_end, gdata.mlx);
