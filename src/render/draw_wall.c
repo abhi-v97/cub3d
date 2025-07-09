@@ -39,7 +39,7 @@ void	draw_wall(t_gdata *data, t_ray ray, int x)
 		tex.y = (int)texinfo.tex_pos & (data->tex_size - 1);
 		texinfo.tex_pos += texinfo.step;
 		put_pixel(&data->canvas, x, y++,
-			data->textures[texinfo.dir][data->tex_size * tex.y + tex.x]);
+			data->textures[texinfo.dir][data->tex_size * tex.y + (data->tex_size - tex.x)]);
 	}
 }
 
