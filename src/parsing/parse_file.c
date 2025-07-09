@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/08 19:24:30 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 21:30:32 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool		buffer_has_map_data(char *buffer);
 static void		update_map_width(t_gdata *gd, char *buffer);
 
 // grabs map data from file into char ** array gd->map
-int	parse_file_has_error(t_gdata *gd, char *file_name)
+int	parse_file(t_gdata *gd, char *file_name)
 {
 	gd->map_height = line_count(gd, file_name);
 	if (!gd->map_height || !gd->map_width)

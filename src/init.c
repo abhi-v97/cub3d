@@ -6,15 +6,15 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:34:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/07 23:39:25 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 21:26:58 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	init_mlx_has_error(t_gdata *gd);
+static int	init_mlx(t_gdata *gd);
 
-int	init_gdata_has_error(t_gdata *gd)
+int	init_gdata(t_gdata *gd)
 {
 	gd->map = NULL;
 	gd->map_height = 0;
@@ -34,12 +34,12 @@ int	init_gdata_has_error(t_gdata *gd)
 	gd->time = 0;
 	gd->old_time = 0;
 	gd->file_fd = -1;
-	if (init_mlx_has_error(gd))
+	if (failed(init_mlx(gd)))
 		return (free(gd->textures), free(gd->tex_rgb), gd->exit_status);
 	return (exit_status(gd, EXIT_SUCCESS));
 }
 
-static int	init_mlx_has_error(t_gdata *gd)
+static int	init_mlx(t_gdata *gd)
 {
 	gd->mlx = mlx_init();
 	if (!gd->mlx)

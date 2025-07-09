@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_get_pos.c                                   :+:      :+:    :+:   */
+/*   player_pos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:40:45 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/02 16:09:43 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 21:52:52 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_pos	pos_init_to_invalid_pos(void);
-t_pos	pos_set_to(double x, double y);
+static t_pos	pos_init_to_invalid_pos(void);
+static t_pos	pos_set_to(double x, double y);
 
 t_pos	player_get_pos_from_map(t_gdata *gdata)
 {
@@ -37,7 +37,7 @@ t_pos	player_get_pos_from_map(t_gdata *gdata)
 	return (pos_init_to_invalid_pos());
 }
 
-t_pos	pos_init_to_invalid_pos(void)
+static t_pos	pos_init_to_invalid_pos(void)
 {
 	t_pos	pos;
 
@@ -46,7 +46,7 @@ t_pos	pos_init_to_invalid_pos(void)
 	return (pos);
 }
 
-t_pos	pos_set_to(double x, double y)
+static t_pos	pos_set_to(double x, double y)
 {
 	t_pos	pos;
 
@@ -76,4 +76,9 @@ int	player_outside_map(t_gdata *data, t_pos pos)
 	if (data->map[row][col + 1] && data->map[row][col + 1] == ' ')
 		return (1);
 	return (0);
+}
+
+t_ipos	pos_dtoi(t_pos dpos)
+{
+	return ((t_ipos){(int)dpos.x, (int)dpos.y});
 }

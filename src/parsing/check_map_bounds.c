@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:29:36 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/07 23:44:41 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 21:38:47 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	is_space_or_wall(char c);
 // loops through every char until it finds an empty space ' '
 // if the empty space isn't surrounded by another ' ' or a wall (1),
 // it means there is a gap in the wall
-int	check_map_bounds_missing(t_gdata *gd, char **map, int map_height)
+int	check_map_bounds(t_gdata *gd, char **map, int map_height)
 {
 	int		row;
 	int		col;

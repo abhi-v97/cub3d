@@ -1,43 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map_error.c                                  :+:      :+:    :+:   */
+/*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:33:14 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/07 23:39:33 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 21:55:14 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static bool	check_horizontal_border_missing(char *map);
-static bool	check_vertical_border_missing(char **map, int map_height);
+static bool	check_horizontal_border(char *map);
+static bool	check_vertical_border(char **map, int map_height);
 static int	check_invalid_char(t_gdata *data, char **map, int map_height);
 static bool	check_only_one_player(t_gdata *gd, char **map);
 
-int	check_map_error(t_gdata *gd)
+int	check_map(t_gdata *gd)
 {
-	if (!gd->map || check_horizontal_border_missing(gd->map[0])
-		|| check_horizontal_border_missing(gd->map[gd->map_height - 1]))
+	if (!gd->map || failed(check_horizontal_border(gd->map[0]))
+		|| failed(check_horizontal_border(gd->map[gd->map_height - 1])))
 		return (ft_error("Map has incorrect horizontal borders"),
 			exit_status(gd, EMAPHBORDERERR));
-	if (check_vertical_border_missing(gd->map, gd->map_height))
+	if (failed(check_vertical_border(gd->map, gd->map_height)))
 		return (ft_error("Map has incorrect vertical borders"),
 			exit_status(gd, EMAPVBORDERERR));
 	if (check_invalid_char(gd, gd->map, gd->map_height))
 		return (gd->exit_status);
 	if (!check_only_one_player(gd, gd->map))
-		return (ft_error("singleplayer only!"), gd->exit_status);
-	if (check_map_bounds_missing(gd, gd->map, gd->map_height))
+		return (ft_error("Map has none or too many players!"),
+			gd->exit_status);
+	if (failed(check_map_bounds(gd, gd->map, gd->map_height)))
 		return (gd->exit_status);
 	return (exit_status(gd, EXIT_SUCCESS));
 }
 
 // checks the horizontal lines (north and south) 
 // returns true if it only contains spaces or 1
-static bool	check_horizontal_border_missing(char *map)
+static bool	check_horizontal_border(char *map)
 {
 	int		row;
 
@@ -55,7 +56,7 @@ static bool	check_horizontal_border_missing(char *map)
 
 // checks every line, except first and last, if its demarcated by 1
 // skips over blank space at the start and end
-static bool	check_vertical_border_missing(char **map, int map_height)
+static bool	check_vertical_border(char **map, int map_height)
 {
 	int		row;
 	int		col;
