@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 10:43:15 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/07 23:39:28 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 21:27:27 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <fcntl.h>
 
 static int	is_dir(char *file_name);
-static int	check_ext_not_dot_cub(char *file_name);
+static int	check_ext(char *file_name);
 
 // tests the map given as arg if its valid or not
 // zero if valid, 1 if not: this results in an exit statement
@@ -28,7 +28,7 @@ int	check_arg(t_gdata *gd, char *file_name)
 	if (fd == -1)
 		return (ft_error("Failed to open file"),
 			exit_status(gd, EFAILOPENFILE));
-	if (check_ext_not_dot_cub(file_name))
+	if (failed(check_ext(file_name)))
 		return (close(fd),
 			ft_error("Wrong extension"), exit_status(gd, EBADFILEEXT));
 	return (close(fd), exit_status(gd, EXIT_SUCCESS));
@@ -47,7 +47,7 @@ static int	is_dir(char *file_name)
 }
 
 // checks if the file has .cub extension
-static int	check_ext_not_dot_cub(char *file_name)
+static int	check_ext(char *file_name)
 {
 	char	*temp;
 

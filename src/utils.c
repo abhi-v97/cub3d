@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-22 13:50:02 by abhi              #+#    #+#             */
-/*   Updated: 2025-06-22 13:50:02 by abhi             ###   ########.fr       */
+/*   Created: 2025/06/22 13:50:02 by abhi              #+#    #+#             */
+/*   Updated: 2025/07/09 21:15:48 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,11 @@ int	exit_status(t_gdata *data, int exit_code)
 {
 	data->exit_status = exit_code;
 	return (exit_code);
+}
+
+// to make overall code more readable, this function
+// can be used to check if a given function has failed
+int	failed(int return_value)
+{
+	return (return_value != EXIT_SUCCESS);
 }

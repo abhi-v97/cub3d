@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/08 19:15:53 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 21:57:07 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,16 +214,16 @@ char	**ft_split(char const *s, char c);
 int		check_arg(t_gdata *gd, char *file_name);
 
 // parsing/parse_file.c
-int		parse_file_has_error(t_gdata *gdata, char *file_name);
+int		parse_file(t_gdata *gdata, char *file_name);
 
 // parsing/map_fill.c
 int		map_fill(t_gdata *gd, char **map, int fd);
 
 // parsing/check_map_error.c
-int		check_map_error(t_gdata *data);
+int		check_map(t_gdata *data);
 
 // parsing/check_map_bounds_missing.c
-int		check_map_bounds_missing(t_gdata *gd, char **map, int map_height);
+int		check_map_bounds(t_gdata *gd, char **map, int map_height);
 
 // parsing/parse_textures.c
 int		parse_texture_data(t_gdata *data, char *buffer);
@@ -231,9 +231,8 @@ int		parse_texture_data(t_gdata *data, char *buffer);
 // parsing/set_textures.c
 int		set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
 
-int		check_error_in_args_map_or_init(t_gdata *gd, int argc, char **argv);
+int		check_args_map_and_init(t_gdata *gd, int argc, char **argv);
 
-// error.c
 void	ft_error(char *msg);
 
 // utils.c
@@ -241,27 +240,23 @@ int		is_blank(char c);
 void	close_fd(int *fd);
 int		is_num(char c);
 int		exit_status(t_gdata *data, int exit_code);
+int		failed(int return_value);
 
 // init.c
-int		init_gdata_has_error(t_gdata *gdata);
+int		init_gdata(t_gdata *gdata);
 
 // cleanup.c
 void	cleanup(t_gdata *gdata);
 void	free_array(char **array);
 
-// put_pixel.c
 void	put_pixel(t_canvas *canvas, int x, int y, int color);
-
 void	put_ver_line(t_canvas *canvas, int x, int y1, int y2, int color);
-
 void	fill_all(t_canvas *canvas, int color);
 
 // player_get_pos.c
 int		player_outside_map(t_gdata *data, t_pos pos);
 t_pos	player_get_pos_from_map(t_gdata *gdata);
-double	pos_nsew_to_angle(char c);
-t_pos	pos_init_to_invalid_pos(void);
-t_pos	pos_set_to(double x, double y);
+t_ipos	pos_dtoi(t_pos dpos);
 
 // key_events.c
 int		key_press(int key, t_gdata *gdata);
@@ -269,13 +264,12 @@ int		key_release(int key, t_gdata *gdata);
 void	handle_key_presses(t_gdata *data);
 
 // debug.c
-void	print_map_info(t_gdata *data);
-void	test_textures(t_gdata *data, int *texture, int offset);
+void	debug_print_map_info(t_gdata *data);
+void	debug_test_textures(t_gdata *data, int *texture, int offset);
 void	debug_print(t_gdata *data);
 
 // render/rendering_function.c
 int		rendering_function(void *param);
-void	player_set_direction(t_gdata *gd);
 
 // render/...
 int		rendering_function(void *param);

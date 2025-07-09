@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_error_in_args_map_or_init.c                  :+:      :+:    :+:   */
+/*   check_args_map_and_init.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 09:01:35 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/07 23:39:19 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 21:41:16 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // is player_outside_map unneccessary? I was not able to make a map that 
 // triggers that line of code, a previous error check flags it first
-int	check_error_in_args_map_or_init(t_gdata *gd, int argc, char **argv)
+int	check_args_map_and_init(t_gdata *gd, int argc, char **argv)
 {
 	if (argc < 2)
 		return (ft_error("Need a map!"),
@@ -22,13 +22,13 @@ int	check_error_in_args_map_or_init(t_gdata *gd, int argc, char **argv)
 	if (argc > 2)
 		return (ft_error("Too many parameters!"),
 			exit_status(gd, EINVALARGCOUNT));
-	if (check_arg(gd, argv[1]))
+	if (failed(check_arg(gd, argv[1])))
 		return (gd->exit_status);
-	if (init_gdata_has_error(gd))
+	if (failed(init_gdata(gd)))
 		return (gd->exit_status);
-	if (parse_file_has_error(gd, argv[1]))
+	if (failed(parse_file(gd, argv[1])))
 		return (cleanup(gd), exit_status(gd, 1));
-	if (check_map_error(gd))
+	if (failed(check_map(gd)))
 		return (cleanup(gd), exit_status(gd, 1));
 	gd->player.pos = player_get_pos_from_map(gd);
 	player_set_direction(gd);
