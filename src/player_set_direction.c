@@ -6,13 +6,13 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 21:55:35 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/07 21:56:01 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 22:18:21 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void player_set_direction(t_gdata *gd)
+void	player_set_direction(t_gdata *gd)
 {
 	t_cardinal	cardinal;
 

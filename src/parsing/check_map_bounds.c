@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map_bounds_missing.c                         :+:      :+:    :+:   */
+/*   check_map_bounds.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:29:36 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/09 21:38:47 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 22:19:37 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static bool	check_missing_wall(t_gdata *gd, char **map, int row, int col)
 }
 
 static bool	is_space_or_wall(char c)
-{	
+{
 	if (!c)
 		return (false);
 	return (!(c == ' ' || c == '1'));

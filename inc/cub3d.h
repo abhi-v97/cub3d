@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/09 21:57:07 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 22:17:40 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ void	cleanup(t_gdata *gdata);
 void	free_array(char **array);
 
 void	put_pixel(t_canvas *canvas, int x, int y, int color);
-void	put_ver_line(t_canvas *canvas, int x, int y1, int y2, int color);
+void	put_ver_line(t_canvas *canvas, int x, t_ray *ray, int color);
 void	fill_all(t_canvas *canvas, int color);
 
 // player_get_pos.c

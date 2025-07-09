@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 15:27:41 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/08 13:39:37 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 22:24:02 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ static void	set_texinfo(t_gdata *data, t_ray ray, t_texinfo *texinfo);
 // texinfo: struct that contains variables used to calculate texture data
 // tex: struct with x and y which are coordinates of the texture array, used to
 // grab the correct colour from the texture array
+// texet = texture pixel
 void	draw_wall(t_gdata *data, t_ray ray, int x)
 {
 	int			y;
+	int			texel;
 	t_texinfo	texinfo;
 	t_ipos		tex;
 
@@ -38,8 +40,9 @@ void	draw_wall(t_gdata *data, t_ray ray, int x)
 	{
 		tex.y = (int)texinfo.tex_pos & (data->tex_size - 1);
 		texinfo.tex_pos += texinfo.step;
+		texel = data->tex_size * tex.y + (data->tex_size - tex.x);
 		put_pixel(&data->canvas, x, y++,
-			data->textures[texinfo.dir][data->tex_size * tex.y + (data->tex_size - tex.x)]);
+			data->textures[texinfo.dir][texel]);
 	}
 }
 
