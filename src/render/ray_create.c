@@ -6,16 +6,16 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 22:01:57 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/08 11:38:30 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 22:20:40 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 static void	ray_calc_step_x_and_side_dist_x(
-		t_gdata *gd, t_ray *ray, int map_pos_x);
+				t_gdata *gd, t_ray *ray, int map_pos_x);
 static void	ray_calc_step_y_and_side_dist_y(
-		t_gdata *gd, t_ray *ray, int map_pos_y);
+				t_gdata *gd, t_ray *ray, int map_pos_y);
 /*
  * calculate ray position and direction
  * camera_x - x-coordinate in camera space
@@ -31,6 +31,7 @@ static void	ray_calc_step_y_and_side_dist_y(
  * Division through zero is prevented, even though technically that's not
  * needed in C++ with IEEE 754 floating point values.
  */
+
 t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos)
 {
 	t_ray	ray;

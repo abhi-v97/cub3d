@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:16 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/08 11:42:11 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 22:22:38 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	calc_draw_distance(t_ray *ray);
 
 int	rendering_function(void *param)
 {
-	t_gdata *gd;
+	t_gdata	*gd;
 	t_ray	ray;
 	t_ipos	map_pos;
 	int		x;
@@ -34,7 +34,7 @@ int	rendering_function(void *param)
 		ray_calc_side_dist(gd, &ray, &map_pos);
 		ray.line_height = line_height(gd, &ray);
 		calc_draw_distance(&ray);
-		draw_wall(gd, ray, x); //draw_wall_plain(gd, &ray, x, 0x0000FF00);
+		draw_wall(gd, ray, x);
 	}
 	render_minimap(gd);
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);	
@@ -84,7 +84,6 @@ static int	line_height(t_gdata *gd, t_ray *ray)
 		ray->perp_dist = (ray->side_dist.x - ray->delta_dist.x);
 	else
 		ray->perp_dist = (ray->side_dist.y - ray->delta_dist.y);
-
 	line_height = (int)(W_HEIGHT / ray->perp_dist);
 	return (line_height);
 }
