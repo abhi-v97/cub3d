@@ -20,8 +20,8 @@ void player_set_direction(t_gdata *gd)
 		double direction_consts[][4] = {
 	{-1, 0, 0, 0.66},
 	{1, 0, 0, -0.66},
-	{0, 1, 0.66, 0},
-	{0, -1, -0.66, 0}
+	{0, 1, -0.66, 0},
+	{0, -1, 0.66, 0}
 	};
 	gd->player_direction = map_get(gd, gd->player.pos.x, gd->player.pos.y);
 	if (gd->player_direction == 'N')
