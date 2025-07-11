@@ -25,7 +25,8 @@ int	rendering_function(void *param)
 	int		x;
 
 	gd = (t_gdata *)param;
-	render_background(gd);
+	// render_background(gd);
+	floor_casting(gd);
 	x = -1;
 	while (++x < W_WIDTH)
 	{

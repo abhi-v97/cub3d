@@ -3,8 +3,9 @@
  WE textures/yelow.xpm
  EA textures/Grey.xpm
  
- F 220,100,0
- C 225,30,0
+ 
+ F textures/red.xpm
+ C textures/black.xpm
 
 11111111
 10000001

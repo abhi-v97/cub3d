@@ -278,4 +278,7 @@ void	map_set(t_gdata *gd, int x, int y, char c);
 // fps.c
 void	update_frame_time(t_gdata *gd);
 
+// render/floor_casting.c
+void	floor_casting(t_gdata *gd);
+
 #endif
