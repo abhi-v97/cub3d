@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/10 06:48:41 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/13 23:22:02 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,12 @@
 
 # define MAP_EMPTY_SPACE '0'
 # define MAP_WALL '1'
+
+typedef enum e_action
+{
+    SET,
+    GET
+}   t_action;
 
 typedef enum e_cardinal
 {
@@ -211,6 +217,10 @@ int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
 
+// program_name.c
+char	*get_program_name();
+void	set_program_name(char *program_name);
+
 void    show_usage(int argc, char **argv);
 int		handle_error(int return_code, int argc, char **argv);
 
@@ -240,6 +250,7 @@ int		check_args_map_and_init(t_gdata *gd, int argc, char **argv);
 // error.c
 void	ft_error(char *msg);
 void	ft_errmsg(char *msg);
+void	ft_perror(void);
 
 // utils.c
 int		is_blank(char c);
