@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 09:01:35 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/09 21:41:16 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/13 21:21:11 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_args_map_and_init(t_gdata *gd, int argc, char **argv)
 			exit_status(gd, EINVALARGCOUNT));
 	if (failed(check_arg(gd, argv[1])))
 		return (gd->exit_status);
-	if (failed(init_gdata(gd)))
+	if (failed(init_all(gd)))
 		return (gd->exit_status);
 	if (failed(parse_file(gd, argv[1])))
 		return (cleanup(gd), exit_status(gd, 1));
