@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:19:27 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/13 20:47:33 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/13 23:23:15 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 	{
 		if (copy_buffer_error(gd, buffer, map, row++))
 			return (free_array(map), free(buffer), cleanup_textures(gd),
-				perror("Error: cub3D"), gd->exit_status);
+				ft_perror(), gd->exit_status);
 		free(buffer);
 		buffer = get_next_line(fd);
 	}

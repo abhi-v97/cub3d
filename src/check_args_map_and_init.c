@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 09:01:35 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/13 20:44:28 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/13 23:02:43 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // triggers that line of code, a previous error check flags it first
 int	check_args_map_and_init(t_gdata *gd, int argc, char **argv)
 {
+	set_program_name(argv[0]);
 	if (argc < 2)
 		return (ft_error("Need a map!"),
 			exit_status(gd, EINVALARGCOUNT));
