@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:48:18 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/05 19:17:00 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 23:02:14 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	*parse_xpm(t_gdata *data, char *path)
 	img.img = mlx_xpm_file_to_image(data->mlx,
 			path, &data->tex_size, &data->tex_size);
 	if (img.img == NULL)
-		return (ft_error("failed to init mlx image"), NULL);
+		return (ft_error("Failed to init mlx image!"), NULL);
 	img.addr = (int *)mlx_get_data_addr(img.img,
 			&img.bpp, &img.ll, &img.endian);
 	array = ft_calloc(sizeof(int), data->tex_size * data->tex_size);

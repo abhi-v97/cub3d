@@ -6,13 +6,15 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:27:15 by aistok            #+#    #+#             */
-/*   Updated: 2025/06/30 18:10:16 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/13 20:58:12 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void		free_array(char **array);
 static void	free_data(t_gdata *data);
+void		cleanup_textures(t_gdata *gd);
 
 void	cleanup(t_gdata *gdata)
 {
@@ -35,24 +37,33 @@ void	free_array(char **array)
 
 	i = 0;
 	while (array && array[i])
-		free(array[i++]);
+	{
+		free(array[i]);
+		array[i] = NULL;
+		i++;
+	}
 	free(array);
 }
 
 static void	free_data(t_gdata *data)
 {
-	int		i;
-
 	close_fd(&data->file_fd);
+	if (data->map)
+		free_array(data->map);
+	cleanup_textures(data);
+}
+
+void	cleanup_textures(t_gdata *gd)
+{
+	int		i;
+	
 	i = 0;
 	while (i < 7)
 	{
-		if (data->textures[i])
-			free(data->textures[i]);
+		if (gd->textures[i])
+			free(gd->textures[i]);
 		i++;
-	}
-	if (data->map)
-		free_array(data->map);
-	free(data->textures);
-	free(data->tex_rgb);
+	}	
+	free(gd->textures);
+	free(gd->tex_rgb);
 }
