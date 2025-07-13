@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 13:33:14 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/09 21:55:14 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/09 23:03:18 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	check_map(t_gdata *gd)
 {
 	if (!gd->map || failed(check_horizontal_border(gd->map[0]))
 		|| failed(check_horizontal_border(gd->map[gd->map_height - 1])))
-		return (ft_error("Map has incorrect horizontal borders"),
+		return (ft_error("Map has incorrect horizontal borders!"),
 			exit_status(gd, EMAPHBORDERERR));
 	if (failed(check_vertical_border(gd->map, gd->map_height)))
-		return (ft_error("Map has incorrect vertical borders"),
+		return (ft_error("Map has incorrect vertical borders!"),
 			exit_status(gd, EMAPVBORDERERR));
 	if (check_invalid_char(gd, gd->map, gd->map_height))
 		return (gd->exit_status);
@@ -97,7 +97,7 @@ static int	check_invalid_char(t_gdata *gd, char **map, int map_height)
 			if (map[row][col] == ' ')
 				;
 			else if (!ft_strchr("01NSWE", map[row][col]))
-				return (ft_error("Invalid character found"),
+				return (ft_error("Invalid character found in map!"),
 					exit_status(gd, EMAPINVCHAR));
 			col++;
 		}
