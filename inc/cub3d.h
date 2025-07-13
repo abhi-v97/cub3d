@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/13 21:16:37 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/10 06:48:41 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,9 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
+
+void    show_usage(int argc, char **argv);
+int		handle_error(int return_code, int argc, char **argv);
 
 // parsing/check_arg.c
 int		check_arg(t_gdata *gd, char *file_name);
