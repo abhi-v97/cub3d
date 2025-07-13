@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/09 22:17:40 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/13 21:16:37 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 
 # define EMLXINIT 5
 # define EMLXWINCREATE 6
+# define EMLXIMGCREATE 7
 
 # define EFILEISDIR	10
 # define EFAILOPENFILE 11
@@ -221,7 +222,9 @@ int		set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
 
 int		check_args_map_and_init(t_gdata *gd, int argc, char **argv);
 
+// error.c
 void	ft_error(char *msg);
+void	ft_errmsg(char *msg);
 
 // utils.c
 int		is_blank(char c);
@@ -231,10 +234,11 @@ int		exit_status(t_gdata *data, int exit_code);
 int		failed(int return_value);
 
 // init.c
-int		init_gdata(t_gdata *gdata);
+int		init_all(t_gdata *gd);
 
 // cleanup.c
 void	cleanup(t_gdata *gdata);
+void	cleanup_textures(t_gdata *gd);
 void	free_array(char **array);
 
 void	put_pixel(t_canvas *canvas, int x, int y, int color);
