@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/09 21:21:14 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/13 21:39:36 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(gdata.mlx, rendering_function, &gdata);
 	mlx_loop(gdata.mlx);
 	cleanup(&gdata);
-	return (0);
+	return (EXIT_SUCCESS);
 }
