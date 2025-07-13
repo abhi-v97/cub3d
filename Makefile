@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: aistok <aistok@student.42london.com>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/07/13 21:29:37 by aistok            #+#    #+#              #
+#    Updated: 2025/07/13 21:29:43 by aistok           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = cub3D
 
 SRC_DIR = src
@@ -39,13 +51,13 @@ CFLAGS = -Wall -Wextra -Werror -O0
 all: ${NAME}
 
 ${NAME}: ${LIBFT} ${LIBMLX} ${OBJS} ${TMP_INC_FILES}
-	${CC} ${CFLAGS} ${OBJS} -o $@ -I${INC_DIR} -L${LIBFT_DIR} -lft -L${LIBMLX_DIR} -lmlx -lXext -lX11 -lm 
+	${CC} ${CFLAGS} ${OBJS} -o $@ -I${INC_DIR} -I${LIBFT_DIR} -L${LIBFT_DIR} -lft -L${LIBMLX_DIR} -lmlx -lXext -lX11 -lm
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c ${TMP_INC_FILES} | ${OBJ_DIR}
-	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -c $< -o $@ 
+	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -I${LIBFT_DIR} -c $< -o $@
 
 ${BONUS_DIR}/%.o:${BONUS_DIR}/%.c ${TMP_INC_FILES} | ${OBJ_DIR}
-	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -c $< -o $@
+	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -I${LIBFT_DIR} -c $< -o $@
 
 ${OBJ_DIR}:
 	mkdir -p ${TMP_OBJ_DIRS}
