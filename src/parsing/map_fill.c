@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:19:27 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/07 23:39:36 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/13 20:47:33 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
+	if (missing_textures(gd))
+		return (free(buffer), gd->exit_status);
 	while (buffer)
 	{
 		if (copy_buffer_error(gd, buffer, map, row++))
-			return (free_array(map), free(buffer),
-				perror("Error: Cub3D"), gd->exit_status);
+			return (free_array(map), free(buffer), cleanup_textures(gd),
+				perror("Error: cub3D"), gd->exit_status);
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	map[row] = NULL;
 	gd->map_height = row;
-	if (missing_textures(gd))
-		return (free(buffer), 1);
 	return (exit_status(gd, EXIT_SUCCESS));
 }
 
@@ -71,8 +71,8 @@ static int	copy_buffer_error(t_gdata *gd, char *buf, char **map, int row)
 }
 
 // checks if each cardinal direction has a value in gd->textures or
-// gd->tex_rgb, which are calloc'd and will be zero if not set by set_textures
-// func
+// gd->tex_rgb, which are calloc'd and will be zero if not set by
+// set_textures func
 // Only checks NWSE for now
 static int	missing_textures(t_gdata *gd)
 {
@@ -83,6 +83,7 @@ static int	missing_textures(t_gdata *gd)
 	{
 		if (!gd->textures[dir] && !gd->tex_rgb[dir])
 			return (ft_error("Missing texture!"),
+				cleanup_textures(gd),
 				exit_status(gd, EMISSINGTEXTURE));
 		dir++;
 	}

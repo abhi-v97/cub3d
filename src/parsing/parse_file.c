@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_file_has_error.c                             :+:      :+:    :+:   */
+/*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/09 21:30:32 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/13 20:49:00 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static bool		buffer_has_map_data(char *buffer);
 static void		update_map_width(t_gdata *gd, char *buffer);
 
 // grabs map data from file into char ** array gd->map
+// NOTE: will free everything, no need for cleanup outside for parse_file
 int	parse_file(t_gdata *gd, char *file_name)
 {
 	gd->map_height = line_count(gd, file_name);
@@ -25,12 +26,15 @@ int	parse_file(t_gdata *gd, char *file_name)
 		return (exit_status(gd, EINVMAPHEIGHT));
 	gd->map = (char **) ft_calloc(sizeof(char *), gd->map_height + 1);
 	if (!gd->map)
-		return (perror("Error: Cub3D"), exit_status(gd, ENOMEM));
+		return (perror("Error: cub3D"), exit_status(gd, ENOMEM)); //cub3D executable name?
 	gd->file_fd = open(file_name, O_RDONLY);
 	if (gd->file_fd < 0)
 		return (ft_error(strerror(errno)),
-			free(gd->map), exit_status(gd, EFAILOPENFILE));
-	return (map_fill(gd, gd->map, gd->file_fd));
+			free(gd->map), exit_status(gd, EFAILOPENFILE)); //since free(gd->map), there was a cleanup(gd) which attempted to free(map) the second time and that caused a segfault; now, there is no more cleanup(gd) outside, since this function handles all the freein?
+	if (failed(map_fill(gd, gd->map, gd->file_fd)))
+		return (close_fd(&gd->file_fd), free_array(gd->map),
+			gd->exit_status);
+	return (EXIT_SUCCESS);
 }
 
 // return: number of lines the map has (map height) in the .cub file
@@ -45,7 +49,7 @@ static int	line_count(t_gdata *gd, char *file)
 	map_row_count = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (perror("Error: Cub3D"),
+		return (perror("Error: cub3D"),
 			exit_status(gd, EFAILOPENFILE), map_row_count);
 	else
 	{
@@ -90,7 +94,7 @@ static bool	buffer_has_map_data(char *buffer)
 	size_t	i;
 
 	if (!buffer)
-		return (0);
+		return (false);
 	i = 0;
 	while (buffer[i] && buffer[i] == ' ')
 		i++;
