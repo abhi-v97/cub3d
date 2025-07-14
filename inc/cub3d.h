@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/13 23:22:02 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/14 13:47:32 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,8 @@ typedef struct s_gdata
 	double		old_time;
 	double		frame_time;
 	int			exit_status;
+	t_ipos		mouse_pos;
+	t_ipos		mouse_prev_pos;
 }	t_gdata;
 
 // libft funcs
@@ -295,5 +297,9 @@ void	map_set(t_gdata *gd, int x, int y, char c);
 
 // fps.c
 void	update_frame_time(t_gdata *gd);
+
+bool	mouse_moving_left(t_gdata *gd);
+bool	mouse_moving_right(t_gdata *gd);
+void	mouse_update(t_gdata *gd);
 
 #endif

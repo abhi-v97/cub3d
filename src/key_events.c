@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:14:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/07 22:55:31 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/14 14:04:42 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	key_press(int key, t_gdata *gd)
 		gd->keys[KEY_A] = true;
 	else if (key == XK_p)
 		debug_print(gd);
+	else if (key == XK_z)
+		mlx_mouse_move(gd->mlx, gd->win, 10, 10);
 	return (1);
 }
 
@@ -64,7 +66,7 @@ void	handle_key_presses(t_gdata *gd)
 	double		rot_speed;
 
 	move_speed = gd->frame_time * 5.0 * 8;
-	rot_speed = -gd->frame_time * 3.0 * 8;
+	rot_speed = -gd->frame_time * 3.0;
 	if (gd->keys[KEY_UP])
 		move_player(gd, gd->dir.x, gd->dir.y, move_speed);
 	if (gd->keys[KEY_DOWN])
@@ -74,9 +76,15 @@ void	handle_key_presses(t_gdata *gd)
 	if (gd->keys[KEY_D])
 		move_player(gd, -gd->dir.y, gd->dir.x, move_speed);
 	if (gd->keys[KEY_RIGHT])
-		rotate_player(gd, -rot_speed);
+		rotate_player(gd, -rot_speed * 8);
+	if (mouse_moving_right(gd))
+		rotate_player(gd, -rot_speed * 5);
 	if (gd->keys[KEY_LEFT])
-		rotate_player(gd, rot_speed);
+		rotate_player(gd, rot_speed * 8);
+	if (mouse_moving_left(gd))
+		rotate_player(gd, rot_speed * 5);
+	mlx_mouse_move(gd->mlx, gd->win,
+		gd->mouse_prev_pos.x, gd->mouse_prev_pos.y);
 }
 
 static void	move_player(t_gdata *gd, double dx, double dy, double move_speed)

@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:34:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/10 07:24:41 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/14 13:59:31 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int	init_all(t_gdata *gd)
 		return (gd->exit_status);
 	if (failed(init_mlx(gd)))
 		return (free_textures(gd), gd->exit_status);
+	mlx_mouse_move(gd->mlx, gd->win, gd->win_center.x, gd->win_center.y);
+	mlx_mouse_get_pos(gd->mlx, gd->win, &gd->mouse_pos.x, &gd->mouse_pos.y);
+	mouse_update(gd);
 	return (EXIT_SUCCESS);
 }
 

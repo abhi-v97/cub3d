@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:16 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/09 22:22:38 by aistok           ###   ########.fr       */
+/*   Updated: 2025/07/14 13:33:22 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ int	rendering_function(void *param)
 	}
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
 	update_frame_time(gd);
+	mouse_update(gd);
 	handle_key_presses(gd);
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 //	perform DDA
