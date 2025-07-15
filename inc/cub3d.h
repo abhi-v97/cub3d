@@ -81,9 +81,9 @@
 
 typedef enum e_action
 {
-    SET,
-    GET
-}   t_action;
+	SET,
+	GET
+}	t_action;
 
 typedef enum e_cardinal
 {
@@ -218,10 +218,10 @@ char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
 
 // program_name.c
-char	*get_program_name();
+char	*get_program_name(void);
 void	set_program_name(char *program_name);
 
-void    show_usage(int argc, char **argv);
+void	show_usage(int argc, char **argv);
 int		handle_error(int return_code, int argc, char **argv);
 
 // parsing/check_arg.c
