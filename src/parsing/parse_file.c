@@ -26,11 +26,11 @@ int	parse_file(t_gdata *gd, char *file_name)
 		return (exit_status(gd, EINVMAPHEIGHT));
 	gd->map = (char **) ft_calloc(sizeof(char *), gd->map_height + 1);
 	if (!gd->map)
-		return (ft_perror(), exit_status(gd, ENOMEM)); //cub3D executable name?
+		return (ft_perror(), exit_status(gd, ENOMEM));
 	gd->file_fd = open(file_name, O_RDONLY);
 	if (gd->file_fd < 0)
 		return (ft_error(strerror(errno)),
-			free(gd->map), exit_status(gd, EFAILOPENFILE)); //since free(gd->map), there was a cleanup(gd) which attempted to free(map) the second time and that caused a segfault; now, there is no more cleanup(gd) outside, since this function handles all the freein?
+			free(gd->map), exit_status(gd, EFAILOPENFILE));
 	if (failed(map_fill(gd, gd->map, gd->file_fd)))
 		return (close_fd(&gd->file_fd), free_array(gd->map),
 			gd->exit_status);

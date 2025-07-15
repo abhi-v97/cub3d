@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int handle_error(int return_code, int argc, char **argv)
+int	handle_error(int return_code, int argc, char **argv)
 {
 	if (return_code == EINVALARGCOUNT)
 		show_usage(argc, argv);

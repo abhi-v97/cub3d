@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-char		*get_program_name();
+char		*get_program_name(void);
 void		set_program_name(char *program_name);
 static char	*internal_program_name(char *program_name, t_action action);
 
@@ -21,14 +21,14 @@ void	set_program_name(char *program_name)
 	internal_program_name(program_name, SET);
 }
 
-char	*get_program_name()
+char	*get_program_name(void)
 {
 	return (internal_program_name(NULL, GET));
 }
 
 static char	*internal_program_name(char *program_name, t_action action)
 {
-	static char *int_program_name = NULL;
+	static char	*int_program_name = NULL;
 
 	if (action == SET)
 		int_program_name = program_name;
