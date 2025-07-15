@@ -23,6 +23,18 @@ static void	set_texinfo(t_gdata *data, t_ray ray, t_texinfo *texinfo);
 // tex: struct with x and y which are coordinates of the texture array, used to
 // grab the correct colour from the texture array
 // texet = texture pixel
+// *******
+// ## tex.x calculation explanation:
+// Pretend you're holding a flat 2d image in your hand and you're looking at it
+// head on. Now, turn around exactly 180 degrees, while holding the image and
+// still looking at it. The image is now mirrored to match your perspective... 
+// if you didn't rotate the image while turning around, you'd be looking at
+// the back of the image, it would be mirrored...
+// First, you multiply tex_size (typically 64) by wall_x (float in range(0,1))
+// Now, if the wall you're looking at is the W or S (don't ask me why yet)
+// flip the image to account for your perspective. For example,
+// data->tex_size - tex.x - 1 = 64 - 4 - 1 = 59, where 59 is the inverse of 4
+// do it for each number between 0-64 and you will get 64-0.
 void	draw_wall(t_gdata *data, t_ray ray, int x)
 {
 	int			y;
@@ -32,15 +44,15 @@ void	draw_wall(t_gdata *data, t_ray ray, int x)
 
 	set_texinfo(data, ray, &texinfo);
 	tex.x = (int)(texinfo.wall_x * data->tex_size);
-	if ((ray.side_hit == 0 && ray.dir.x > 0)
-		|| (ray.side_hit == 1 && ray.dir.y < 0))
+	if ((ray.side_hit == 0 && ray.dir.x < 0)
+		|| (ray.side_hit == 1 && ray.dir.y > 0))
 		tex.x = data->tex_size - tex.x - 1;
 	y = ray.draw_start;
 	while (y < ray.draw_end)
 	{
 		tex.y = (int)texinfo.tex_pos & (data->tex_size - 1);
 		texinfo.tex_pos += texinfo.step;
-		texel = data->tex_size * tex.y + (data->tex_size - tex.x);
+		texel = data->tex_size * tex.y + tex.x;
 		put_pixel(&data->canvas, x, y++,
 			data->textures[texinfo.dir][texel]);
 	}

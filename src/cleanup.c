@@ -56,14 +56,14 @@ static void	free_data(t_gdata *data)
 void	cleanup_textures(t_gdata *gd)
 {
 	int		i;
-	
+
 	i = 0;
 	while (i < 7)
 	{
 		if (gd->textures[i])
 			free(gd->textures[i]);
 		i++;
-	}	
+	}
 	free(gd->textures);
 	free(gd->tex_rgb);
 }
