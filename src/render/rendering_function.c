@@ -34,8 +34,10 @@ int	rendering_function(void *param)
 		ray_calc_side_dist(gd, &ray, &map_pos);
 		ray.line_height = line_height(gd, &ray);
 		calc_draw_distance(&ray);
+		gd->z_buffer[x] = ray.perp_dist;
 		draw_wall(gd, ray, x);
 	}
+	draw_sprite(gd);
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
 	update_frame_time(gd);
 	handle_key_presses(gd);

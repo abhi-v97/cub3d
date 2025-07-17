@@ -93,6 +93,7 @@ typedef enum e_cardinal
 	WEST,
 	FLOOR,
 	CEILING,
+	SPRITE,
 }	t_cardinal;
 
 typedef enum e_direction_elements
@@ -187,6 +188,7 @@ typedef struct s_gdata
 	double		old_time;
 	double		frame_time;
 	int			exit_status;
+	double		z_buffer[W_WIDTH];
 }	t_gdata;
 
 // libft funcs
@@ -295,5 +297,8 @@ void	map_set(t_gdata *gd, int x, int y, char c);
 
 // fps.c
 void	update_frame_time(t_gdata *gd);
+
+// sprite.c
+void	draw_sprite(t_gdata *gd);
 
 #endif
