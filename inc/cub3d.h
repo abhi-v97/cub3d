@@ -159,14 +159,12 @@ typedef struct s_ray
 	t_pos	step;
 }	t_ray;
 
-
 typedef struct s_minimap
 {
 	int		height;
 	int		width;
-	int	**colour_array;
+	int		**colour_array;
 }	t_minimap;
-
 
 
 /*
@@ -199,7 +197,6 @@ typedef struct s_gdata
 	int			exit_status;
 	t_minimap	minimap;
 }	t_gdata;
-
 
 // libft funcs
 size_t	ft_strlen(const char *s);
