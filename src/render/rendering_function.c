@@ -34,6 +34,7 @@ int	rendering_function(void *param)
 		ray_calc_side_dist(gd, &ray, &map_pos);
 		ray.line_height = line_height(gd, &ray);
 		calc_draw_distance(&ray);
+		gd->z_buffer[x] = ray.perp_dist;
 		draw_wall(gd, ray, x);
 	}
 	render_minimap(gd);

@@ -93,6 +93,7 @@ typedef enum e_cardinal
 	WEST,
 	FLOOR,
 	CEILING,
+	SPRITE,
 }	t_cardinal;
 
 typedef enum e_direction_elements
@@ -196,6 +197,7 @@ typedef struct s_gdata
 	double		frame_time;
 	int			exit_status;
 	t_minimap	minimap;
+	double		z_buffer[W_WIDTH];
 }	t_gdata;
 
 // libft funcs
@@ -305,7 +307,8 @@ void	map_set(t_gdata *gd, int x, int y, char c);
 // fps.c
 void	update_frame_time(t_gdata *gd);
 
-t_ipos	pos_dtoi(t_pos dpos);
+// sprite.c
+void	draw_sprite(t_gdata *gd);
 
 // BONUS render/minimap.c
 int	**minimap_colours(t_gdata *gd);

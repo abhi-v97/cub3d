@@ -1,12 +1,15 @@
- NO textures/atti/painting--N.xpm
- SO textures/atti/painting--S.xpm
- WE textures/atti/painting--W.xpm
- EA textures/atti/painting--E.xpm
- 
+ NO textures/wolfenstein/eagle.xpm
+ SO textures/wolfenstein/bluestone.xpm
+ WE textures/wolfenstein/purplestone.xpm
+ EA textures/wolfenstein/wood.xpm
+ SP textures/wolfenstein/barrel.xpm
+
  F 220,100,0
  C 225,30,0
 
-11111
-10001
-101N1
-11111
+11111111    
+10000001
+1E000001
+10000001
+10111001
+111 1111  

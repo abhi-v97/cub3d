@@ -46,6 +46,8 @@ static int	set_texture_info(t_gdata *gd, char *buffer)
 		return (set_textures(gd, buffer + 2, FLOOR), 0);
 	else if (buffer[0] == 'C' && buffer[1] == ' ')
 		return (set_textures(gd, buffer + 2, CEILING), 0);
+	else if (buffer[0] == 'S' && buffer[1] == 'P')
+		return (set_textures(gd, buffer + 2, SPRITE), 0);
 	else
 		return (exit_status(gd, EMAPTEXERROR));
 }
