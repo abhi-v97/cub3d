@@ -38,6 +38,7 @@ int	rendering_function(void *param)
 		draw_wall(gd, ray, x);
 	}
 	render_minimap(gd);
+	draw_sprite(gd);
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
 	update_frame_time(gd);
 	handle_key_presses(gd);
