@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <math.h>
 
 static void	ray_calc_step_x_and_side_dist_x(
 				t_gdata *gd, t_ray *ray, int map_pos_x);
@@ -50,6 +51,8 @@ t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos)
 		ray.delta_dist.y = fabs(1 / ray.dir.y);
 	ray_calc_step_x_and_side_dist_x(gd, &ray, map_pos->x);
 	ray_calc_step_y_and_side_dist_y(gd, &ray, map_pos->y);
+	ray.hit_door = 0;
+	ray.door_side = 0;
 	return (ray);
 }
 

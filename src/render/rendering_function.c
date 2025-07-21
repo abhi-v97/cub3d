@@ -12,10 +12,67 @@
 
 #include "cub3d.h"
 #include "mlx.h"
+#include <X11/Xlib.h>
+#include <math.h>
 
 static void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 static int	line_height(t_gdata *gd, t_ray *ray);
 static void	calc_draw_distance(t_ray *ray);
+
+void	open_sesame(t_gdata *gd)
+{
+	for (int i = 0; i < gd->num_doors; i++)
+	{
+		int dx = (int)gd->player.pos.x - gd->door[i].x;
+		int dy = (int)gd->player.pos.y - gd->door[i].y;
+		double dist = sqrt(dx * dx + dy * dy);
+		if (dist <= 2.0)
+		{
+			if (gd->door[i].status == 0)
+				gd->door[i].status = 2;
+		}
+		else
+		{
+			if (gd->door[i].status == 1)
+				gd->door[i].status = 3;
+		}
+	}
+}
+
+void	wall_anim(t_gdata *gd)
+{
+	int		i;
+	static int	time;
+
+	i = 0;
+	time = get_time_stamp();
+	while (i < gd->num_doors)
+	{
+		if (gd->old_time == 0)
+			gd->door[i].old_time = time;
+		if (gd->door[i].status == 2)
+		{
+			if ((time - gd->door[i].old_time) > 30000)
+			{
+				gd->door[i].offset += 0.1;
+				gd->door[i].old_time = time;
+			}
+			if (gd->door[i].offset >= 1.0)
+				gd->door[i].status = 1;
+		}
+		else if (gd->door[i].status == 3)
+		{
+			if ((time - gd->door[i].old_time) > 30000)
+			{
+				gd->door[i].offset -= 0.1;
+				gd->door[i].old_time = time;
+			}
+			if (gd->door[i].offset <= 0.0)
+				gd->door[i].status = 0;
+		}
+		i++;
+	}
+}
 
 int	rendering_function(void *param)
 {
@@ -39,10 +96,26 @@ int	rendering_function(void *param)
 	}
 	render_minimap(gd);
 	draw_sprite(gd);
+	open_sesame(gd);
+	wall_anim(gd);
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
 	update_frame_time(gd);
 	handle_key_presses(gd);
 	return (1);
+}
+
+float	get_door_offset(t_gdata *gd, int x, int y)
+{
+	int		i;
+
+	i = 0;
+	while (i < gd->num_doors)
+	{
+		if (gd->door[i].x == x && gd->door[i].y == y)
+			return (gd->door[i].offset);
+		i++;
+	}
+	return (0.0);
 }
 
 //	perform DDA
@@ -70,9 +143,41 @@ static void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos)
 			ray->side_dist.y += ray->delta_dist.y;
 			map_pos->y += ray->step.y;
 			ray->side_hit = RAY_HIT_E_OR_W;
-		}
-		if (map_get(gd, map_pos->x, map_pos->y) == MAP_WALL)
-			hit = 1;
+		}		
+		int cell = map_get(gd, map_pos->x, map_pos->y);
+        if (cell == MAP_WALL)
+            hit = 1;
+        else if (cell == 'D')
+        {
+			double door_dist;
+			double wall_x;
+			double wall_y;
+
+			if (ray->side_hit == RAY_HIT_N_OR_S)
+			{
+				door_dist = (map_pos->x - gd->player.pos.x + (1 - ray->step.x) / 2) / ray->dir.x;
+				wall_y = gd->player.pos.y + door_dist * ray->dir.y;
+				wall_y -= floor(wall_y);
+				if (wall_y < (1.0 - get_door_offset(gd, map_pos->x, map_pos->y)))
+				{
+					hit = 1;
+					ray->perp_dist = door_dist;
+					ray->hit_door = 1;
+				}
+			}
+			else
+			{
+				door_dist = (map_pos->y - gd->player.pos.y + (1 - ray->step.y) / 2) / ray->dir.y;
+				wall_x = gd->player.pos.x + door_dist * ray->dir.x;
+				wall_x -= floor(wall_x);
+				if (wall_x < (1.0 - get_door_offset(gd, map_pos->x, map_pos->y)))
+				{
+					hit = 1;
+					ray->perp_dist = door_dist;
+					ray->hit_door = 1;
+				}
+        }
+	}
 	}
 }
 

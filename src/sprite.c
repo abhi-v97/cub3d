@@ -12,21 +12,6 @@
 
 #include "cub3d.h"
 
-typedef struct s_sprite
-{
-	double	x;
-	double	y;
-	double	inv_det;
-	double	transform_x;
-	double	transform_y;
-	int		sprite_screen_x;
-	int		sprite_size;
-	int		draw_start_x;
-	int		draw_start_y;
-	int		draw_end_x;
-	int		draw_end_y;
-}	t_sprite;
-
 static void	calc_sprite_info(t_gdata *gd, t_sprite *sp);
 static void	render(t_gdata *gd, t_sprite *sp);
 

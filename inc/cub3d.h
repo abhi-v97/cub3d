@@ -22,7 +22,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <math.h>
 # include "mlx.h"
 
 # ifndef W_WIDTH
@@ -94,6 +93,7 @@ typedef enum e_cardinal
 	FLOOR,
 	CEILING,
 	SPRITE,
+	DOOR,
 }	t_cardinal;
 
 typedef enum e_direction_elements
@@ -153,6 +153,8 @@ typedef struct s_ray
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
+	int		hit_door;
+	int		door_side;
 	double	perp_dist;
 	t_pos	dir;
 	t_pos	delta_dist;
@@ -167,6 +169,29 @@ typedef struct s_minimap
 	int		**colour_array;
 }	t_minimap;
 
+typedef struct s_sprite
+{
+	double	x;
+	double	y;
+	double	inv_det;
+	double	transform_x;
+	double	transform_y;
+	int		sprite_screen_x;
+	int		sprite_size;
+	int		draw_start_x;
+	int		draw_start_y;
+	int		draw_end_x;
+	int		draw_end_y;
+}	t_sprite;
+
+typedef struct	s_door
+{
+	int		x;
+	int		y;
+	int		status;
+	int		old_time;
+	float	offset;
+}	t_door;
 
 /*
  *	gdata - Game data
@@ -196,6 +221,8 @@ typedef struct s_gdata
 	double		old_time;
 	double		frame_time;
 	int			exit_status;
+	t_door		door[16];
+	int			num_doors;
 	t_minimap	minimap;
 	double		z_buffer[W_WIDTH];
 }	t_gdata;
@@ -311,7 +338,11 @@ void	update_frame_time(t_gdata *gd);
 void	draw_sprite(t_gdata *gd);
 
 // BONUS render/minimap.c
-int	**minimap_colours(t_gdata *gd);
+int		**minimap_colours(t_gdata *gd);
 void	render_minimap(t_gdata *gd);
+
+// door.c
+void	find_doors(t_gdata *gd);
+void	draw_door(t_gdata *gd);
 
 #endif

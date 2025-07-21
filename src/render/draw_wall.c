@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <math.h>
 
 static int	set_texinfo_dir(t_ray *ray);
 static void	set_texinfo(t_gdata *data, t_ray ray, t_texinfo *texinfo);
@@ -44,6 +45,8 @@ void	draw_wall(t_gdata *data, t_ray ray, int x)
 
 	set_texinfo(data, ray, &texinfo);
 	tex.x = (int)(texinfo.wall_x * data->tex_size);
+	// if (ray.hit_door)
+	// 	tex.x -= data->tex_size * 0.4;
 	if ((ray.side_hit == 0 && ray.dir.x < 0)
 		|| (ray.side_hit == 1 && ray.dir.y > 0))
 		tex.x = data->tex_size - tex.x - 1;
@@ -78,6 +81,8 @@ static inline void	set_texinfo(t_gdata *data, t_ray ray, t_texinfo *texinfo)
 
 static int	set_texinfo_dir(t_ray *ray)
 {
+	if (ray->hit_door == 1)
+		return (NORTH);
 	if (ray->side_hit == RAY_HIT_E_OR_W)
 	{
 		if (ray->dir.y < 0)

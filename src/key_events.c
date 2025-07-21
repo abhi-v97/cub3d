@@ -12,6 +12,7 @@
 
 #include "cub3d.h"
 #include <stdbool.h>
+#include <math.h>
 
 static void	move_player(t_gdata *gd, double dx, double dy, double move_speed);
 static void	rotate_player(t_gdata *gd, double rot_speed);
@@ -79,6 +80,20 @@ void	handle_key_presses(t_gdata *gd)
 		rotate_player(gd, rot_speed);
 }
 
+int	wall_status(t_gdata *gd, int x, int y)
+{
+	int		i;
+
+	i = 0;
+	while (i < gd->num_doors)
+	{
+		if (gd->door[i].x == x && gd->door[i].y == y)
+			return (gd->door[i].status);
+		i++;
+	}
+	return (1);
+}
+
 static void	move_player(t_gdata *gd, double dx, double dy, double move_speed)
 {
 	int		x;
@@ -91,7 +106,7 @@ static void	move_player(t_gdata *gd, double dx, double dy, double move_speed)
 		else
 			x = (int)(gd->player.pos.x + dx * move_speed - WALL_MAX_CLOSENESS);
 		y = (int)(gd->player.pos.y);
-		if (map_get(gd, x, y) != MAP_WALL)
+		if (map_get(gd, x, y) != MAP_WALL && wall_status(gd, x, y))
 			gd->player.pos.x += dx * move_speed;
 	}
 	if (dy != 0)
@@ -101,7 +116,7 @@ static void	move_player(t_gdata *gd, double dx, double dy, double move_speed)
 			y = (int)(gd->player.pos.y + dy * move_speed + WALL_MAX_CLOSENESS);
 		else
 			y = (int)(gd->player.pos.y + dy * move_speed - WALL_MAX_CLOSENESS);
-		if (map_get(gd, x, y) != MAP_WALL)
+		if (map_get(gd, x, y) != MAP_WALL && wall_status(gd, x, y))
 			gd->player.pos.y += dy * move_speed;
 	}
 }

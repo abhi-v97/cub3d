@@ -96,7 +96,7 @@ static int	check_invalid_char(t_gdata *gd, char **map, int map_height)
 		{
 			if (map[row][col] == ' ')
 				;
-			else if (!ft_strchr("01NSWE", map[row][col]))
+			else if (!ft_strchr("01NSWED", map[row][col]))
 				return (ft_error("Invalid character found in map!"),
 					exit_status(gd, EMAPINVCHAR));
 			col++;
