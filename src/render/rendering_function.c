@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   rendering_function.c							   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: aistok <aistok@student.42london.com>	   +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2025/06/30 17:23:16 by aistok			#+#	#+#			 */
-/*   Updated: 2025/07/09 22:22:38 by aistok		   ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rendering_function.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-07-22 15:52:09 by abhi              #+#    #+#             */
+/*   Updated: 2025-07-22 15:52:09 by abhi             ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
@@ -26,7 +26,8 @@ int	rendering_function(void *param)
 	int		x;
 
 	gd = (t_gdata *)param;
-	render_background(gd);
+	// TODO: add logic to correctly handle RGB instead of texture
+	floor_cast(gd);
 	x = -1;
 	while (++x < W_WIDTH)
 	{

@@ -193,6 +193,16 @@ typedef struct	s_door
 	float	offset;
 }	t_door;
 
+typedef struct s_floor
+{
+	float		step_x;
+	float		step_y;
+	float		floor_x;
+	float		floor_y;
+	float		row_dist;
+	t_ray		ray;
+}	t_floor;
+
 /*
  *	gdata - Game data
  *
@@ -347,5 +357,8 @@ void	wall_anim(t_gdata *gd);
 void	open_sesame(t_gdata *gd);
 float	get_door_offset(t_gdata *gd, int x, int y);
 int		door_calc(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
+
+// floor_cast.c
+void	floor_cast(t_gdata *gd);
 
 #endif
