@@ -12,29 +12,6 @@
 
 #include "cub3d.h"
 
-void	find_doors(t_gdata *gd)
-{
-	int		row;
-	int		col;
-	int		i;
-
-	row = -1;
-	i = 0;
-	while (++row < gd->map_height)
-	{
-		col = -1;
-		while (++col < gd->map_width)
-		{
-			if (gd->map[row][col] == 'D')
-			{
-				gd->door[i].x = col;		
-				gd->door[i++].y = row;		
-			}
-		}
-	}
-	gd->num_doors = i;
-}
-
 int	main(int argc, char **argv)
 {
 	t_gdata		gdata;

@@ -18,42 +18,51 @@ int	set_colour(t_gdata *gd, int row, int col)
 
 	colour = 0;
 	if (ft_strchr("NSWE0", gd->map[row][col]))
-		colour = 0xD7D7D7; // grey
+		colour = 0xD7D7D7;
 	else if (gd->map[row][col] == '1')
-		colour = 0xFE7743; // orange
+		colour = 0xFE7743;
 	else
-		colour = 0x273F4F; // dark blue
-
+		colour = 0x273F4F;
 	return (colour);
-
 }
 
 int	**minimap_colours(t_gdata *gd)
 {
 	int	**array;
+	int	row;
+	int	col;
 
-	(void) gd;
 	array = ft_calloc(sizeof(int *), gd->map_height + 1);
 	if (array == NULL)
 		return (NULL);
-	for (int row = 0; row < gd->map_height; row++)
+	row = 0;
+	while (row < gd->map_height)
 	{
 		array[row] = ft_calloc(sizeof(int), gd->map_width + 1);
-		for (int col = 0; col < gd->map_width; col++)
+		col = 0;
+		while (col < gd->map_width)
 		{
 			array[row][col] = set_colour(gd, row, col);
+			col++;
 		}
+		row++;
 	}
 	return (array);
 }
 
 // alpha: 0 (fully bg) to 255 (fully fg)
-int blend(int fg, int bg, int alpha)
+int	blend(int fg, int bg, int alpha)
 {
-    int r = ((fg >> 16) & 0xFF) * alpha / 255 + ((bg >> 16) & 0xFF) * (255 - alpha) / 255;
-    int g = ((fg >> 8) & 0xFF) * alpha / 255 + ((bg >> 8) & 0xFF) * (255 - alpha) / 255;
-    int b = (fg & 0xFF) * alpha / 255 + (bg & 0xFF) * (255 - alpha) / 255;
-    return (r << 16) | (g << 8) | b;
+	int		r;
+	int		g;
+	int		b;
+
+	r = ((fg >> 16) & 0xFF) * alpha / 255 + ((bg >> 16) & 0xFF) * (255 - alpha)
+		/ 255;
+	g = ((fg >> 8) & 0xFF) * alpha / 255 + ((bg >> 8) & 0xFF) * (255 - alpha)
+		/ 255;
+	b = (fg & 0xFF) * alpha / 255 + (bg & 0xFF) * (255 - alpha) / 255;
+	return ((r << 16) | (g << 8) | b);
 }
 
 int	bg_colour(t_canvas *canvas, int x, int y)
@@ -63,7 +72,6 @@ int	bg_colour(t_canvas *canvas, int x, int y)
 	dst = (char *)canvas->addr + (y * canvas->ll + x * (canvas->bpp / 8));
 	return (*(unsigned int *)dst);
 }
-
 
 // 400: minimap size squared, 20 * 20
 // change to a macro or precalculate it to save performance
@@ -80,7 +88,8 @@ void	draw_block(t_gdata *gd, int x_offset, int y_offset, int colour)
 	{
 		x = i % 20 + 20;
 		y = i / 20 + 20;
-		put_pixel(&gd->canvas, x + x_offset, y + y_offset, blend(colour, bg_colour(&gd->canvas, x + x_offset, y + y_offset), 128));
+		put_pixel(&gd->canvas, x + x_offset, y + y_offset, blend(colour,
+				bg_colour(&gd->canvas, x + x_offset, y + y_offset), 128));
 		i++;
 	}
 }
@@ -115,7 +124,6 @@ void	render_minimap(t_gdata *gd)
 		{
 			bg_colour(&gd->canvas, x * 20, y * 20);
 			draw_block(gd, x * 20, y * 20, fetch_colour(gd, x, y));
-			// draw_block(gd, x * 20, y * 20, blend(fetch_colour(gd, x, y), bg_colour(&gd->canvas, x * 20, y * 20), 128));
 			y++;
 		}
 		x++;

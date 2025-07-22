@@ -46,10 +46,10 @@ static void	init_gdata(t_gdata *gd)
 // will free everything, no need for cleanup outside for alloc_textures
 static int	alloc_textures(t_gdata *gd)
 {
-	gd->tex_rgb = ft_calloc(sizeof(int), 7);
+	gd->tex_rgb = ft_calloc(sizeof(int), 8);
 	if (!gd->tex_rgb)
 		return (exit_status(gd, ENOMEM));
-	gd->textures = ft_calloc(sizeof(int *), 7);
+	gd->textures = ft_calloc(sizeof(int *), 8);
 	if (!gd->textures)
 		return (free(gd->tex_rgb), exit_status(gd, ENOMEM));
 	return (EXIT_SUCCESS);

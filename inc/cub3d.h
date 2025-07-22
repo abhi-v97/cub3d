@@ -343,6 +343,9 @@ void	render_minimap(t_gdata *gd);
 
 // door.c
 void	find_doors(t_gdata *gd);
-void	draw_door(t_gdata *gd);
+void	wall_anim(t_gdata *gd);
+void	open_sesame(t_gdata *gd);
+float	get_door_offset(t_gdata *gd, int x, int y);
+int		door_calc(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 
 #endif

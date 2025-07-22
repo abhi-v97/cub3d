@@ -3,14 +3,14 @@
  WE textures/wolfenstein/purplestone.xpm
  EA textures/wolfenstein/wood.xpm
  SP textures/wolfenstein/barrel.xpm
- DO textures/wolfenstein/redbrick.xpm
+ DO textures/wolfenstein/door.xpm
 
  F 220,100,0
  C 225,30,0
 
 11111111    
 10001001
-10001D11
-10E0D001
+1E001001
+1000D001
 10111001
 111 1111  
