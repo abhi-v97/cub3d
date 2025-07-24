@@ -35,7 +35,7 @@ static void	init_gdata(t_gdata *gd)
 	gd->player.pos.x = 0.0;
 	gd->player.pos.y = 0.0;
 	gd->player_direction = 0;
-	memset(gd->keys, 0, KEY_COUNT * sizeof(int));
+	ft_memset(gd->keys, 0, KEY_COUNT * sizeof(int));
 	gd->win_center.x = W_WIDTH / 2;
 	gd->win_center.y = W_HEIGHT / 2;
 	gd->time = 0;

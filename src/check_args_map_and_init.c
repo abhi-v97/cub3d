@@ -28,7 +28,7 @@ int	check_args_map_and_init(t_gdata *gd, int argc, char **argv)
 	if (failed(init_all(gd)))
 		return (gd->exit_status);
 	if (failed(parse_file(gd, argv[1])))
-		return (gd->exit_status);
+		return (cleanup(gd), gd->exit_status);
 	if (failed(check_map(gd)))
 		return (cleanup(gd), exit_status(gd, 1));
 	gd->player.pos = player_get_pos_from_map(gd);
