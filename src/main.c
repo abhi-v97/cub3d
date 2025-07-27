@@ -12,11 +12,20 @@
 
 #include "cub3d.h"
 
+void	weapon_fire(t_gdata *gd)
+{
+	if (gd->weapon_state == 0)
+	{
+		gd->weapon_state = 1;
+		gd->weapon_frame = 1;
+	}
+}
+
 int	mouse_events(int button, int x, int y, t_gdata *gd)
 {
 	printf("i: %i %i %i %i\n", button, x, y, x);
 	if (button == 1) // left click
-		gd->weapon_frame++;
+		weapon_fire(gd);
 	return (0);
 }
 

@@ -80,30 +80,28 @@ void	open_sesame(t_gdata *gd)
 void	wall_anim(t_gdata *gd)
 {
 	int			i;
-	static int	time;
 
 	i = 0;
-	time = get_time_stamp();
 	while (i < gd->num_doors)
 	{
 		if (gd->old_time == 0)
-			gd->door[i].old_time = time;
+			gd->door[i].old_time = gd->time;
 		if (gd->door[i].status == 2)
 		{
-			if ((time - gd->door[i].old_time) > 30000)
+			if ((gd->time - gd->door[i].old_time) > 30000)
 			{
 				gd->door[i].offset += 0.1;
-				gd->door[i].old_time = time;
+				gd->door[i].old_time = gd->time;
 			}
 			if (gd->door[i].offset >= 1.0)
 				gd->door[i].status = 1;
 		}
 		else if (gd->door[i].status == 3)
 		{
-			if ((time - gd->door[i].old_time) > 30000)
+			if ((gd->time - gd->door[i].old_time) > 30000)
 			{
 				gd->door[i].offset -= 0.1;
-				gd->door[i].old_time = time;
+				gd->door[i].old_time = gd->time;
 			}
 			if (gd->door[i].offset <= 0.0)
 				gd->door[i].status = 0;

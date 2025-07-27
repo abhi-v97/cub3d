@@ -18,6 +18,28 @@ static void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 static int	line_height(t_gdata *gd, t_ray *ray);
 static void	calc_draw_distance(t_ray *ray);
 
+void	weapon_shoot(t_gdata *gd)
+{
+	static int		old_time;
+	
+	if (!old_time)
+		old_time = gd->time;
+	if (gd->weapon_state == 1)
+	{
+		if (gd->time - old_time > 50000)
+		{
+			gd->weapon_frame++;
+			old_time = gd->time;
+		}
+		if (gd->weapon_frame == 5)
+		{
+			gd->weapon_state = 0;
+			gd->weapon_frame = 0;
+		}
+	}
+	
+}
+
 int	rendering_function(void *param)
 {
 	t_gdata	*gd;
@@ -44,6 +66,7 @@ int	rendering_function(void *param)
 	open_sesame(gd);
 	wall_anim(gd);
 	draw_weapon(gd);
+	weapon_shoot(gd);
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
 	update_frame_time(gd);
 	handle_key_presses(gd);
