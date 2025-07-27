@@ -15,7 +15,6 @@
 #include <math.h>
 
 static void	move_player(t_gdata *gd, double dx, double dy, double move_speed);
-static void	rotate_player(t_gdata *gd, double rot_speed);
 
 int	key_press(int key, t_gdata *gd)
 {
@@ -123,7 +122,7 @@ static void	move_player(t_gdata *gd, double dx, double dy, double move_speed)
 	}
 }
 
-static void	rotate_player(t_gdata *gd, double rot_speed)
+void	rotate_player(t_gdata *gd, double rot_speed)
 {
 	double		tmp;
 

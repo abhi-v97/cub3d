@@ -324,6 +324,7 @@ t_ipos	pos_dtoi(t_pos dpos);
 int		key_press(int key, t_gdata *gdata);
 int		key_release(int key, t_gdata *gdata);
 void	handle_key_presses(t_gdata *data);
+void	rotate_player(t_gdata *gd, double rot_speed);
 
 // debug.c
 void	debug_print_map_info(t_gdata *data);

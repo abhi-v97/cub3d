@@ -41,6 +41,7 @@ int	main(int argc, char **argv)
 	mlx_hook(gdata.win, KeyRelease, KeyReleaseMask, key_release, &gdata);
 	mlx_hook(gdata.win, DestroyNotify, NoEventMask, mlx_loop_end, gdata.mlx);
 	mlx_mouse_hook(gdata.win, mouse_events, &gdata);
+	// mlx_hook(gdata.win,  06, 1L << 6,mouse_move, &gdata);
 	mlx_loop_hook(gdata.mlx, rendering_function, &gdata);
 	mlx_loop(gdata.mlx);
 	cleanup(&gdata);

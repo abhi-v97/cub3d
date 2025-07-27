@@ -40,6 +40,22 @@ void	weapon_shoot(t_gdata *gd)
 	
 }
 
+
+int	mouse_move(t_gdata *gd)
+{
+	int	x, y;
+	double		rot_speed;
+
+	rot_speed = gd->frame_time * 3.0 * 8;
+	mlx_mouse_get_pos(gd->mlx, gd->win, &x, &y);
+	if (x < W_WIDTH / 3)
+		rotate_player(gd, -rot_speed);
+	else if (x > (W_WIDTH  * 2 / 3))
+		rotate_player(gd, rot_speed);
+	return (0);
+}
+
+
 int	rendering_function(void *param)
 {
 	t_gdata	*gd;
@@ -70,6 +86,7 @@ int	rendering_function(void *param)
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
 	update_frame_time(gd);
 	handle_key_presses(gd);
+	mouse_move(gd);
 	return (1);
 }
 
