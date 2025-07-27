@@ -13,8 +13,6 @@
 #include "cub3d.h"
 
 static int		*parse_xpm(t_gdata *data, char *path);
-static void		init_img(t_canvas *img);
-static char		*get_texture_path(char *buffer);
 static int		set_rgb(char *path);
 
 int	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
@@ -62,7 +60,7 @@ static int	*parse_xpm(t_gdata *data, char *path)
 	return (mlx_destroy_image(data->mlx, img.img), array);
 }
 
-static void	init_img(t_canvas *img)
+void	init_img(t_canvas *img)
 {
 	img->img = NULL;
 	img->addr = NULL;
@@ -79,9 +77,8 @@ static void	init_img(t_canvas *img)
 // len: length of the path plus whitespace
 // ft_strndup(buffer + i, len - i - 1)
 // buffer + i tells strndup to begin copying from where the whitespace ends
-// len - i - 1: len - i to subtract the whitespace chars from len, and 
-// another -1 to subtract the '/n' char from gnl
-static char	*get_texture_path(char *buffer)
+// len - i: len - i to subtract the whitespace chars from len
+char	*get_texture_path(char *buffer)
 {
 	int		i;
 	int		len;
@@ -91,11 +88,11 @@ static char	*get_texture_path(char *buffer)
 	while (buffer[i] && is_blank(buffer[i]))
 		i++;
 	len = i;
-	while (buffer[len] && !is_blank(buffer[len] && buffer[len] != '\n'))
+	while (buffer[len] && !is_blank(buffer[len]) && buffer[len] != '\n')
 		len++;
 	if (buffer[i] == '\0')
 		return (NULL);
-	result = ft_strndup(buffer + i, len - i - 1);
+	result = ft_strndup(buffer + i, len - i);
 	if (!result)
 		return (NULL);
 	return (result);

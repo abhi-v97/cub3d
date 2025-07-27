@@ -41,6 +41,7 @@ static void	init_gdata(t_gdata *gd)
 	gd->time = 0;
 	gd->old_time = 0;
 	gd->file_fd = -1;
+	gd->weapon_frame = 0;
 }
 
 // will free everything, no need for cleanup outside for alloc_textures

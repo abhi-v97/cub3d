@@ -12,6 +12,14 @@
 
 #include "cub3d.h"
 
+int	mouse_events(int button, int x, int y, t_gdata *gd)
+{
+	printf("i: %i %i %i %i\n", button, x, y, x);
+	if (button == 1) // left click
+		gd->weapon_frame++;
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_gdata		gdata;
@@ -23,6 +31,7 @@ int	main(int argc, char **argv)
 	mlx_hook(gdata.win, KeyPress, KeyPressMask, key_press, &gdata);
 	mlx_hook(gdata.win, KeyRelease, KeyReleaseMask, key_release, &gdata);
 	mlx_hook(gdata.win, DestroyNotify, NoEventMask, mlx_loop_end, gdata.mlx);
+	mlx_mouse_hook(gdata.win, mouse_events, &gdata);
 	mlx_loop_hook(gdata.mlx, rendering_function, &gdata);
 	mlx_loop(gdata.mlx);
 	cleanup(&gdata);

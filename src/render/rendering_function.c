@@ -43,6 +43,7 @@ int	rendering_function(void *param)
 	draw_sprite(gd);
 	open_sesame(gd);
 	wall_anim(gd);
+	draw_weapon(gd);
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
 	update_frame_time(gd);
 	handle_key_presses(gd);

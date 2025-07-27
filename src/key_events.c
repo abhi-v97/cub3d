@@ -33,6 +33,8 @@ int	key_press(int key, t_gdata *gd)
 		gd->keys[KEY_A] = true;
 	else if (key == XK_p)
 		debug_print(gd);
+	else if (key == 0)
+		printf("foo");
 	return (1);
 }
 

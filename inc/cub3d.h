@@ -15,6 +15,7 @@
 
 # include <X11/X.h>
 # include <X11/keysym.h>
+#include <X11/keysymdef.h>
 # include <string.h>
 # include <stdio.h>
 # include <stdbool.h>
@@ -94,6 +95,7 @@ typedef enum e_cardinal
 	CEILING,
 	SPRITE,
 	DOOR,
+	WEAPON,
 }	t_cardinal;
 
 typedef enum e_direction_elements
@@ -235,6 +237,10 @@ typedef struct s_gdata
 	int			num_doors;
 	t_minimap	minimap;
 	double		z_buffer[W_WIDTH];
+	int			*weapon;
+	int			weapon_width;
+	int			weapon_height;
+	int			weapon_frame;
 }	t_gdata;
 
 // libft funcs
@@ -280,8 +286,9 @@ int		parse_texture_data(t_gdata *data, char *buffer);
 
 // parsing/set_textures.c
 int		set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
-
+void	init_img(t_canvas *img);
 int		check_args_map_and_init(t_gdata *gd, int argc, char **argv);
+char	*get_texture_path(char *buffer);
 
 // error.c
 void	ft_error(char *msg);
@@ -360,5 +367,9 @@ int		door_calc(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 
 // floor_cast.c
 void	floor_cast(t_gdata *gd);
+
+// weapon.c
+int		set_weapon(t_gdata *gd, char *buffer);
+void	draw_weapon(t_gdata *gd);
 
 #endif
