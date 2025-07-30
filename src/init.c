@@ -43,6 +43,7 @@ static void	init_gdata(t_gdata *gd)
 	gd->file_fd = -1;
 	gd->weapon_frame = 0;
 	gd->weapon_state = 0;
+	gd->current_weapon = 0;
 }
 
 // will free everything, no need for cleanup outside for alloc_textures
@@ -52,6 +53,7 @@ static int	alloc_textures(t_gdata *gd)
 	if (!gd->tex_rgb)
 		return (exit_status(gd, ENOMEM));
 	gd->textures = ft_calloc(sizeof(int *), 8);
+	gd->weapon = ft_calloc(sizeof(int *), 5);
 	if (!gd->textures)
 		return (free(gd->tex_rgb), exit_status(gd, ENOMEM));
 	return (EXIT_SUCCESS);

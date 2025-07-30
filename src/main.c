@@ -36,6 +36,7 @@ int	main(int argc, char **argv)
 	if (failed(check_args_map_and_init(&gdata, argc, argv)))
 		return (gdata.exit_status);
 	gdata.minimap.colour_array = minimap_colours(&gdata);
+	set_weapon(&gdata);
 	find_doors(&gdata);
 	mlx_hook(gdata.win, KeyPress, KeyPressMask, key_press, &gdata);
 	mlx_hook(gdata.win, KeyRelease, KeyReleaseMask, key_release, &gdata);

@@ -237,7 +237,8 @@ typedef struct s_gdata
 	int			num_doors;
 	t_minimap	minimap;
 	double		z_buffer[W_WIDTH];
-	int			*weapon;
+	int			**weapon;
+	int			current_weapon;
 	int			weapon_width;
 	int			weapon_height;
 	int			weapon_frame;
@@ -371,7 +372,7 @@ int		door_calc(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 void	floor_cast(t_gdata *gd);
 
 // weapon.c
-int		set_weapon(t_gdata *gd, char *buffer);
+int		set_weapon(t_gdata *gd);
 void	draw_weapon(t_gdata *gd);
 
 #endif
