@@ -31,11 +31,8 @@ int	check_args_map_and_init(t_gdata *gd, int argc, char **argv)
 		return (cleanup(gd), gd->exit_status);
 	if (failed(check_map(gd)))
 		return (cleanup(gd), exit_status(gd, 1));
-	gd->player.pos = player_get_pos_from_map(gd);
+	if (set_player_pos(gd))
+		return (exit_status(gd, EMAPPLAYEROUTOFBOUNDS));
 	player_set_direction(gd);
-	// if (gd->player.pos.x > 0 && gd->player.pos.y > 0
-	// 	&& player_outside_map(gd, gd->player.pos))
-	// 	return (ft_error("Player out of bounds!"),
-	// 		exit_status(gd, EMAPPLAYEROUTOFBOUNDS));
 	return (exit_status(gd, EXIT_SUCCESS));
 }

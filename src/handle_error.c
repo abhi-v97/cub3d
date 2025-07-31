@@ -26,5 +26,9 @@ int	handle_error(int return_code, int argc, char **argv)
 		ft_error("failed to initialize mlx image!");
 	else if (return_code == EINVMAP)
 		ft_error("invalid map!");
+	else if (return_code == EMAPINVCHAR)
+		ft_error("Invalid character found in map!");
+	else if (return_code == E_INV_PLAYER)
+		ft_error("Map has none or too many players!");
 	return (return_code);
 }

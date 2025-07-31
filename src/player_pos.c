@@ -12,41 +12,31 @@
 
 #include "cub3d.h"
 
-static t_pos	pos_init_to_invalid_pos(void);
-static t_pos	pos_set_to(double x, double y);
+static t_pos	set_pos(double x, double y);
 
-t_pos	player_get_pos_from_map(t_gdata *gdata)
+int	set_player_pos(t_gdata *gd)
 {
 	char	**map;
 	char	c;
 	int		row;
 	int		col;
 
-	map = gdata->map;
+	map = gd->map;
 	row = -1;
-	while (++row < gdata->map_height)
+	while (++row < gd->map_height)
 	{
 		col = -1;
-		while (++col < gdata->map_width)
+		while (++col < gd->map_width)
 		{
 			c = map[row][col];
 			if (c != '\0' && ft_strchr("NSEW", c))
-				return (pos_set_to(0.5 + col, 0.5 + row));
+				return (set_pos(0.5 + col, 0.5 + row), 0);
 		}
 	}
-	return (pos_init_to_invalid_pos());
+	return (1);
 }
 
-static t_pos	pos_init_to_invalid_pos(void)
-{
-	t_pos	pos;
-
-	pos.x = -1;
-	pos.y = -1;
-	return (pos);
-}
-
-static t_pos	pos_set_to(double x, double y)
+static t_pos	set_pos(double x, double y)
 {
 	t_pos	pos;
 

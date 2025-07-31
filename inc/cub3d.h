@@ -49,8 +49,9 @@
 # define EMAPVBORDER 22
 # define EMAPEMPTY 23
 # define EMAPINVCHAR 24
-# define EMAPTOOMANYPLAYERS 25
-# define EMAPNOPLAYERS 26
+// # define EMAPTOOMANYPLAYERS 25
+// # define EMAPNOPLAYERS 26
+# define E_INV_PLAYER 26
 # define EMAPPLAYEROUTOFBOUNDS 27
 # define EMAPWALLMISSING 28
 # define EMISSINGTEXTURE 29
@@ -261,7 +262,7 @@ void	fill_all(t_canvas *canvas, int color);
 
 // player_get_pos.c
 int		player_outside_map(t_gdata *data, t_pos pos);
-t_pos	player_get_pos_from_map(t_gdata *gdata);
+int		set_player_pos(t_gdata *gdata);
 t_ipos	pos_dtoi(t_pos dpos);
 
 // key_events.c
