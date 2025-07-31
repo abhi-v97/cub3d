@@ -30,5 +30,7 @@ int	handle_error(int return_code, int argc, char **argv)
 		ft_error("Invalid character found in map!");
 	else if (return_code == E_INV_PLAYER)
 		ft_error("Map has none or too many players!");
+	else if (return_code == EMISSINGTEXTURE)
+		ft_error("Missing texture!");
 	return (return_code);
 }

@@ -29,11 +29,9 @@ int	parse_file(t_gdata *gd, char *file_name)
 		return (ft_perror(), exit_status(gd, ENOMEM));
 	gd->file_fd = open(file_name, O_RDONLY);
 	if (gd->file_fd < 0)
-		return (ft_error(strerror(errno)),
-			free(gd->map), exit_status(gd, EFAILOPENFILE));
+		return (ft_perror(), exit_status(gd, EFAILOPENFILE));
 	if (failed(map_fill(gd, gd->map, gd->file_fd)))
-		return (close_fd(&gd->file_fd), free_array(gd->map),
-			gd->exit_status);
+		return (close_fd(&gd->file_fd), gd->exit_status);
 	return (EXIT_SUCCESS);
 }
 

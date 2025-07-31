@@ -232,7 +232,7 @@ int		check_map_bounds(t_gdata *gd, char **map, int map_height);
 int		parse_texture_data(t_gdata *data, char *buffer);
 
 // parsing/set_textures.c
-int		set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
+void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
 
 int		check_args_map_and_init(t_gdata *gd, int argc, char **argv);
 
@@ -261,8 +261,7 @@ void	put_ver_line(t_canvas *canvas, int x, t_ray *ray, int color);
 void	fill_all(t_canvas *canvas, int color);
 
 // player_get_pos.c
-int		player_outside_map(t_gdata *data, t_pos pos);
-int		set_player_pos(t_gdata *gdata);
+int		set_start_pos(t_gdata *gdata);
 t_ipos	pos_dtoi(t_pos dpos);
 
 // key_events.c

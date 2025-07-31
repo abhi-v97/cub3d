@@ -17,22 +17,24 @@ static void		init_img(t_canvas *img);
 static char		*get_texture_path(char *buffer);
 static int		set_rgb(char *path);
 
-int	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
+void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
 {
 	char	*path;
 
 	if (data->textures[wall_dir] || data->tex_rgb[wall_dir])
-		return (0);
+		return ;
 	path = get_texture_path(buffer);
+	if (!path)
+		return ;
 	if (path && ft_strchr(path, '/'))
 	{
 		data->textures[wall_dir] = parse_xpm(data, path);
 		if (!data->textures[wall_dir])
-			return (free(path), 1);
+			return (free(path));
 	}
 	else if (path && (path[0] >= '0' && path[0] <= '9'))
 		data->tex_rgb[wall_dir] = set_rgb(path);
-	return (free(path), 0);
+	return (free(path));
 }
 
 static int	*parse_xpm(t_gdata *data, char *path)

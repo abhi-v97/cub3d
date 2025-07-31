@@ -17,7 +17,6 @@ static int		missing_textures(t_gdata *gd);
 
 // copy contents of map file into map array
 // updates gd->map_height to total count of rows
-//
 // first while loop checks for texture data, breaks once it hits the map
 int	map_fill(t_gdata *gd, char **map, int fd)
 {
@@ -33,18 +32,17 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
-	if (missing_textures(gd))
-		return (free(buffer), gd->exit_status);
 	while (buffer)
 	{
 		if (copy_buffer_error(gd, buffer, map, row++))
-			return (free_array(map), free(buffer), cleanup_textures(gd),
-				ft_perror(), gd->exit_status);
+			return (free(buffer), ft_perror(), gd->exit_status);
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	map[row] = NULL;
 	gd->map_height = row;
+	if (missing_textures(gd))
+		return (gd->exit_status);
 	return (exit_status(gd, EXIT_SUCCESS));
 }
 
@@ -82,9 +80,7 @@ static int	missing_textures(t_gdata *gd)
 	while (dir <= WEST)
 	{
 		if (!gd->textures[dir] && !gd->tex_rgb[dir])
-			return (ft_error("Missing texture!"),
-				cleanup_textures(gd),
-				exit_status(gd, EMISSINGTEXTURE));
+			return (exit_status(gd, EMISSINGTEXTURE));
 		dir++;
 	}
 	return (exit_status(gd, EXIT_SUCCESS));
