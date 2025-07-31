@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 08:28:09 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/07 23:39:42 by aistok           ###   ########.fr       */
+/*   Updated: 2025-07-31 21:34:58 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	set_texture_info(t_gdata *gd, char *buffer);
 // blank lines in between texture paths
 // only returns 1 if set_texture_info returns 1, which a non-blank line was 
 // found and it did not contain texture info, ergo it must be the map
-int	parse_texture_data(t_gdata *gd, char *buffer)
+int	parse_textures(t_gdata *gd, char *buffer)
 {
 	int		i;
 

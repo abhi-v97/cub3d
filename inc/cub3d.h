@@ -25,6 +25,8 @@
 # include <math.h>
 # include "mlx.h"
 
+// ********** MACROS **********
+
 # ifndef W_WIDTH
 #  define W_WIDTH 1024
 # endif
@@ -79,6 +81,8 @@
 
 # define MAP_EMPTY_SPACE '0'
 # define MAP_WALL '1'
+
+// ********** STRUCTS **********
 
 typedef enum e_action
 {
@@ -190,7 +194,8 @@ typedef struct s_gdata
 	int			exit_status;
 }	t_gdata;
 
-// libft funcs
+// ********** LIBFT **********
+
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
@@ -205,41 +210,81 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
+void	ft_putstr_fd(char *s, int fd);
 
-// program_name.c
-char	*get_program_name(void);
-void	set_program_name(char *program_name);
-
-void	show_usage(int argc, char **argv);
-int		handle_error(int return_code, int argc, char **argv);
+// ********** PARSING **********
 
 // parsing/check_arg.c
 int		check_arg(t_gdata *gd, char *file_name);
 
-// parsing/parse_file.c
-int		parse_file(t_gdata *gdata, char *file_name);
+// parsing/check_map.c
+int		check_map(t_gdata *data);
+
+// parsing/check_map_bounds.c
+int		check_map_bounds(t_gdata *gd, char **map, int map_height);
 
 // parsing/map_fill.c
 int		map_fill(t_gdata *gd, char **map, int fd);
 
-// parsing/check_map_error.c
-int		check_map(t_gdata *data);
-
-// parsing/check_map_bounds_missing.c
-int		check_map_bounds(t_gdata *gd, char **map, int map_height);
+// parsing/parse_file.c
+int		parse_file(t_gdata *gdata, char *file_name);
 
 // parsing/parse_textures.c
-int		parse_texture_data(t_gdata *data, char *buffer);
+int		parse_textures(t_gdata *data, char *buffer);
 
 // parsing/set_textures.c
 void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
 
-int		check_args_map_and_init(t_gdata *gd, int argc, char **argv);
+// ********** RENDER **********
+
+// render/draw_wall.c
+void	draw_wall(t_gdata *data, t_ray ray, int x);
+
+// render/put_pixel.c
+void	put_pixel(t_canvas *canvas, int x, int y, int color);
+
+// render/ray_create.c
+t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos);
+
+// render/render_frame.c
+int		render_frame(void *param);
+
+// ********** THE REST **********
+
+// cleanup.c
+void	cleanup(t_gdata *gdata);
+void	free_data(t_gdata *data);
+void	free_array(char **array);
+
+// debug.c
+void	debug_print(t_gdata *data);
+void	debug_show_vars_after_init(t_gdata *gd);
 
 // error.c
+int		handle_error(int return_code, char **argv);
 void	ft_error(char *msg);
-void	ft_errmsg(char *msg);
 void	ft_perror(void);
+
+// fps.c
+void	update_frame_time(t_gdata *gd);
+
+// init.c
+int		init_map_data(t_gdata *gd);
+int		init_mlx(t_gdata *gd);
+
+// key_events.c
+int		key_press(int key, t_gdata *gdata);
+int		key_release(int key, t_gdata *gdata);
+void	handle_key_presses(t_gdata *data);
+
+// map_functions.c
+char	map_get(t_gdata *gd, int x, int y);
+void	map_set(t_gdata *gd, int x, int y, char c);
+t_ipos	pos_dtoi(t_pos dpos);
+
+// program_name.c
+char	*get_program_name(void);
+void	set_program_name(char *program_name);
 
 // utils.c
 int		is_blank(char c);
@@ -247,55 +292,5 @@ void	close_fd(int *fd);
 int		is_num(char c);
 int		exit_status(t_gdata *data, int exit_code);
 int		failed(int return_value);
-
-// init.c
-int		init_all(t_gdata *gd);
-int		init_map_data(t_gdata *gd);
-int		init_mlx(t_gdata *gd);
-
-// cleanup.c
-void	cleanup(t_gdata *gdata);
-void	free_data(t_gdata *data);
-void	free_array(char **array);
-
-void	put_pixel(t_canvas *canvas, int x, int y, int color);
-void	put_ver_line(t_canvas *canvas, int x, t_ray *ray, int color);
-void	fill_all(t_canvas *canvas, int color);
-
-// player_get_pos.c
-int		set_start_pos(t_gdata *gdata);
-t_ipos	pos_dtoi(t_pos dpos);
-
-// key_events.c
-int		key_press(int key, t_gdata *gdata);
-int		key_release(int key, t_gdata *gdata);
-void	handle_key_presses(t_gdata *data);
-
-// debug.c
-void	debug_print_map_info(t_gdata *data);
-void	debug_test_textures(t_gdata *data, int *texture, int offset);
-void	debug_print(t_gdata *data);
-
-// render/rendering_function.c
-int		rendering_function(void *param);
-
-// render/...
-int		rendering_function(void *param);
-void	draw_wall(t_gdata *data, t_ray ray, int x);
-void	player_set_direction(t_gdata *gd);
-void	draw_wall_plain(t_gdata *gd, t_ray *ray, int x, int color);
-void	render_background(t_gdata *gd);
-void	draw_ceiling(t_canvas *canvas, int color);
-void	draw_floor(t_canvas *canvas, int color);
-t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos);
-
-int		get_time_stamp(void);
-
-// map_functions.c
-char	map_get(t_gdata *gd, int x, int y);
-void	map_set(t_gdata *gd, int x, int y, char c);
-
-// fps.c
-void	update_frame_time(t_gdata *gd);
 
 #endif

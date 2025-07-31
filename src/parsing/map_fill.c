@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map_fill.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:19:27 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/13 23:23:15 by aistok           ###   ########.fr       */
+/*   Updated: 2025-07-31 21:34:19 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int		copy_buffer_error(t_gdata *gd, char *buf, char **map, int row);
+static int		set_map_row(t_gdata *gd, char *buf, char **map, int row);
 static int		missing_textures(t_gdata *gd);
 
 // copy contents of map file into map array
@@ -27,14 +27,14 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
-		if (parse_texture_data(gd, buffer))
+		if (parse_textures(gd, buffer))
 			break ;
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	while (buffer)
 	{
-		if (copy_buffer_error(gd, buffer, map, row++))
+		if (set_map_row(gd, buffer, map, row++))
 			return (free(buffer), ft_perror(), gd->exit_status);
 		free(buffer);
 		buffer = get_next_line(fd);
@@ -48,11 +48,7 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 
 // normalises each map line to have the same width
 // empty gaps are represented by a ' ' sign
-// actually, it doesn't need to be a dash, it can just be a
-// space character. so once we no longer need to print the
-// map with print_map_info, we can remove the while loop at the end
-// and replace the ' ' checks with ' '
-static int	copy_buffer_error(t_gdata *gd, char *buf, char **map, int row)
+static int	set_map_row(t_gdata *gd, char *buf, char **map, int row)
 {
 	char	*nl_char;
 
@@ -71,7 +67,8 @@ static int	copy_buffer_error(t_gdata *gd, char *buf, char **map, int row)
 // checks if each cardinal direction has a value in gd->textures or
 // gd->tex_rgb, which are calloc'd and will be zero if not set by
 // set_textures func
-// Only checks NWSE for now
+// Only checks NWSE for now, if floor or ceiling aren't set it defaults to
+// black
 static int	missing_textures(t_gdata *gd)
 {
 	t_cardinal	dir;

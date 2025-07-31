@@ -21,3 +21,8 @@ void	map_set(t_gdata *gd, int x, int y, char c)
 {
 	gd->map[y][x] = c;
 }
+
+t_ipos	pos_dtoi(t_pos dpos)
+{
+	return ((t_ipos){(int)dpos.x, (int)dpos.y});
+}

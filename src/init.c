@@ -14,16 +14,6 @@
 
 static int	alloc_textures(t_gdata *gd);
 
-int	init_all(t_gdata *gd)
-{
-	init_map_data(gd);
-
-	if (failed(init_mlx(gd)))
-		return (free(gd->textures),
-			free(gd->tex_rgb), gd->exit_status);
-	return (EXIT_SUCCESS);
-}
-
 int	init_map_data(t_gdata *gd)
 {
 	gd->map = NULL;
@@ -48,18 +38,6 @@ int	init_map_data(t_gdata *gd)
 	return (0);
 }
 
-// will free everything, no need for cleanup outside for alloc_textures
-static int	alloc_textures(t_gdata *gd)
-{
-	gd->tex_rgb = ft_calloc(sizeof(int), 7);
-	if (!gd->tex_rgb)
-		return (exit_status(gd, ENOMEM));
-	gd->textures = ft_calloc(sizeof(int *), 7);
-	if (!gd->textures)
-		return (free(gd->tex_rgb), exit_status(gd, ENOMEM));
-	return (EXIT_SUCCESS);
-}
-
 // will free everything, no need for cleanup outside for init_mlx
 int	init_mlx(t_gdata *gd)
 {
@@ -76,4 +54,16 @@ int	init_mlx(t_gdata *gd)
 	gd->canvas.w = W_WIDTH;
 	gd->canvas.h = W_HEIGHT;
 	return (exit_status(gd, EXIT_SUCCESS));
+}
+
+// will free everything, no need for cleanup outside for alloc_textures
+static int	alloc_textures(t_gdata *gd)
+{
+	gd->tex_rgb = ft_calloc(sizeof(int), 7);
+	if (!gd->tex_rgb)
+		return (exit_status(gd, ENOMEM));
+	gd->textures = ft_calloc(sizeof(int *), 7);
+	if (!gd->textures)
+		return (free(gd->tex_rgb), exit_status(gd, ENOMEM));
+	return (EXIT_SUCCESS);
 }

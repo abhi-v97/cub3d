@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_textures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:48:18 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/09 23:02:14 by aistok           ###   ########.fr       */
+/*   Updated: 2025-07-31 21:24:22 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static int	*parse_xpm(t_gdata *data, char *path)
 	return (mlx_destroy_image(data->mlx, img.img), array);
 }
 
+// helper function to initialse the temporary img struct needed by mlx
 static void	init_img(t_canvas *img)
 {
 	img->img = NULL;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rendering_function.c                               :+:      :+:    :+:   */
+/*   render_frame.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:23:16 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/09 22:22:38 by aistok           ###   ########.fr       */
+/*   Updated: 2025-07-31 21:25:43 by abhi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	line_height(t_gdata *gd, t_ray *ray);
 static void	calc_draw_distance(t_ray *ray);
 static void	draw_bg(t_gdata *gd, t_ray *ray, int x);
 
-int	rendering_function(void *param)
+int	render_frame(void *param)
 {
 	t_gdata	*gd;
 	t_ray	ray;
