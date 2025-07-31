@@ -250,10 +250,12 @@ int		failed(int return_value);
 
 // init.c
 int		init_all(t_gdata *gd);
+int		init_map_data(t_gdata *gd);
+int		init_mlx(t_gdata *gd);
 
 // cleanup.c
 void	cleanup(t_gdata *gdata);
-void	cleanup_textures(t_gdata *gd);
+void	free_data(t_gdata *data);
 void	free_array(char **array);
 
 void	put_pixel(t_canvas *canvas, int x, int y, int color);

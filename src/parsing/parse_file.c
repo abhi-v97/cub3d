@@ -21,6 +21,8 @@ static void		update_map_width(t_gdata *gd, char *buffer);
 // NOTE: will free everything, no need for cleanup outside for parse_file
 int	parse_file(t_gdata *gd, char *file_name)
 {
+	if (failed(init_map_data(gd)))
+		return (gd->exit_status);
 	gd->map_height = line_count(gd, file_name);
 	if (gd->map_height < 2 || gd->map_width < 2)
 		return (exit_status(gd, EINVMAP));

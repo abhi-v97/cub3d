@@ -13,8 +13,7 @@
 #include "cub3d.h"
 
 void		free_array(char **array);
-static void	free_data(t_gdata *data);
-void		cleanup_textures(t_gdata *gd);
+static void	cleanup_textures(t_gdata *gd);
 
 void	cleanup(t_gdata *gdata)
 {
@@ -45,7 +44,7 @@ void	free_array(char **array)
 	free(array);
 }
 
-static void	free_data(t_gdata *data)
+void	free_data(t_gdata *data)
 {
 	close_fd(&data->file_fd);
 	if (data->map)
@@ -53,7 +52,7 @@ static void	free_data(t_gdata *data)
 	cleanup_textures(data);
 }
 
-void	cleanup_textures(t_gdata *gd)
+static void	cleanup_textures(t_gdata *gd)
 {
 	int		i;
 

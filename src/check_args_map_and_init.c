@@ -23,8 +23,6 @@ int	check_args_map_and_init(t_gdata *gd, int argc, char **argv)
 			exit_status(gd, EINVARGS));
 	if (failed(check_arg(gd, argv[1])))
 		return (gd->exit_status);
-	if (failed(init_all(gd)))
-		return (gd->exit_status);
 	if (failed(parse_file(gd, argv[1])))
 		return (cleanup(gd), gd->exit_status);
 	if (failed(check_map(gd)))
@@ -32,5 +30,7 @@ int	check_args_map_and_init(t_gdata *gd, int argc, char **argv)
 	if (set_start_pos(gd))
 		return (exit_status(gd, EMAPPLAYEROUTOFBOUNDS));
 	player_set_direction(gd);
+	if (failed(init_mlx(gd)))
+		return (gd->exit_status);
 	return (exit_status(gd, EXIT_SUCCESS));
 }

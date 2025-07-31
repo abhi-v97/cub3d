@@ -12,22 +12,19 @@
 
 #include "cub3d.h"
 
-static void	init_gdata(t_gdata *gd);
 static int	alloc_textures(t_gdata *gd);
-static void	free_textures(t_gdata *gd);
-static int	init_mlx(t_gdata *gd);
 
 int	init_all(t_gdata *gd)
 {
-	init_gdata(gd);
-	if (failed(alloc_textures(gd)))
-		return (gd->exit_status);
+	init_map_data(gd);
+
 	if (failed(init_mlx(gd)))
-		return (free_textures(gd), gd->exit_status);
+		return (free(gd->textures),
+			free(gd->tex_rgb), gd->exit_status);
 	return (EXIT_SUCCESS);
 }
 
-static void	init_gdata(t_gdata *gd)
+int	init_map_data(t_gdata *gd)
 {
 	gd->map = NULL;
 	gd->map_height = 0;
@@ -41,6 +38,14 @@ static void	init_gdata(t_gdata *gd)
 	gd->time = 0;
 	gd->old_time = 0;
 	gd->file_fd = -1;
+	if (failed(alloc_textures(gd)))
+		return (gd->exit_status);
+	gd->mlx = mlx_init();
+	if (!gd->mlx)
+		return (exit_status(gd, EMLXINIT));
+	gd->canvas.img = NULL;
+	gd->win = NULL;
+	return (0);
 }
 
 // will free everything, no need for cleanup outside for alloc_textures
@@ -55,18 +60,9 @@ static int	alloc_textures(t_gdata *gd)
 	return (EXIT_SUCCESS);
 }
 
-static void	free_textures(t_gdata *gd)
-{
-	free(gd->textures);
-	free(gd->tex_rgb);
-}
-
 // will free everything, no need for cleanup outside for init_mlx
-static int	init_mlx(t_gdata *gd)
+int	init_mlx(t_gdata *gd)
 {
-	gd->mlx = mlx_init();
-	if (!gd->mlx)
-		return (exit_status(gd, EMLXINIT));
 	gd->win = mlx_new_window(gd->mlx, W_WIDTH, W_HEIGHT, "cub3D");
 	if (!gd->win)
 		return (mlx_destroy_display(gd->mlx), exit_status(gd, EMLXWINCREATE));
