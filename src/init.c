@@ -38,12 +38,13 @@ static void	init_gdata(t_gdata *gd)
 	memset(gd->keys, 0, KEY_COUNT * sizeof(int));
 	gd->win_center.x = W_WIDTH / 2;
 	gd->win_center.y = W_HEIGHT / 2;
-	gd->time = 0;
+	gd->time = get_time_stamp();
 	gd->old_time = 0;
 	gd->file_fd = -1;
 	gd->weapon_frame = 0;
 	gd->weapon_state = 0;
 	gd->current_weapon = 0;
+	gd->weapon_auto = 0;
 }
 
 // will free everything, no need for cleanup outside for alloc_textures

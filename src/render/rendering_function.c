@@ -33,6 +33,12 @@ void	weapon_shoot(t_gdata *gd)
 		}
 		if (gd->weapon_frame == 5)
 		{
+			if (gd->weapon_auto)
+			{
+				gd->weapon_frame = 1;
+				return ;
+			}
+
 			gd->weapon_state = 0;
 			gd->weapon_frame = 0;
 		}
@@ -45,18 +51,17 @@ void	weapon_holster(t_gdata *gd)
 	
 	if (!old_time)
 		old_time = gd->time;
-	if (gd->time - old_time > 50000)
+	if (gd->time - old_time > 100000)
 	{
-		gd->weapon_frame--;
+		gd->weapon_frame++;
 		old_time = gd->time;
 	}
-	if (gd->weapon_frame == -1)
+	if (gd->weapon_frame == 1)
 	{
 		gd->weapon_state = -1;
 		gd->weapon_frame = 0;
 	}
 }
-
 
 void	weapon_equip(t_gdata *gd)
 {
@@ -80,13 +85,13 @@ void	weapon_animate(t_gdata *gd)
 {
 	if (gd->weapon_state == -1)
 		return ;
+	draw_weapon(gd);
 	if (gd->weapon_state == 1)
 		weapon_shoot(gd);
 	if (gd->weapon_state == 2)
 		weapon_equip(gd);
 	if (gd->weapon_state == 3)
 		weapon_holster(gd);
-	draw_weapon(gd);
 }
 
 int	mouse_move(t_gdata *gd)
@@ -130,10 +135,10 @@ int	rendering_function(void *param)
 	open_sesame(gd);
 	wall_anim(gd);
 	weapon_animate(gd);
-	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
-	update_frame_time(gd);
 	handle_key_presses(gd);
 	mouse_move(gd);
+	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
+	update_frame_time(gd);
 	return (1);
 }
 

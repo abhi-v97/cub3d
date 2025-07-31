@@ -16,12 +16,10 @@ int	*parse_weapon(t_gdata *data, char *path);
 
 int	set_weapon(t_gdata *gd)
 {
-	gd->weapon[0] = parse_weapon(gd, "textures/wolfenstein/knife.xpm");
+	gd->weapon[0] = parse_weapon(gd, "textures/wolfenstein/rifle.xpm");
 	gd->weapon[1] = parse_weapon(gd, "textures/wolfenstein/pistol.xpm");
-	gd->weapon[2] = parse_weapon(gd, "textures/wolfenstein/rifle.xpm");
+	gd->weapon[2] = parse_weapon(gd, "textures/wolfenstein/knife.xpm");
 	gd->weapon[3] = parse_weapon(gd, "textures/wolfenstein/minigun.xpm");
-	if (!gd->weapon)
-		return (1);
 	return (0);
 }
 

@@ -243,6 +243,7 @@ typedef struct s_gdata
 	int			weapon_height;
 	int			weapon_frame;
 	int			weapon_state;
+	int			weapon_auto;
 }	t_gdata;
 
 // libft funcs

@@ -32,36 +32,38 @@ int	key_press(int key, t_gdata *gd)
 		gd->keys[KEY_A] = true;
 	else if (key == XK_p)
 		debug_print(gd);
-	else if (key == XK_1)
+	else if (key == XK_1 || key == XK_2 || key == XK_3 || key == XK_4)
 	{
-		gd->current_weapon = 0;
+		if ((key - XK_1) != gd->current_weapon)
+		{
+			gd->current_weapon = key - XK_1;
+			gd->weapon_state = -1;
+		}
 		if (gd->weapon_state == -1)
 		{
 			gd->weapon_state = 2;
 			gd->weapon_frame = 0;
 		}
-		if (gd->weapon_state == 0)
+		else if (gd->weapon_state == 0)
 		{
 			gd->weapon_state = 3;
-			gd->weapon_frame = 2;
-		}
-	}
-	else if (key == XK_2)
-	{
-		gd->current_weapon = 1;
-		if (gd->weapon_state == -1)
-		{
-			gd->weapon_state = 2;
 			gd->weapon_frame = 0;
 		}
-		if (gd->weapon_state == 0)
-		{
-			gd->weapon_state = 3;
-			gd->weapon_frame = 2;
-		}
 	}
-	else if (key == 0)
-		printf("foo");
+	// else if (key == XK_2)
+	// {
+	// 	gd->current_weapon = 1;
+	// 	if (gd->weapon_state == -1)
+	// 	{
+	// 		gd->weapon_state = 2;
+	// 		gd->weapon_frame = 0;
+	// 	}
+	// 	if (gd->weapon_state == 0)
+	// 	{
+	// 		gd->weapon_state = 3;
+	// 		gd->weapon_frame = 0;
+	// 	}
+	// }
 	return (1);
 }
 
