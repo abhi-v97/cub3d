@@ -16,6 +16,7 @@
 static void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 static int	line_height(t_gdata *gd, t_ray *ray);
 static void	calc_draw_distance(t_ray *ray);
+static void	draw_bg(t_gdata *gd, t_ray *ray, int x);
 
 int	rendering_function(void *param)
 {
@@ -25,7 +26,6 @@ int	rendering_function(void *param)
 	int		x;
 
 	gd = (t_gdata *)param;
-	render_background(gd);
 	x = -1;
 	while (++x < W_WIDTH)
 	{
@@ -34,6 +34,7 @@ int	rendering_function(void *param)
 		ray_calc_side_dist(gd, &ray, &map_pos);
 		ray.line_height = line_height(gd, &ray);
 		calc_draw_distance(&ray);
+		draw_bg(gd, &ray, x);
 		draw_wall(gd, ray, x);
 	}
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
@@ -101,4 +102,17 @@ static void	calc_draw_distance(t_ray *ray)
 	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2;
 	if (ray->draw_end >= W_HEIGHT)
 		ray->draw_end = W_HEIGHT - 1;
+}
+
+static void	draw_bg(t_gdata *gd, t_ray *ray, int x)
+{
+	int	start;
+	int	end;
+
+	start = ray->draw_start;
+	while (start >= 0)
+		put_pixel(&gd->canvas, x, start--, gd->tex_rgb[CEILING]);
+	end = ray->draw_end;
+	while (end <= W_HEIGHT)
+		put_pixel(&gd->canvas, x, end++, gd->tex_rgb[FLOOR]);
 }
