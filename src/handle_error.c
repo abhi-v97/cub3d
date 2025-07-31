@@ -14,7 +14,7 @@
 
 int	handle_error(int return_code, int argc, char **argv)
 {
-	if (return_code == EINVALARGCOUNT)
+	if (return_code == EINVARGS)
 		show_usage(argc, argv);
 	else if (return_code == ENOMEM)
 		ft_error("out of memory!");
@@ -24,9 +24,7 @@ int	handle_error(int return_code, int argc, char **argv)
 		ft_error("failed to initialize mlx window!");
 	else if (return_code == EMLXIMGCREATE)
 		ft_error("failed to initialize mlx image!");
-	else if (return_code == EINVMAPHEIGHT)
-		ft_error("invalid map hight!");
-	else if (return_code == EINVMAPHEIGHT)
-		ft_error("invalid map hight!");
+	else if (return_code == EINVMAP)
+		ft_error("invalid map!");
 	return (return_code);
 }

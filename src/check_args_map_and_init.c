@@ -19,10 +19,10 @@ int	check_args_map_and_init(t_gdata *gd, int argc, char **argv)
 	set_program_name(argv[0]);
 	if (argc < 2)
 		return (ft_error("Need a map!"),
-			exit_status(gd, EINVALARGCOUNT));
+			exit_status(gd, EINVARGS));
 	if (argc > 2)
-		return (ft_error("Too many parameters!"),
-			exit_status(gd, EINVALARGCOUNT));
+		return (ft_error("Too many arguments!"),
+			exit_status(gd, EINVARGS));
 	if (failed(check_arg(gd, argv[1])))
 		return (gd->exit_status);
 	if (failed(init_all(gd)))
@@ -33,9 +33,9 @@ int	check_args_map_and_init(t_gdata *gd, int argc, char **argv)
 		return (cleanup(gd), exit_status(gd, 1));
 	gd->player.pos = player_get_pos_from_map(gd);
 	player_set_direction(gd);
-	if (gd->player.pos.x > 0 && gd->player.pos.y > 0
-		&& player_outside_map(gd, gd->player.pos))
-		return (ft_error("Player out of bounds!"),
-			exit_status(gd, EMAPPLAYEROUTOFBOUNDS));
+	// if (gd->player.pos.x > 0 && gd->player.pos.y > 0
+	// 	&& player_outside_map(gd, gd->player.pos))
+	// 	return (ft_error("Player out of bounds!"),
+	// 		exit_status(gd, EMAPPLAYEROUTOFBOUNDS));
 	return (exit_status(gd, EXIT_SUCCESS));
 }
