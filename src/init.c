@@ -45,6 +45,7 @@ static void	init_gdata(t_gdata *gd)
 	gd->weapon_state = 0;
 	gd->current_weapon = 0;
 	gd->weapon_auto = 0;
+	gd->pitch = 0;
 }
 
 // will free everything, no need for cleanup outside for alloc_textures

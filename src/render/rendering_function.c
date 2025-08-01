@@ -16,7 +16,7 @@
 
 static void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 static int	line_height(t_gdata *gd, t_ray *ray);
-static void	calc_draw_distance(t_ray *ray);
+static void	calc_draw_distance(t_gdata *gd, t_ray *ray);
 
 void	weapon_shoot(t_gdata *gd)
 {
@@ -108,7 +108,6 @@ int	mouse_move(t_gdata *gd)
 	return (0);
 }
 
-
 int	rendering_function(void *param)
 {
 	t_gdata	*gd;
@@ -126,7 +125,7 @@ int	rendering_function(void *param)
 		ray = ray_create(gd, x, &map_pos);
 		ray_calc_side_dist(gd, &ray, &map_pos);
 		ray.line_height = line_height(gd, &ray);
-		calc_draw_distance(&ray);
+		calc_draw_distance(gd, &ray);
 		gd->z_buffer[x] = ray.perp_dist;
 		draw_wall(gd, ray, x);
 	}
@@ -195,12 +194,13 @@ static int	line_height(t_gdata *gd, t_ray *ray)
 // updates:
 //		ray->draw_start
 //		ray->draw_end
-static void	calc_draw_distance(t_ray *ray)
+static void	calc_draw_distance(t_gdata *gd, t_ray *ray)
 {
-	ray->draw_start = -ray->line_height / 2 + W_HEIGHT / 2 + pitch + (posZ / ray->perp_dist);
+	ray->draw_start = -ray->line_height / 2 + W_HEIGHT / 2 + gd->pitch;
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
-	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2 + pitch + (posZ / ray->perp_dist);
+	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2 + gd->pitch;
+
 	if (ray->draw_end >= W_HEIGHT)
 		ray->draw_end = W_HEIGHT - 1;
 }

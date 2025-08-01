@@ -24,16 +24,14 @@ void	floor_cast(t_gdata *gd)
 	t_floor			floor;
 	
 
-	gd->pitch = 0;
-	gd->posZ = 0;
 	floor.ray.dir.x = gd->dir.x - gd->plane.x;
 	floor.ray.dir.y = gd->dir.y - gd->plane.y;
 	y = 0;
 	while (y < W_HEIGHT)
 	{
-		bool is_floor = y > W_HEIGHT / 2.0 + gd->pitch;
-		int p = is_floor ? (y - W_HEIGHT / 2.0 - gd->pitch) : (W_HEIGHT / 2.0 - y + gd->pitch);
-		float camZ = is_floor ? (0.5 * W_HEIGHT + gd->posZ) : (0.5 * W_HEIGHT - gd->posZ);
+		floor.is_floor = y > W_HEIGHT / 2.0 + gd->pitch;
+		int p = floor.is_floor ? (y - W_HEIGHT / 2.0 - gd->pitch) : (W_HEIGHT / 2.0 - y + gd->pitch);
+		float camZ = 0.5 * W_HEIGHT;
 		floor.row_dist = camZ / p;
 		set_floorcast_info(gd, &floor, y);
 		draw_line(gd, &floor, y);
@@ -44,7 +42,7 @@ void	floor_cast(t_gdata *gd)
 static void	set_floorcast_info(t_gdata *gd, t_floor *floor, int y)
 {
 	(void) y;
-	// floor->row_dist = (0.5 * W_HEIGHT) / (y - W_HEIGHT / 2.0);
+	// floor->row_dist = W_HEIGHT / (2.0 * y - W_HEIGHT);
 	floor->step_x = floor->row_dist * (gd->dir.x + gd->plane.x
 			- floor->ray.dir.x) / W_WIDTH;
 	floor->step_y = floor->row_dist * (gd->dir.y + gd->plane.y
@@ -64,14 +62,18 @@ static void	draw_line(t_gdata *gd, t_floor *floor, int y)
 	while (x < W_WIDTH)
 	{
 		set_texels(gd, floor, &tx, &ty);
-		floor->floor_x += floor->step_x;
-		floor->floor_y += floor->step_y;
-		colour = gd->textures[FLOOR][gd->tex_size * ty + tx];
-		colour = (colour >> 1) & 8355711;
-		put_pixel(&gd->canvas, x, y, colour);
-		colour = gd->textures[CEILING][gd->tex_size * ty + tx];
-		colour = (colour >> 1) & 8355711;
-		put_pixel(&gd->canvas, x, W_HEIGHT - y - 1, colour);
+		if (floor->is_floor)
+		{
+			colour = gd->textures[FLOOR][gd->tex_size * ty + tx];
+			colour = (colour >> 1) & 8355711;
+			put_pixel(&gd->canvas, x, y, colour);
+		}
+		else
+		{
+			colour = gd->textures[CEILING][gd->tex_size * ty + tx];
+			colour = (colour >> 1) & 8355711;
+			put_pixel(&gd->canvas, x, W_HEIGHT - y - 1, colour);
+		}
 		x++;
 	}
 }
@@ -82,4 +84,6 @@ static void	set_texels(t_gdata *gd, t_floor *floor, int *tx, int *ty)
 		& (gd->tex_size - 1);
 	*ty = (int)(gd->tex_size * (floor->floor_y - (int)floor->floor_y))
 		& (gd->tex_size - 1);
+	floor->floor_x += floor->step_x;
+	floor->floor_y += floor->step_y;
 }

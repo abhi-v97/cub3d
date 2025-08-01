@@ -18,9 +18,13 @@ static void	move_player(t_gdata *gd, double dx, double dy, double move_speed);
 
 int	key_press(int key, t_gdata *gd)
 {
-	if (key == XK_Down || key == XK_s)
+	if (key == XK_Down)
+		gd->keys[KEY_PITCH_DOWN] = true;
+	else if (key == XK_Up)
+		gd->keys[KEY_PITCH_UP] = true;
+	else if (key == XK_s)
 		gd->keys[KEY_DOWN] = true;
-	else if (key == XK_Up || key == XK_w)
+	else if (key == XK_w)
 		gd->keys[KEY_UP] = true;
 	else if (key == XK_Right)
 		gd->keys[KEY_RIGHT] = true;
@@ -50,20 +54,6 @@ int	key_press(int key, t_gdata *gd)
 			gd->weapon_frame = 0;
 		}
 	}
-	// else if (key == XK_2)
-	// {
-	// 	gd->current_weapon = 1;
-	// 	if (gd->weapon_state == -1)
-	// 	{
-	// 		gd->weapon_state = 2;
-	// 		gd->weapon_frame = 0;
-	// 	}
-	// 	if (gd->weapon_state == 0)
-	// 	{
-	// 		gd->weapon_state = 3;
-	// 		gd->weapon_frame = 0;
-	// 	}
-	// }
 	return (1);
 }
 
@@ -71,9 +61,13 @@ int	key_release(int key, t_gdata *gd)
 {
 	if (key == XK_Escape)
 		mlx_loop_end(gd->mlx);
-	else if (key == XK_Down || key == XK_s)
+	else if (key == XK_Down)
+		gd->keys[KEY_PITCH_DOWN] = false;
+	else if (key == XK_Up)
+		gd->keys[KEY_PITCH_UP] = false;
+	else if (key == XK_s)
 		gd->keys[KEY_DOWN] = false;
-	else if (key == XK_Up || key == XK_w)
+	else if (key == XK_w)
 		gd->keys[KEY_UP] = false;
 	else if (key == XK_Right)
 		gd->keys[KEY_RIGHT] = false;
@@ -109,6 +103,18 @@ void	handle_key_presses(t_gdata *gd)
 		rotate_player(gd, -rot_speed);
 	if (gd->keys[KEY_LEFT])
 		rotate_player(gd, rot_speed);
+	if (gd->keys[KEY_PITCH_DOWN])
+	{
+		gd->pitch -= 400 * move_speed;
+		if (gd->pitch < -200)
+			gd->pitch = -200;
+	}
+	if (gd->keys[KEY_PITCH_UP])
+	{
+		gd->pitch += 400 * move_speed;
+		if (gd->pitch > 200)
+			gd->pitch = 200;
+	}
 }
 
 int	wall_status(t_gdata *gd, int x, int y)

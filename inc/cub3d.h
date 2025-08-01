@@ -57,7 +57,7 @@
 # define EMAPTEXINVALIDFILENAME 30
 # define EMAPTEXERROR 31
 
-# define KEY_COUNT 7
+# define KEY_COUNT 9
 # define KEY_UP 0
 # define KEY_DOWN 1
 # define KEY_LEFT 2
@@ -65,6 +65,8 @@
 # define KEY_A 4
 # define KEY_D 5
 # define KEY_ESC 6
+# define KEY_PITCH_UP 7
+#define KEY_PITCH_DOWN 8
 
 # define M_BUTT_COUNT 5
 # define M_LEFTBUTT 1
@@ -203,6 +205,7 @@ typedef struct s_floor
 	float		floor_y;
 	float		row_dist;
 	t_ray		ray;
+	bool		is_floor;
 }	t_floor;
 
 /*
@@ -245,7 +248,6 @@ typedef struct s_gdata
 	int			weapon_state;
 	int			weapon_auto;
 	double pitch;
-	double posZ;
 }	t_gdata;
 
 // libft funcs

@@ -64,16 +64,16 @@ void	draw_wall(t_gdata *data, t_ray ray, int x)
 // step: governs how to loop over the texture array, so that textures are drawn
 // evenly and in full
 // tex_pos: starting and current location of where we are in the texture array
-static inline void	set_texinfo(t_gdata *data, t_ray ray, t_texinfo *texinfo)
+static inline void	set_texinfo(t_gdata *gd, t_ray ray, t_texinfo *texinfo)
 {
 	texinfo->dir = set_texinfo_dir(&ray);
 	if (ray.side_hit == RAY_HIT_N_OR_S)
-		texinfo->wall_x = data->player.pos.y + ray.perp_dist * ray.dir.y;
+		texinfo->wall_x = gd->player.pos.y + ray.perp_dist * ray.dir.y;
 	else
-		texinfo->wall_x = data->player.pos.x + ray.perp_dist * ray.dir.x;
+		texinfo->wall_x = gd->player.pos.x + ray.perp_dist * ray.dir.x;
 	texinfo->wall_x -= floor(texinfo->wall_x);
-	texinfo->step = (1.0 * data->tex_size / ray.line_height);
-	texinfo->tex_pos = (ray.draw_start - W_HEIGHT / 2.0
+	texinfo->step = (1.0 * gd->tex_size / ray.line_height);
+	texinfo->tex_pos = (ray.draw_start - W_HEIGHT / 2.0 - gd->pitch
 			+ ray.line_height / 2.0) * texinfo->step;
 }
 
