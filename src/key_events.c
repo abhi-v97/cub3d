@@ -90,7 +90,7 @@ void	handle_key_presses(t_gdata *gd)
 	double		rot_speed;
 
 	move_speed = gd->frame_time * 5.0 * 8;
-	rot_speed = -gd->frame_time * 3.0 * 8;
+	rot_speed = gd->frame_time * 3.0 * 8;
 	if (gd->keys[KEY_UP])
 		move_player(gd, gd->dir.x, gd->dir.y, move_speed);
 	if (gd->keys[KEY_DOWN])
@@ -100,9 +100,9 @@ void	handle_key_presses(t_gdata *gd)
 	if (gd->keys[KEY_D])
 		move_player(gd, -gd->dir.y, gd->dir.x, move_speed);
 	if (gd->keys[KEY_RIGHT])
-		rotate_player(gd, -rot_speed);
-	if (gd->keys[KEY_LEFT])
 		rotate_player(gd, rot_speed);
+	if (gd->keys[KEY_LEFT])
+		rotate_player(gd, -rot_speed);
 	if (gd->keys[KEY_PITCH_DOWN])
 	{
 		gd->pitch -= 400 * move_speed;

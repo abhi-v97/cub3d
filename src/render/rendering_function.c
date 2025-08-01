@@ -96,15 +96,22 @@ void	weapon_animate(t_gdata *gd)
 
 int	mouse_move(t_gdata *gd)
 {
-	int	x, y;
-	double		rot_speed;
-
-	rot_speed = gd->frame_time * 3.0 * 8;
+	(void) gd;
+	int		x;
+	int		y;
+	
 	mlx_mouse_get_pos(gd->mlx, gd->win, &x, &y);
-	if (x < W_WIDTH / 3)
-		rotate_player(gd, -rot_speed);
-	else if (x > (W_WIDTH  * 2 / 3))
-		rotate_player(gd, rot_speed);
+	if (x != W_WIDTH / 2)
+		rotate_player(gd, (x - W_WIDTH / 2) * gd->frame_time);
+	if (y != W_HEIGHT / 2)
+	{
+		gd->pitch -= (y - W_HEIGHT / 2);
+		if (gd->pitch < -200)
+			gd->pitch = -200;
+		if (gd->pitch > 200)
+			gd->pitch = 200;
+	}
+	mlx_mouse_move(gd->mlx, gd->win, W_WIDTH / 2, W_HEIGHT / 2);
 	return (0);
 }
 
@@ -138,6 +145,8 @@ int	rendering_function(void *param)
 	mouse_move(gd);
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
 	update_frame_time(gd);
+	// gd->keys[KEY_LEFT] = false;
+	// gd->keys[KEY_RIGHT] = false;
 	return (1);
 }
 

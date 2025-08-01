@@ -42,6 +42,15 @@ int	mouse_release(int button, int x, int y, t_gdata *gd)
 	return (0);
 }
 
+// int	mouse_move(int x, int y, t_gdata *gd)
+// {
+// 	(void) gd;
+// 	(void) x;
+// 	(void) y;
+// 	mlx_mouse_move(gd->mlx, gd->win, W_WIDTH / 2, W_HEIGHT / 2);
+// 	return (0);
+// }
+
 int	main(int argc, char **argv)
 {
 	t_gdata		gdata;
@@ -56,6 +65,7 @@ int	main(int argc, char **argv)
 	mlx_hook(gdata.win, DestroyNotify, NoEventMask, mlx_loop_end, gdata.mlx);
 	mlx_hook(gdata.win, 4, 1L << 2, mouse_events, &gdata);
 	mlx_hook(gdata.win, 5, 1L << 3, mouse_release, &gdata);
+	mlx_mouse_move(gdata.mlx, gdata.win, W_WIDTH / 2, W_HEIGHT / 2);
 	// mlx_hook(gdata.win,  06, 1L << 6,mouse_move, &gdata);
 	mlx_loop_hook(gdata.mlx, rendering_function, &gdata);
 	mlx_loop(gdata.mlx);
