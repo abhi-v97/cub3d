@@ -14,11 +14,10 @@
 #include "mlx.h"
 
 static void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
-static int	line_height(t_gdata *gd, t_ray *ray);
 static void	calc_draw_distance(t_ray *ray);
 static void	draw_bg(t_gdata *gd, t_ray *ray, int x);
 
-int	render_frame(void *param)
+int	render_loop(void *param)
 {
 	t_gdata	*gd;
 	t_ray	ray;
@@ -32,7 +31,6 @@ int	render_frame(void *param)
 		map_pos = pos_dtoi(gd->player.pos);
 		ray = ray_create(gd, x, &map_pos);
 		ray_calc_side_dist(gd, &ray, &map_pos);
-		ray.line_height = line_height(gd, &ray);
 		calc_draw_distance(&ray);
 		draw_bg(gd, &ray, x);
 		draw_wall(gd, ray, x);
@@ -74,28 +72,23 @@ static void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos)
 	}
 }
 
-//	Returns: height of line to draw on screen
-static int	line_height(t_gdata *gd, t_ray *ray)
-{
-	int		line_height;
-
-	(void) gd;
-	if (ray->side_hit == RAY_HIT_N_OR_S)
-		ray->perp_dist = (ray->side_dist.x - ray->delta_dist.x);
-	else
-		ray->perp_dist = (ray->side_dist.y - ray->delta_dist.y);
-	line_height = (int)(W_HEIGHT / ray->perp_dist);
-	return (line_height);
-}
-
 // calculates draw_start and draw_end distances for each ray, which is then
 // passed onto the paint_walls function
+// doing so requires calculating line_height and perp_dist, which will be
+// used later, so the calculation is stored in t_ray struct
 //
 // updates:
 //		ray->draw_start
 //		ray->draw_end
+// 		ray->perp_dist
+// 		ray->line_height
 static void	calc_draw_distance(t_ray *ray)
 {
+	if (ray->side_hit == RAY_HIT_N_OR_S)
+		ray->perp_dist = (ray->side_dist.x - ray->delta_dist.x);
+	else
+		ray->perp_dist = (ray->side_dist.y - ray->delta_dist.y);
+	ray->line_height = (int)(W_HEIGHT / ray->perp_dist);
 	ray->draw_start = -ray->line_height / 2 + W_HEIGHT / 2;
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;

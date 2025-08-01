@@ -247,7 +247,7 @@ void	put_pixel(t_canvas *canvas, int x, int y, int color);
 t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos);
 
 // render/render_frame.c
-int		render_frame(void *param);
+int		render_loop(void *param);
 
 // ********** THE REST **********
 

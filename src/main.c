@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	mlx_hook(gdata.win, KeyPress, KeyPressMask, key_press, &gdata);
 	mlx_hook(gdata.win, KeyRelease, KeyReleaseMask, key_release, &gdata);
 	mlx_hook(gdata.win, DestroyNotify, NoEventMask, mlx_loop_end, gdata.mlx);
-	mlx_loop_hook(gdata.mlx, render_frame, &gdata);
+	mlx_loop_hook(gdata.mlx, render_loop, &gdata);
 	mlx_loop(gdata.mlx);
 	cleanup(&gdata);
 	return (EXIT_SUCCESS);
