@@ -72,7 +72,7 @@ static void	draw_line(t_gdata *gd, t_floor *floor, int y)
 		{
 			colour = gd->textures[CEILING][gd->tex_size * ty + tx];
 			colour = (colour >> 1) & 8355711;
-			put_pixel(&gd->canvas, x, W_HEIGHT - y - 1, colour);
+			put_pixel(&gd->canvas, x, y, colour);
 		}
 		x++;
 	}
