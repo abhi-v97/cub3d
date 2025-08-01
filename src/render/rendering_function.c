@@ -197,10 +197,10 @@ static int	line_height(t_gdata *gd, t_ray *ray)
 //		ray->draw_end
 static void	calc_draw_distance(t_ray *ray)
 {
-	ray->draw_start = -ray->line_height / 2 + W_HEIGHT / 2;
+	ray->draw_start = -ray->line_height / 2 + W_HEIGHT / 2 + pitch + (posZ / ray->perp_dist);
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
-	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2;
+	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2 + pitch + (posZ / ray->perp_dist);
 	if (ray->draw_end >= W_HEIGHT)
 		ray->draw_end = W_HEIGHT - 1;
 }
