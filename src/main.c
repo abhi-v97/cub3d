@@ -41,9 +41,8 @@ static int	init_game_data(t_gdata *gd, int argc, char **argv)
 	if (failed(parse_file(gd, argv[1])))
 		return (cleanup(gd), gd->exit_status);
 	if (failed(check_map(gd)))
-		return (cleanup(gd), exit_status(gd, 1));
-	if (set_start_pos(gd))
-		return (exit_status(gd, EMAPPLAYEROUTOFBOUNDS));
+		return (cleanup(gd), gd->exit_status);
+	set_start_pos(gd);
 	player_set_direction(gd);
 	if (failed(init_mlx(gd)))
 		return (gd->exit_status);

@@ -13,8 +13,6 @@
 #include "cub3d.h"
 
 static int		line_count(t_gdata *data, char *file);
-
-static bool		buffer_has_map_data(char *buffer);
 static void		update_map_width(t_gdata *gd, char *buffer);
 
 // grabs map data from file into char ** array gd->map
@@ -28,10 +26,10 @@ int	parse_file(t_gdata *gd, char *file_name)
 		return (exit_status(gd, EINVMAP));
 	gd->map = (char **) ft_calloc(sizeof(char *), gd->map_height + 1);
 	if (!gd->map)
-		return (ft_perror(), exit_status(gd, ERR_MALLOC));
+		return (exit_status(gd, ERR_MALLOC));
 	gd->file_fd = open(file_name, O_RDONLY);
 	if (gd->file_fd < 0)
-		return (ft_perror(), exit_status(gd, EFAILOPENFILE));
+		return (exit_status(gd, EFAILOPENFILE));
 	if (failed(map_fill(gd, gd->map, gd->file_fd)))
 		return (close_fd(&gd->file_fd), gd->exit_status);
 	return (EXIT_SUCCESS);
@@ -49,8 +47,7 @@ static int	line_count(t_gdata *gd, char *file)
 	map_row_count = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_perror(),
-			exit_status(gd, EFAILOPENFILE), map_row_count);
+		return (exit_status(gd, EFAILOPENFILE), map_row_count);
 	else
 	{
 		buffer = get_next_line(fd);
@@ -68,8 +65,8 @@ static int	line_count(t_gdata *gd, char *file)
 	return (close_fd(&fd), exit_status(gd, EXIT_SUCCESS), map_row_count);
 }
 
-// used to set gd->map_width to that of the widest part of map
-// updates gd->map_width if len of current buffer is greater
+// updates gd->map_width to that of the widest part of map,
+// only if len of current buffer is greater
 static void	update_map_width(t_gdata *gd, char *buffer)
 {
 	size_t	len;
@@ -88,17 +85,24 @@ static void	update_map_width(t_gdata *gd, char *buffer)
 // ***
 // LOGIC: skip over blank space characters. If the next character is a 0 or 1
 // (could just check for 1), it is considered a valid map file
-// if its a texture line, first char after skipping space will be N or S etc
-static bool	buffer_has_map_data(char *buffer)
+// if its a texture line, first char after skipping space will be N or S etc]
+// old version is causing too many segfaults, dumbing it down
+bool	buffer_has_map_data(char *buffer)
 {
-	size_t	i;
+	// size_t	i;
 
 	if (!buffer)
 		return (false);
-	i = 0;
-	while (buffer[i] && buffer[i] == ' ')
-		i++;
-	if (buffer[i] && ft_strchr("01", buffer[i]))
+	// i = 0;
+	// while (buffer[i] && buffer[i] == ' ')
+	// 	i++;
+	// if (buffer[i] && ft_strchr("01", buffer[i]))
+	// 	return (true);
+	// else
+	// 	return (false);
+	if (ft_strchr(buffer, '/') || ft_strchr(buffer, ','))
+		return (false);
+	else if (ft_strchr(buffer, '0') || ft_strchr(buffer, '1'))
 		return (true);
 	else
 		return (false);

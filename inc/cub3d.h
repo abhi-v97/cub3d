@@ -52,7 +52,6 @@
 # define EMAPINVCHAR 24
 # define ERR_MALLOC 25
 # define E_INV_PLAYER 26
-# define EMAPPLAYEROUTOFBOUNDS 27
 # define EMAPWALLMISSING 28
 # define EMISSINGTEXTURE 29
 # define EMAPTEXINVALIDFILENAME 30
@@ -224,6 +223,7 @@ int		map_fill(t_gdata *gd, char **map, int fd);
 
 // parsing/parse_file.c
 int		parse_file(t_gdata *gdata, char *file_name);
+bool	buffer_has_map_data(char *buffer);
 
 // parsing/parse_textures.c
 int		parse_textures(t_gdata *data, char *buffer);

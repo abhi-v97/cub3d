@@ -12,8 +12,8 @@
 
 #include "cub3d.h"
 
-static int		set_map_row(t_gdata *gd, char *buf, char **map, int row);
-static int		missing_textures(t_gdata *gd);
+static int		set_map_row(t_gdata *gd, char *buf, char **map, int *row);
+static int		check_textures(t_gdata *gd);
 
 // copy contents of map file into map array
 // updates gd->map_height to total count of rows
@@ -34,33 +34,33 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 	}
 	while (buffer)
 	{
-		if (set_map_row(gd, buffer, map, row++))
-			return (free(buffer), ft_perror(), gd->exit_status);
+		if (set_map_row(gd, buffer, map, &row))
+			gd->exit_status = EINVMAP;
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	map[row] = NULL;
 	gd->map_height = row;
-	if (missing_textures(gd))
-		return (gd->exit_status);
-	return (exit_status(gd, EXIT_SUCCESS));
+	return (check_textures(gd));
 }
 
 // normalises each map line to have the same width
 // empty gaps are represented by a ' ' sign
-static int	set_map_row(t_gdata *gd, char *buf, char **map, int row)
+static int	set_map_row(t_gdata *gd, char *buf, char **map, int *row)
 {
 	char	*nl_char;
-
-	map[row] = (char *) malloc(sizeof(char *) * (gd->map_width + 1));
-	if (!map[row])
+	if (buffer_has_map_data(buf) == false)
+		return (EXIT_FAILURE);
+	map[*row] = (char *) malloc(sizeof(char *) * (gd->map_width + 1));
+	if (!map[*row])
 		return (exit_status(gd, ERR_MALLOC));
-	ft_memset(map[row], ' ', gd->map_width);
-	ft_memcpy(map[row], buf, ft_strlen(buf));
-	map[row][gd->map_width] = '\0';
-	nl_char = ft_strchr(map[row], '\n');
+	ft_memset(map[*row], ' ', gd->map_width);
+	ft_memcpy(map[*row], buf, ft_strlen(buf));
+	map[*row][gd->map_width] = '\0';
+	nl_char = ft_strchr(map[*row], '\n');
 	if (nl_char)
 		*nl_char = ' ';
+	(*row)++;
 	return (exit_status(gd, EXIT_SUCCESS));
 }
 
@@ -69,10 +69,13 @@ static int	set_map_row(t_gdata *gd, char *buf, char **map, int row)
 // set_textures func
 // Only checks NWSE for now, if floor or ceiling aren't set it defaults to
 // black
-static int	missing_textures(t_gdata *gd)
+// doesn't bother checking if gd->exit_status isn't zero
+static int	check_textures(t_gdata *gd)
 {
 	t_cardinal	dir;
 
+	if (gd->exit_status)
+		return (gd->exit_status);
 	dir = 0;
 	while (dir <= WEST)
 	{
@@ -80,5 +83,5 @@ static int	missing_textures(t_gdata *gd)
 			return (exit_status(gd, EMISSINGTEXTURE));
 		dir++;
 	}
-	return (exit_status(gd, EXIT_SUCCESS));
+	return (EXIT_SUCCESS);
 }
