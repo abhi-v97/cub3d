@@ -42,8 +42,12 @@ int	handle_error(int return_code, char **argv)
 {
 	if (return_code == EINVARGS)
 		show_usage(argv);
+	else if (return_code == EFAILOPENFILE)
+		ft_error("Failed to open file!");
+	else if (return_code == EBADFILEEXT)
+		ft_error("Wrong extension!");
 	else if (return_code == ERR_MALLOC)
-		ft_error("out of memory!");
+		ft_error("Malloc failed!");
 	else if (return_code == EMLXINIT)
 		ft_error("mlx failed to initialize!");
 	else if (return_code == EMLXWINCREATE)
@@ -63,7 +67,6 @@ int	handle_error(int return_code, char **argv)
 
 static void	show_usage(char **argv)
 {
-	
 	ft_putstr_fd("Invalid args! \n\n", STDERR_FILENO);
 	ft_putstr_fd("Usage: \n", STDERR_FILENO);
 	ft_putstr_fd(argv[0], STDERR_FILENO);

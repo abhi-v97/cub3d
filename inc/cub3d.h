@@ -181,9 +181,7 @@ typedef struct s_gdata
 	int			**textures;
 	int			*tex_rgb;
 	t_player	player;
-	int			player_direction;
 	int			keys[KEY_COUNT];
-	t_ipos		win_center;
 	t_pos		dir;
 	t_pos		plane;
 	double		time;

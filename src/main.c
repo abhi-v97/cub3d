@@ -53,6 +53,7 @@ static int	init_game_data(t_gdata *gd, int argc, char **argv)
 static void	player_set_direction(t_gdata *gd)
 {
 	t_cardinal	cardinal;
+	int			player_dir;
 
 	static const
 		double direction_consts[][4] = {
@@ -61,12 +62,12 @@ static void	player_set_direction(t_gdata *gd)
 	{1, 0, 0, 0.66},
 	{-1, 0, 0, -0.66}
 	};
-	gd->player_direction = map_get(gd, gd->player.pos.x, gd->player.pos.y);
-	if (gd->player_direction == 'N')
+	player_dir = map_get(gd, gd->player.pos.x, gd->player.pos.y);
+	if (player_dir == 'N')
 		cardinal = NORTH;
-	else if (gd->player_direction == 'S')
+	else if (player_dir == 'S')
 		cardinal = SOUTH;
-	else if (gd->player_direction == 'E')
+	else if (player_dir == 'E')
 		cardinal = EAST;
 	else
 		cardinal = WEST;

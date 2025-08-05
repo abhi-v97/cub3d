@@ -23,14 +23,12 @@ int	check_arg(t_gdata *gd, char *file_name)
 	int		fd;
 
 	if (is_dir(file_name))
-		return (exit_status(gd, EFILEISDIR));
+		return (ft_error("File is a directory!"), exit_status(gd, EFILEISDIR));
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
-		return (ft_error("Failed to open file!"),
-			exit_status(gd, EFAILOPENFILE));
+		return (exit_status(gd, EFAILOPENFILE));
 	if (failed(check_ext(file_name)))
-		return (close(fd),
-			ft_error("Wrong extension!"), exit_status(gd, EBADFILEEXT));
+		return (close(fd), exit_status(gd, EBADFILEEXT));
 	return (close(fd), exit_status(gd, EXIT_SUCCESS));
 }
 
@@ -42,7 +40,7 @@ static int	is_dir(char *file_name)
 
 	fd = open(file_name, O_DIRECTORY);
 	if (fd >= 0)
-		return (close_fd(&fd), ft_error("File is a directory!"), EFILEISDIR);
+		return (close_fd(&fd), EXIT_FAILURE);
 	return (close_fd(&fd), EXIT_SUCCESS);
 }
 
@@ -53,8 +51,8 @@ static int	check_ext(char *file_name)
 
 	temp = ft_strrchr(file_name, '.');
 	if (!temp)
-		return (EBADFILEEXT);
+		return (EXIT_FAILURE);
 	if (ft_strcmp(temp, ".cub"))
-		return (EBADFILEEXT);
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -21,10 +21,7 @@ int	init_map_data(t_gdata *gd)
 	gd->map_width = 0;
 	gd->player.pos.x = 0.0;
 	gd->player.pos.y = 0.0;
-	gd->player_direction = 0;
 	ft_memset(gd->keys, 0, KEY_COUNT * sizeof(int));
-	gd->win_center.x = W_WIDTH / 2;
-	gd->win_center.y = W_HEIGHT / 2;
 	gd->time = 0;
 	gd->old_time = 0;
 	gd->file_fd = -1;
