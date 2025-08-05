@@ -54,7 +54,7 @@ static int	set_map_row(t_gdata *gd, char *buf, char **map, int row)
 
 	map[row] = (char *) malloc(sizeof(char *) * (gd->map_width + 1));
 	if (!map[row])
-		return (exit_status(gd, ENOMEM));
+		return (exit_status(gd, ERR_MALLOC));
 	ft_memset(map[row], ' ', gd->map_width);
 	ft_memcpy(map[row], buf, ft_strlen(buf));
 	map[row][gd->map_width] = '\0';

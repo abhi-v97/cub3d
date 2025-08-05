@@ -35,8 +35,7 @@ static int	init_game_data(t_gdata *gd, int argc, char **argv)
 {
 	set_program_name(argv[0]);
 	if (argc != 2)
-		return (ft_error("Need a map!"),
-			exit_status(gd, EINVARGS));
+		return (exit_status(gd, EINVARGS));
 	if (failed(check_arg(gd, argv[1])))
 		return (gd->exit_status);
 	if (failed(parse_file(gd, argv[1])))

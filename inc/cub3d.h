@@ -21,7 +21,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <errno.h>
 # include <math.h>
 # include "mlx.h"
 
@@ -51,8 +50,7 @@
 # define EMAPVBORDER 22
 # define EMAPEMPTY 23
 # define EMAPINVCHAR 24
-// # define EMAPTOOMANYPLAYERS 25
-// # define EMAPNOPLAYERS 26
+# define ERR_MALLOC 25
 # define E_INV_PLAYER 26
 # define EMAPPLAYEROUTOFBOUNDS 27
 # define EMAPWALLMISSING 28

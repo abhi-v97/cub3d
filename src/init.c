@@ -61,9 +61,9 @@ static int	alloc_textures(t_gdata *gd)
 {
 	gd->tex_rgb = ft_calloc(sizeof(int), 7);
 	if (!gd->tex_rgb)
-		return (exit_status(gd, ENOMEM));
+		return (exit_status(gd, ERR_MALLOC));
 	gd->textures = ft_calloc(sizeof(int *), 7);
 	if (!gd->textures)
-		return (free(gd->tex_rgb), exit_status(gd, ENOMEM));
+		return (free(gd->tex_rgb), exit_status(gd, ERR_MALLOC));
 	return (EXIT_SUCCESS);
 }

@@ -42,7 +42,7 @@ int	handle_error(int return_code, char **argv)
 {
 	if (return_code == EINVARGS)
 		show_usage(argv);
-	else if (return_code == ENOMEM)
+	else if (return_code == ERR_MALLOC)
 		ft_error("out of memory!");
 	else if (return_code == EMLXINIT)
 		ft_error("mlx failed to initialize!");
@@ -63,7 +63,9 @@ int	handle_error(int return_code, char **argv)
 
 static void	show_usage(char **argv)
 {
-	ft_putstr_fd("Usage: ", STDERR_FILENO);
+	
+	ft_putstr_fd("Invalid args! \n\n", STDERR_FILENO);
+	ft_putstr_fd("Usage: \n", STDERR_FILENO);
 	ft_putstr_fd(argv[0], STDERR_FILENO);
-	ft_putstr_fd(" map_file.cub\n", STDERR_FILENO);
+	ft_putstr_fd(" [map_file]\n", STDERR_FILENO);
 }

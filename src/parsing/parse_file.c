@@ -28,7 +28,7 @@ int	parse_file(t_gdata *gd, char *file_name)
 		return (exit_status(gd, EINVMAP));
 	gd->map = (char **) ft_calloc(sizeof(char *), gd->map_height + 1);
 	if (!gd->map)
-		return (ft_perror(), exit_status(gd, ENOMEM));
+		return (ft_perror(), exit_status(gd, ERR_MALLOC));
 	gd->file_fd = open(file_name, O_RDONLY);
 	if (gd->file_fd < 0)
 		return (ft_perror(), exit_status(gd, EFAILOPENFILE));
