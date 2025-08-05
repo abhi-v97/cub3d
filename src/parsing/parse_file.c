@@ -83,26 +83,19 @@ static void	update_map_width(t_gdata *gd, char *buffer)
 
 // checks if map is a valid map line, used for the size of gd->map
 // ***
-// LOGIC: skip over blank space characters. If the next character is a 0 or 1
-// (could just check for 1), it is considered a valid map file
-// if its a texture line, first char after skipping space will be N or S etc]
-// old version is causing too many segfaults, dumbing it down
+// if buffer has slash or comma character, it is probably a texture path
 bool	buffer_has_map_data(char *buffer)
 {
-	// size_t	i;
-
+	int		i;
 	if (!buffer)
 		return (false);
-	// i = 0;
-	// while (buffer[i] && buffer[i] == ' ')
-	// 	i++;
-	// if (buffer[i] && ft_strchr("01", buffer[i]))
-	// 	return (true);
-	// else
-	// 	return (false);
-	if (ft_strchr(buffer, '/') || ft_strchr(buffer, ','))
+
+	i = 0;
+	while (buffer[i] == ' ')
+		i++;
+	if (ft_strchr("NSWEFC", buffer[i]) && !ft_strchr("01", buffer[i + 1]))
 		return (false);
-	else if (ft_strchr(buffer, '0') || ft_strchr(buffer, '1'))
+	if (ft_strchr(buffer, '0') || ft_strchr(buffer, '1'))
 		return (true);
 	else
 		return (false);
