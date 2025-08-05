@@ -27,7 +27,7 @@ int	parse_textures(t_gdata *gd, char *buffer)
 	while (is_blank(buffer[i]))
 		i++;
 	if (!buffer[i] || buffer[i] == '\n')
-		return (exit_status(gd, EXIT_SUCCESS));
+		return (0);
 	if (buffer[i] && buffer[i + 1])
 		return (set_texture_info(gd, buffer + i));
 	return (0);

@@ -83,7 +83,8 @@ static void	update_map_width(t_gdata *gd, char *buffer)
 
 // checks if map is a valid map line, used for the size of gd->map
 // ***
-// if buffer has slash or comma character, it is probably a texture path
+// skip over empty spaces. If the character is NSWEFC and the following
+// character is not 0 or 1, its most likely a texture file
 bool	buffer_has_map_data(char *buffer)
 {
 	int		i;

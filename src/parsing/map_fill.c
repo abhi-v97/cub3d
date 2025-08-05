@@ -61,7 +61,7 @@ static int	set_map_row(t_gdata *gd, char *buf, char **map, int *row)
 	if (nl_char)
 		*nl_char = ' ';
 	(*row)++;
-	return (exit_status(gd, EXIT_SUCCESS));
+	return (EXIT_SUCCESS);
 }
 
 // checks if each cardinal direction has a value in gd->textures or
@@ -80,7 +80,7 @@ static int	check_textures(t_gdata *gd)
 	while (dir <= WEST)
 	{
 		if (!gd->textures[dir] && !gd->tex_rgb[dir])
-			return (exit_status(gd, EMISSINGTEXTURE));
+			return (exit_status(gd, EMAPTEXERROR));
 		dir++;
 	}
 	return (EXIT_SUCCESS);

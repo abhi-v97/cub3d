@@ -22,7 +22,10 @@ void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
 	char	*path;
 
 	if (data->textures[wall_dir] || data->tex_rgb[wall_dir])
+	{
+		exit_status(data, EMAPTEXERROR);
 		return ;
+	}
 	path = get_texture_path(buffer);
 	if (!path)
 		return ;

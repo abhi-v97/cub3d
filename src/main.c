@@ -16,6 +16,13 @@ static int	init_game_data(t_gdata *gd, int argc, char **argv);
 static int	set_start_pos(t_gdata *gd);
 static void	player_set_direction(t_gdata *gd);
 
+int	resize_func(t_gdata *gd)
+{
+	(void) gd;
+	printf("foo");
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_gdata		gdata;
@@ -25,6 +32,7 @@ int	main(int argc, char **argv)
 	mlx_hook(gdata.win, KeyPress, KeyPressMask, key_press, &gdata);
 	mlx_hook(gdata.win, KeyRelease, KeyReleaseMask, key_release, &gdata);
 	mlx_hook(gdata.win, DestroyNotify, NoEventMask, mlx_loop_end, gdata.mlx);
+	mlx_hook(gdata.win, 25, 1L << 18, resize_func, &gdata);
 	mlx_loop_hook(gdata.mlx, render_loop, &gdata);
 	mlx_loop(gdata.mlx);
 	cleanup(&gdata);
