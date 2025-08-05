@@ -13,27 +13,25 @@
 #include "cub3d.h"
 
 static int		line_count(t_gdata *data, char *file);
-
-static bool		buffer_has_map_data(char *buffer);
 static void		update_map_width(t_gdata *gd, char *buffer);
 
 // grabs map data from file into char ** array gd->map
 // NOTE: will free everything, no need for cleanup outside for parse_file
 int	parse_file(t_gdata *gd, char *file_name)
 {
+	if (failed(init_map_data(gd)))
+		return (gd->exit_status);
 	gd->map_height = line_count(gd, file_name);
-	if (!gd->map_height || !gd->map_width)
-		return (exit_status(gd, EINVMAPHEIGHT));
+	if (gd->map_height < 2 || gd->map_width < 2)
+		return (exit_status(gd, EINVMAP));
 	gd->map = (char **) ft_calloc(sizeof(char *), gd->map_height + 1);
 	if (!gd->map)
-		return (ft_perror(), exit_status(gd, ENOMEM));
+		return (exit_status(gd, ERR_MALLOC));
 	gd->file_fd = open(file_name, O_RDONLY);
 	if (gd->file_fd < 0)
-		return (ft_error(strerror(errno)),
-			free(gd->map), exit_status(gd, EFAILOPENFILE));
+		return (exit_status(gd, EFAILOPENFILE));
 	if (failed(map_fill(gd, gd->map, gd->file_fd)))
-		return (close_fd(&gd->file_fd), free_array(gd->map),
-			gd->exit_status);
+		return (close_fd(&gd->file_fd), gd->exit_status);
 	return (EXIT_SUCCESS);
 }
 
@@ -49,8 +47,7 @@ static int	line_count(t_gdata *gd, char *file)
 	map_row_count = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_perror(),
-			exit_status(gd, EFAILOPENFILE), map_row_count);
+		return (exit_status(gd, EFAILOPENFILE), map_row_count);
 	else
 	{
 		buffer = get_next_line(fd);
@@ -68,8 +65,8 @@ static int	line_count(t_gdata *gd, char *file)
 	return (close_fd(&fd), exit_status(gd, EXIT_SUCCESS), map_row_count);
 }
 
-// used to set gd->map_width to that of the widest part of map
-// updates gd->map_width if len of current buffer is greater
+// updates gd->map_width to that of the widest part of map,
+// only if len of current buffer is greater
 static void	update_map_width(t_gdata *gd, char *buffer)
 {
 	size_t	len;
@@ -86,19 +83,20 @@ static void	update_map_width(t_gdata *gd, char *buffer)
 
 // checks if map is a valid map line, used for the size of gd->map
 // ***
-// LOGIC: skip over blank space characters. If the next character is a 0 or 1
-// (could just check for 1), it is considered a valid map file
-// if its a texture line, first char after skipping space will be N or S etc
-static bool	buffer_has_map_data(char *buffer)
+// skip over empty spaces. If the character is NSWEFC and the following
+// character is not 0 or 1, its most likely a texture file
+bool	buffer_has_map_data(char *buffer)
 {
-	size_t	i;
-
+	int		i;
 	if (!buffer)
 		return (false);
+
 	i = 0;
-	while (buffer[i] && buffer[i] == ' ')
+	while (buffer[i] == ' ')
 		i++;
-	if (buffer[i] && ft_strchr("01", buffer[i]))
+	if (ft_strchr("NSWEFC", buffer[i]) && !ft_strchr("01", buffer[i + 1]))
+		return (false);
+	if (ft_strchr(buffer, '0') || ft_strchr(buffer, '1'))
 		return (true);
 	else
 		return (false);

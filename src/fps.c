@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   fps.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-06 14:57:33 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-06 14:57:33 by abhi             ###   ########.fr       */
+/*   Created: 2025/07/06 14:57:33 by abhi              #+#    #+#             */
+/*   Updated: 2025/08/05 18:57:41 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <sys/time.h>
+
+int	get_time_stamp(void)
+{
+	static struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000 + tv.tv_usec);
+}
 
 static int	num_len(int n);
 

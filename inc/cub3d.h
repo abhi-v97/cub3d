@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/13 23:22:02 by aistok           ###   ########.fr       */
+/*   Updated: 2025/08/05 19:12:01 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 
 # include <X11/X.h>
 # include <X11/keysym.h>
-#include <X11/keysymdef.h>
 # include <string.h>
 # include <stdio.h>
 # include <stdbool.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <errno.h>
 # include "mlx.h"
 
 # ifndef W_WIDTH
@@ -42,16 +40,15 @@
 # define EFILEISDIR	10
 # define EFAILOPENFILE 11
 # define EBADFILEEXT 12
-# define EINVALARGCOUNT 13
+# define EINVARGS 13
 
-# define EINVMAPHEIGHT 20
-# define EMAPHBORDERERR 21
-# define EMAPVBORDERERR 22
+# define EINVMAP 20
+# define EMAPHBORDER 21
+# define EMAPVBORDER 22
 # define EMAPEMPTY 23
 # define EMAPINVCHAR 24
-# define EMAPTOOMANYPLAYERS 25
-# define EMAPNOPLAYERS 26
-# define EMAPPLAYEROUTOFBOUNDS 27
+# define ERR_MALLOC 25
+# define E_INV_PLAYER 26
 # define EMAPWALLMISSING 28
 # define EMISSINGTEXTURE 29
 # define EMAPTEXINVALIDFILENAME 30
@@ -66,7 +63,7 @@
 # define KEY_D 5
 # define KEY_ESC 6
 # define KEY_PITCH_UP 7
-#define KEY_PITCH_DOWN 8
+# define KEY_PITCH_DOWN 8
 
 # define M_BUTT_COUNT 5
 # define M_LEFTBUTT 1
@@ -227,9 +224,7 @@ typedef struct s_gdata
 	int			**textures;
 	int			*tex_rgb;
 	t_player	player;
-	int			player_direction;
 	int			keys[KEY_COUNT];
-	t_ipos		win_center;
 	t_pos		dir;
 	t_pos		plane;
 	double		time;
@@ -247,7 +242,7 @@ typedef struct s_gdata
 	int			weapon_frame;
 	int			weapon_state;
 	int			weapon_auto;
-	double pitch;
+	double		pitch;
 }	t_gdata;
 
 // libft funcs
@@ -265,42 +260,50 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
+void	ft_putstr_fd(char *s, int fd);
 
 // program_name.c
 char	*get_program_name(void);
 void	set_program_name(char *program_name);
 
-void	show_usage(int argc, char **argv);
-int		handle_error(int return_code, int argc, char **argv);
-
 // parsing/check_arg.c
 int		check_arg(t_gdata *gd, char *file_name);
 
-// parsing/parse_file.c
-int		parse_file(t_gdata *gdata, char *file_name);
+// parsing/check_map.c
+int		check_map(t_gdata *data);
+
+// parsing/check_map_bounds.c
+int		check_map_bounds(t_gdata *gd, char **map, int map_height);
 
 // parsing/map_fill.c
 int		map_fill(t_gdata *gd, char **map, int fd);
 
-// parsing/check_map_error.c
-int		check_map(t_gdata *data);
-
-// parsing/check_map_bounds_missing.c
-int		check_map_bounds(t_gdata *gd, char **map, int map_height);
+// parsing/parse_file.c
+int		parse_file(t_gdata *gdata, char *file_name);
+bool	buffer_has_map_data(char *buffer);
 
 // parsing/parse_textures.c
-int		parse_texture_data(t_gdata *data, char *buffer);
+int		parse_textures(t_gdata *data, char *buffer);
 
 // parsing/set_textures.c
-int		set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
+void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
 void	init_img(t_canvas *img);
-int		check_args_map_and_init(t_gdata *gd, int argc, char **argv);
-char	*get_texture_path(char *buffer);
+
+// ********** RENDER **********
+
+
+// render/rendering_function.c
+int		render_loop(void *param);
+
+// render/...
+int		render_loop(void *param);
+void	draw_wall(t_gdata *data, t_ray ray, int x);
+t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos);
 
 // error.c
 void	ft_error(char *msg);
-void	ft_errmsg(char *msg);
 void	ft_perror(void);
+int		handle_error(int return_code, char **argv);
 
 // utils.c
 int		is_blank(char c);
@@ -310,21 +313,15 @@ int		exit_status(t_gdata *data, int exit_code);
 int		failed(int return_value);
 
 // init.c
-int		init_all(t_gdata *gd);
+int		init_map_data(t_gdata *gd);
+int		init_mlx(t_gdata *gd);
 
 // cleanup.c
 void	cleanup(t_gdata *gdata);
-void	cleanup_textures(t_gdata *gd);
 void	free_array(char **array);
+void	free_data(t_gdata *data);
 
 void	put_pixel(t_canvas *canvas, int x, int y, int color);
-void	put_ver_line(t_canvas *canvas, int x, t_ray *ray, int color);
-void	fill_all(t_canvas *canvas, int color);
-
-// player_get_pos.c
-int		player_outside_map(t_gdata *data, t_pos pos);
-t_pos	player_get_pos_from_map(t_gdata *gdata);
-t_ipos	pos_dtoi(t_pos dpos);
 
 // key_events.c
 int		key_press(int key, t_gdata *gdata);
@@ -333,28 +330,14 @@ void	handle_key_presses(t_gdata *data);
 void	rotate_player(t_gdata *gd, double rot_speed);
 
 // debug.c
-void	debug_print_map_info(t_gdata *data);
-void	debug_test_textures(t_gdata *data, int *texture, int offset);
 void	debug_print(t_gdata *data);
-
-// render/rendering_function.c
-int		rendering_function(void *param);
-
-// render/...
-int		rendering_function(void *param);
-void	draw_wall(t_gdata *data, t_ray ray, int x);
-void	player_set_direction(t_gdata *gd);
-void	draw_wall_plain(t_gdata *gd, t_ray *ray, int x, int color);
-void	render_background(t_gdata *gd);
-void	draw_ceiling(t_canvas *canvas, int color);
-void	draw_floor(t_canvas *canvas, int color);
-t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos);
 
 int		get_time_stamp(void);
 
 // map_functions.c
 char	map_get(t_gdata *gd, int x, int y);
 void	map_set(t_gdata *gd, int x, int y, char c);
+t_ipos	pos_dtoi(t_pos dpos);
 
 // fps.c
 void	update_frame_time(t_gdata *gd);

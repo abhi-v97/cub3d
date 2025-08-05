@@ -14,23 +14,19 @@
 
 static bool	check_horizontal_border(char *map);
 static bool	check_vertical_border(char **map, int map_height);
-static int	check_invalid_char(t_gdata *data, char **map, int map_height);
-static bool	check_only_one_player(t_gdata *gd, char **map);
+static bool	check_map_validity(t_gdata *gd, char **map);
 
 int	check_map(t_gdata *gd)
 {
 	if (!gd->map || failed(check_horizontal_border(gd->map[0]))
 		|| failed(check_horizontal_border(gd->map[gd->map_height - 1])))
 		return (ft_error("Map has incorrect horizontal borders!"),
-			exit_status(gd, EMAPHBORDERERR));
+			exit_status(gd, EMAPHBORDER));
 	if (failed(check_vertical_border(gd->map, gd->map_height)))
 		return (ft_error("Map has incorrect vertical borders!"),
-			exit_status(gd, EMAPVBORDERERR));
-	if (check_invalid_char(gd, gd->map, gd->map_height))
+			exit_status(gd, EMAPVBORDER));
+	if (check_map_validity(gd, gd->map))
 		return (gd->exit_status);
-	if (!check_only_one_player(gd, gd->map))
-		return (ft_error("Map has none or too many players!"),
-			gd->exit_status);
 	if (failed(check_map_bounds(gd, gd->map, gd->map_height)))
 		return (gd->exit_status);
 	return (exit_status(gd, EXIT_SUCCESS));
@@ -79,34 +75,7 @@ static bool	check_vertical_border(char **map, int map_height)
 	return (false);
 }
 
-// checks if map has any invalid characters
-// allowed chars: 01NSWE and ' ' (empty space)
-static int	check_invalid_char(t_gdata *gd, char **map, int map_height)
-{
-	int		row;
-	int		col;
-
-	if (!map || !*map)
-		return (exit_status(gd, EMAPEMPTY));
-	row = 1;
-	while (row < map_height - 1)
-	{
-		col = 0;
-		while (map[row][col])
-		{
-			if (map[row][col] == ' ')
-				;
-			else if (!ft_strchr("01NSWED", map[row][col]))
-				return (ft_error("Invalid character found in map!"),
-					exit_status(gd, EMAPINVCHAR));
-			col++;
-		}
-		row++;
-	}
-	return (exit_status(gd, EXIT_SUCCESS));
-}
-
-static bool	check_only_one_player(t_gdata *gd, char **map)
+static bool	check_map_validity(t_gdata *gd, char **map)
 {
 	bool	player_found;
 	int		row;
@@ -121,14 +90,15 @@ static bool	check_only_one_player(t_gdata *gd, char **map)
 		{
 			if (map[row][col] && ft_strchr("NSEW", map[row][col]))
 			{
-				if (!player_found)
-					player_found = true;
-				else
-					return (exit_status(gd, EMAPTOOMANYPLAYERS), false);
+				if (player_found)
+					return (exit_status(gd, E_INV_PLAYER), true);
+				player_found = true;
 			}
+			else if (!ft_strchr("01NSWED ", map[row][col]))
+				return (exit_status(gd, EMAPINVCHAR), true);
 		}
 	}
 	if (player_found)
-		return (exit_status(gd, EXIT_SUCCESS), true);
-	return (exit_status(gd, EMAPNOPLAYERS), false);
+		return (exit_status(gd, EXIT_SUCCESS), false);
+	return (exit_status(gd, E_INV_PLAYER), true);
 }

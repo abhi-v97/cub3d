@@ -3,34 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   set_textures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:48:18 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/09 23:02:14 by aistok           ###   ########.fr       */
+/*   Updated: 2025/08/05 19:12:11 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 static int		*parse_xpm(t_gdata *data, char *path);
+static char		*get_texture_path(char *buffer);
 static int		set_rgb(char *path);
 
-int	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
+void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
 {
 	char	*path;
 
 	if (data->textures[wall_dir] || data->tex_rgb[wall_dir])
-		return (0);
+	{
+		exit_status(data, EMAPTEXERROR);
+		return ;
+	}
 	path = get_texture_path(buffer);
+	if (!path)
+		return ;
 	if (path && ft_strchr(path, '/'))
 	{
 		data->textures[wall_dir] = parse_xpm(data, path);
 		if (!data->textures[wall_dir])
-			return (free(path), 1);
+			return (free(path));
 	}
 	else if (path && (path[0] >= '0' && path[0] <= '9'))
 		data->tex_rgb[wall_dir] = set_rgb(path);
-	return (free(path), 0);
+	return (free(path));
 }
 
 static int	*parse_xpm(t_gdata *data, char *path)
@@ -60,6 +66,7 @@ static int	*parse_xpm(t_gdata *data, char *path)
 	return (mlx_destroy_image(data->mlx, img.img), array);
 }
 
+// helper function to initialse the temporary img struct needed by mlx
 void	init_img(t_canvas *img)
 {
 	img->img = NULL;
@@ -77,8 +84,9 @@ void	init_img(t_canvas *img)
 // len: length of the path plus whitespace
 // ft_strndup(buffer + i, len - i - 1)
 // buffer + i tells strndup to begin copying from where the whitespace ends
-// len - i: len - i to subtract the whitespace chars from len
-char	*get_texture_path(char *buffer)
+// len - i - 1: len - i to subtract the whitespace chars from len, and 
+// another -1 to subtract the '/n' char from gnl
+static char	*get_texture_path(char *buffer)
 {
 	int		i;
 	int		len;
@@ -88,11 +96,11 @@ char	*get_texture_path(char *buffer)
 	while (buffer[i] && is_blank(buffer[i]))
 		i++;
 	len = i;
-	while (buffer[len] && !is_blank(buffer[len]) && buffer[len] != '\n')
+	while (buffer[len] && !is_blank(buffer[len] && buffer[len] != '\n'))
 		len++;
 	if (buffer[i] == '\0')
 		return (NULL);
-	result = ft_strndup(buffer + i, len - i);
+	result = ft_strndup(buffer + i, len - i - 1);
 	if (!result)
 		return (NULL);
 	return (result);

@@ -12,12 +12,11 @@
 
 #include "cub3d.h"
 
-static int		copy_buffer_error(t_gdata *gd, char *buf, char **map, int row);
-static int		missing_textures(t_gdata *gd);
+static int		set_map_row(t_gdata *gd, char *buf, char **map, int *row);
+static int		check_textures(t_gdata *gd);
 
 // copy contents of map file into map array
 // updates gd->map_height to total count of rows
-//
 // first while loop checks for texture data, breaks once it hits the map
 int	map_fill(t_gdata *gd, char **map, int fd)
 {
@@ -28,64 +27,61 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 	buffer = get_next_line(fd);
 	while (buffer)
 	{
-		if (parse_texture_data(gd, buffer))
+		if (parse_textures(gd, buffer))
 			break ;
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
-	if (missing_textures(gd))
-		return (free(buffer), gd->exit_status);
 	while (buffer)
 	{
-		if (copy_buffer_error(gd, buffer, map, row++))
-			return (free_array(map), free(buffer), cleanup_textures(gd),
-				ft_perror(), gd->exit_status);
+		if (set_map_row(gd, buffer, map, &row))
+			gd->exit_status = EINVMAP;
 		free(buffer);
 		buffer = get_next_line(fd);
 	}
 	map[row] = NULL;
 	gd->map_height = row;
-	return (exit_status(gd, EXIT_SUCCESS));
+	return (check_textures(gd));
 }
 
 // normalises each map line to have the same width
 // empty gaps are represented by a ' ' sign
-// actually, it doesn't need to be a dash, it can just be a
-// space character. so once we no longer need to print the
-// map with print_map_info, we can remove the while loop at the end
-// and replace the ' ' checks with ' '
-static int	copy_buffer_error(t_gdata *gd, char *buf, char **map, int row)
+static int	set_map_row(t_gdata *gd, char *buf, char **map, int *row)
 {
 	char	*nl_char;
-
-	map[row] = (char *) malloc(sizeof(char *) * (gd->map_width + 1));
-	if (!map[row])
-		return (exit_status(gd, ENOMEM));
-	ft_memset(map[row], ' ', gd->map_width);
-	ft_memcpy(map[row], buf, ft_strlen(buf));
-	map[row][gd->map_width] = '\0';
-	nl_char = ft_strchr(map[row], '\n');
+	if (buffer_has_map_data(buf) == false)
+		return (EXIT_FAILURE);
+	map[*row] = (char *) malloc(sizeof(char *) * (gd->map_width + 1));
+	if (!map[*row])
+		return (exit_status(gd, ERR_MALLOC));
+	ft_memset(map[*row], ' ', gd->map_width);
+	ft_memcpy(map[*row], buf, ft_strlen(buf));
+	map[*row][gd->map_width] = '\0';
+	nl_char = ft_strchr(map[*row], '\n');
 	if (nl_char)
 		*nl_char = ' ';
-	return (exit_status(gd, EXIT_SUCCESS));
+	(*row)++;
+	return (EXIT_SUCCESS);
 }
 
 // checks if each cardinal direction has a value in gd->textures or
 // gd->tex_rgb, which are calloc'd and will be zero if not set by
 // set_textures func
-// Only checks NWSE for now
-static int	missing_textures(t_gdata *gd)
+// Only checks NWSE for now, if floor or ceiling aren't set it defaults to
+// black
+// doesn't bother checking if gd->exit_status isn't zero
+static int	check_textures(t_gdata *gd)
 {
 	t_cardinal	dir;
 
+	if (gd->exit_status)
+		return (gd->exit_status);
 	dir = 0;
 	while (dir <= WEST)
 	{
 		if (!gd->textures[dir] && !gd->tex_rgb[dir])
-			return (ft_error("Missing texture!"),
-				cleanup_textures(gd),
-				exit_status(gd, EMISSINGTEXTURE));
+			return (exit_status(gd, EMAPTEXERROR));
 		dir++;
 	}
-	return (exit_status(gd, EXIT_SUCCESS));
+	return (EXIT_SUCCESS);
 }

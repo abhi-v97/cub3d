@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:27:15 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/13 20:58:12 by aistok           ###   ########.fr       */
+/*   Updated: 2025/08/05 18:46:11 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 void		free_array(char **array);
-static void	free_data(t_gdata *data);
-void		cleanup_textures(t_gdata *gd);
+static void	cleanup_textures(t_gdata *gd);
 
-void	cleanup(t_gdata *gdata)
+void	cleanup(t_gdata *gd)
 {
-	if (gdata->canvas.img)
-		mlx_destroy_image(gdata->mlx, gdata->canvas.img);
-	if (gdata->win)
-		mlx_destroy_window(gdata->mlx, gdata->win);
-	if (gdata->mlx)
+	if (gd->canvas.img)
+		mlx_destroy_image(gd->mlx, gd->canvas.img);
+	if (gd->win)
+		mlx_destroy_window(gd->mlx, gd->win);
+	if (gd->mlx)
 	{
-		mlx_destroy_display(gdata->mlx);
-		mlx_loop_end(gdata->mlx);
-		free(gdata->mlx);
+		mlx_destroy_display(gd->mlx);
+		mlx_loop_end(gd->mlx);
+		free(gd->mlx);
 	}
-	free_data(gdata);
+	free_data(gd);
 }
 
 void	free_array(char **array)
@@ -45,7 +44,7 @@ void	free_array(char **array)
 	free(array);
 }
 
-static void	free_data(t_gdata *data)
+void	free_data(t_gdata *data)
 {
 	close_fd(&data->file_fd);
 	if (data->map)
@@ -53,7 +52,7 @@ static void	free_data(t_gdata *data)
 	cleanup_textures(data);
 }
 
-void	cleanup_textures(t_gdata *gd)
+static void	cleanup_textures(t_gdata *gd)
 {
 	int		i;
 
