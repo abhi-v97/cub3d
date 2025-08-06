@@ -12,8 +12,6 @@
 
 #include "cub3d.h"
 
-static int		*parse_xpm(t_gdata *data, char *path);
-static char		*get_texture_path(char *buffer);
 static int		set_rgb(char *path);
 
 void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
@@ -39,7 +37,7 @@ void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir)
 	return (free(path));
 }
 
-static int	*parse_xpm(t_gdata *data, char *path)
+int	*parse_xpm(t_gdata *data, char *path)
 {
 	t_canvas	img;
 	int			*array;
@@ -86,7 +84,7 @@ void	init_img(t_canvas *img)
 // buffer + i tells strndup to begin copying from where the whitespace ends
 // len - i - 1: len - i to subtract the whitespace chars from len, and 
 // another -1 to subtract the '/n' char from gnl
-static char	*get_texture_path(char *buffer)
+char	*get_texture_path(char *buffer)
 {
 	int		i;
 	int		len;

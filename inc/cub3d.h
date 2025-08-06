@@ -176,6 +176,7 @@ typedef struct s_minimap
 
 typedef struct s_sprite
 {
+	int		tex;
 	double	x;
 	double	y;
 	double	inv_det;
@@ -252,6 +253,10 @@ typedef struct s_gdata
 	double		z_buffer[W_WIDTH];
 	t_weapon	weapon;
 	double		pitch;
+	int			num_sprite_tex;
+	int			num_sprite_pos;
+	int			**sprite_tex;
+	t_sprite	sprite[4];
 }	t_gdata;
 
 /* ------------------------------- libft funcs ------------------------------ */
@@ -296,6 +301,12 @@ int		parse_textures(t_gdata *data, char *buffer);
 // parsing/set_textures.c
 void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
 void	init_img(t_canvas *img);
+int		*parse_xpm(t_gdata *data, char *path);
+char	*get_texture_path(char *buffer);
+
+// parsing/set_sprite.c
+void	set_sprite(t_gdata *gd, char *path);
+void	set_sprite_pos(t_gdata *gd, char *buffer);
 
 /* --------------------------------- render --------------------------------- */
 

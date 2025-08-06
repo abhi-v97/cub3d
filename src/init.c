@@ -30,6 +30,8 @@ int	init_map_data(t_gdata *gd)
 	gd->weapon.current = 0;
 	gd->weapon.auto_fire = 0;
 	gd->pitch = 0;
+	gd->num_sprite_tex = 0;
+	gd->num_sprite_pos = 0;
 	if (failed(alloc_textures(gd)))
 		return (gd->exit_status);
 	gd->mlx = mlx_init();
@@ -63,6 +65,7 @@ static int	alloc_textures(t_gdata *gd)
 	if (!gd->tex_rgb)
 		return (exit_status(gd, ERR_MALLOC));
 	gd->textures = ft_calloc(sizeof(int *), 8);
+	gd->sprite_tex = ft_calloc(sizeof(int *), 5);
 	gd->weapon.model = ft_calloc(sizeof(int *), 5);
 	if (!gd->textures)
 		return (free(gd->tex_rgb), exit_status(gd, ERR_MALLOC));

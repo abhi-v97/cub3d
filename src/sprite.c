@@ -12,40 +12,20 @@
 
 #include "cub3d.h"
 
-static void	calc_sprite_info(t_gdata *gd, t_sprite *sp);
 static void	render(t_gdata *gd, t_sprite *sp);
+static void	put_sprite(t_gdata *gd, t_sprite *sp, int x, int tex_x);
+static void	calc_sprite_info(t_gdata *gd, t_sprite *sp);
 
 void	draw_sprite(t_gdata *gd)
 {
-	t_sprite	sp[1];
 	int			i;
 
-	sp[0].x = 2.5;
-	sp[0].y = 3.5;
 	i = 0;
-	while (i < 1)
+	while (i < gd->num_sprite_pos)
 	{
-		calc_sprite_info(gd, &sp[i]);
-		render(gd, &sp[i++]);
-	}
-}
-
-static void	put_sprite(t_gdata *gd, t_sprite *sp, int x, int tex_x)
-{
-	int		y;
-	int		tex_y;
-	int		colour;
-
-	y = sp->draw_start_y;
-	while (y < sp->draw_end_y)
-	{
-		tex_y = (((((y - (int)gd->pitch) << 8) - (W_HEIGHT << 7)
-						+ (sp->sprite_size << 7))
-					* gd->tex_size) / sp->sprite_size) >> 8;
-		colour = gd->textures[SPRITE][gd->tex_size * tex_y + tex_x];
-		if ((colour & 0x00FFFFFF) != 0)
-			put_pixel(&gd->canvas, x, y, colour);
-		y++;
+		calc_sprite_info(gd, &gd->sprite[i]);
+		render(gd, &gd->sprite[i]);
+		i++;
 	}
 }
 
@@ -63,6 +43,25 @@ static void	render(t_gdata *gd, t_sprite *sp)
 			< gd->z_buffer[x])
 			put_sprite(gd, sp, x, tex_x);
 		x++;
+	}
+}
+
+static void	put_sprite(t_gdata *gd, t_sprite *sp, int x, int tex_x)
+{
+	int		y;
+	int		tex_y;
+	int		colour;
+
+	y = sp->draw_start_y;
+	while (y < sp->draw_end_y)
+	{
+		tex_y = (((((y - (int)gd->pitch) << 8) - (W_HEIGHT << 7)
+						+ (sp->sprite_size << 7))
+					* gd->tex_size) / sp->sprite_size) >> 8;
+		colour = gd->sprite_tex[sp->tex][gd->tex_size * tex_y + tex_x];
+		if ((colour & 0x00FFFFFF) != 0)
+			put_pixel(&gd->canvas, x, y, colour);
+		y++;
 	}
 }
 
