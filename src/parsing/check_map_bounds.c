@@ -62,7 +62,7 @@ static bool	check_missing_wall(t_gdata *gd, char **map, int row, int col)
 	return (false);
 }
 
-static bool	is_space_or_wall(char c)
+static inline bool	is_space_or_wall(char c)
 {
 	if (!c)
 		return (false);

@@ -22,13 +22,13 @@ int	init_map_data(t_gdata *gd)
 	gd->player.pos.x = 0.0;
 	gd->player.pos.y = 0.0;
 	memset(gd->keys, 0, KEY_COUNT * sizeof(int));
-	gd->time = get_time_stamp();
+	gd->time = 0;
 	gd->old_time = 0;
 	gd->file_fd = -1;
-	gd->weapon_frame = 0;
-	gd->weapon_state = 0;
-	gd->current_weapon = 0;
-	gd->weapon_auto = 0;
+	gd->weapon.frame = 0;
+	gd->weapon.state = 0;
+	gd->weapon.current = 0;
+	gd->weapon.auto_fire = 0;
 	gd->pitch = 0;
 	if (failed(alloc_textures(gd)))
 		return (gd->exit_status);
@@ -63,7 +63,7 @@ static int	alloc_textures(t_gdata *gd)
 	if (!gd->tex_rgb)
 		return (exit_status(gd, ERR_MALLOC));
 	gd->textures = ft_calloc(sizeof(int *), 8);
-	gd->weapon = ft_calloc(sizeof(int *), 5);
+	gd->weapon.model = ft_calloc(sizeof(int *), 5);
 	if (!gd->textures)
 		return (free(gd->tex_rgb), exit_status(gd, ERR_MALLOC));
 	return (EXIT_SUCCESS);

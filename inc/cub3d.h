@@ -23,6 +23,8 @@
 # include <fcntl.h>
 # include "mlx.h"
 
+/* --------------------------------- macros --------------------------------- */
+
 # ifndef W_WIDTH
 #  define W_WIDTH 1024
 # endif
@@ -77,6 +79,8 @@
 
 # define MAP_EMPTY_SPACE '0'
 # define MAP_WALL '1'
+
+/* --------------------------------- Structs -------------------------------- */
 
 typedef enum e_action
 {
@@ -185,7 +189,7 @@ typedef struct s_sprite
 	int		draw_end_y;
 }	t_sprite;
 
-typedef struct	s_door
+typedef struct s_door
 {
 	int		x;
 	int		y;
@@ -204,6 +208,17 @@ typedef struct s_floor
 	t_ray		ray;
 	bool		is_floor;
 }	t_floor;
+
+typedef struct set_weapon
+{
+	int			**model;
+	int			current;
+	int			width;
+	int			height;
+	int			frame;
+	int			state;
+	int			auto_fire;
+}	t_weapon;
 
 /*
  *	gdata - Game data
@@ -235,17 +250,12 @@ typedef struct s_gdata
 	int			num_doors;
 	t_minimap	minimap;
 	double		z_buffer[W_WIDTH];
-	int			**weapon;
-	int			current_weapon;
-	int			weapon_width;
-	int			weapon_height;
-	int			weapon_frame;
-	int			weapon_state;
-	int			weapon_auto;
+	t_weapon	weapon;
 	double		pitch;
 }	t_gdata;
 
-// libft funcs
+/* ------------------------------- libft funcs ------------------------------ */
+
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
@@ -262,9 +272,7 @@ char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
 void	ft_putstr_fd(char *s, int fd);
 
-// program_name.c
-char	*get_program_name(void);
-void	set_program_name(char *program_name);
+/* --------------------------------- parsing -------------------------------- */
 
 // parsing/check_arg.c
 int		check_arg(t_gdata *gd, char *file_name);
@@ -289,39 +297,66 @@ int		parse_textures(t_gdata *data, char *buffer);
 void	set_textures(t_gdata *data, char *buffer, t_cardinal wall_dir);
 void	init_img(t_canvas *img);
 
-// ********** RENDER **********
+/* --------------------------------- render --------------------------------- */
 
+// render/door.c
+void	find_doors(t_gdata *gd);
+void	wall_anim(t_gdata *gd);
+void	open_sesame(t_gdata *gd);
+int		door_calc(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 
-// render/rendering_function.c
-int		render_loop(void *param);
-
-// render/...
-int		render_loop(void *param);
+// render/draw_wall.c
 void	draw_wall(t_gdata *data, t_ray ray, int x);
+
+// render/floor_cast.c
+void	floor_cast(t_gdata *gd);
+
+// render/minimap.c
+int		**minimap_colours(t_gdata *gd);
+void	render_minimap(t_gdata *gd);
+
+// render/put_pixel.c
+void	put_pixel(t_canvas *canvas, int x, int y, int color);
+int		blend(int fg, int bg, int alpha);
+int		get_pixel(t_canvas *canvas, int x, int y);
+
+// render/ray_create.c
 t_ray	ray_create(t_gdata *gd, int x, t_ipos *map_pos);
 
-// error.c
-void	ft_error(char *msg);
-void	ft_perror(void);
-int		handle_error(int return_code, char **argv);
+// render/render_loop.c
+int		render_loop(void *param);
 
-// utils.c
-int		is_blank(char c);
-void	close_fd(int *fd);
-int		is_num(char c);
-int		exit_status(t_gdata *data, int exit_code);
-int		failed(int return_value);
+// render/weapon_anim.c
+void	weapon_shoot(t_gdata *gd);
+void	weapon_holster(t_gdata *gd);
+void	weapon_equip(t_gdata *gd);
+void	weapon_animate(t_gdata *gd);
 
-// init.c
-int		init_map_data(t_gdata *gd);
-int		init_mlx(t_gdata *gd);
+// render/weapon.c
+int		set_weapon(t_gdata *gd);
+void	draw_weapon(t_gdata *gd);
+
+/* -------------------------------- the rest -------------------------------- */
 
 // cleanup.c
 void	cleanup(t_gdata *gdata);
 void	free_array(char **array);
 void	free_data(t_gdata *data);
 
-void	put_pixel(t_canvas *canvas, int x, int y, int color);
+// debug.c
+void	debug_print(t_gdata *data);
+
+// error.c
+void	ft_error(char *msg);
+void	ft_perror(void);
+int		handle_error(int return_code, char **argv);
+
+// fps.c
+void	update_frame_time(t_gdata *gd);
+
+// init.c
+int		init_map_data(t_gdata *gd);
+int		init_mlx(t_gdata *gd);
 
 // key_events.c
 int		key_press(int key, t_gdata *gdata);
@@ -329,38 +364,32 @@ int		key_release(int key, t_gdata *gdata);
 void	handle_key_presses(t_gdata *data);
 void	rotate_player(t_gdata *gd, double rot_speed);
 
-// debug.c
-void	debug_print(t_gdata *data);
-
-int		get_time_stamp(void);
+// key_helpers.c
+void	weapon_switch(t_gdata *gd, int key);
+void	modify_pitch(t_gdata *gd, double move_speed);
+int		wall_status(t_gdata *gd, int x, int y);
 
 // map_functions.c
 char	map_get(t_gdata *gd, int x, int y);
 void	map_set(t_gdata *gd, int x, int y, char c);
 t_ipos	pos_dtoi(t_pos dpos);
 
-// fps.c
-void	update_frame_time(t_gdata *gd);
+// mouse_events.c
+int		mouse_click(int button, int x, int y, t_gdata *gd);
+int		mouse_release(int button, int x, int y, t_gdata *gd);
+
+// program_name.c
+char	*get_program_name(void);
+void	set_program_name(char *program_name);
 
 // sprite.c
 void	draw_sprite(t_gdata *gd);
 
-// BONUS render/minimap.c
-int		**minimap_colours(t_gdata *gd);
-void	render_minimap(t_gdata *gd);
-
-// door.c
-void	find_doors(t_gdata *gd);
-void	wall_anim(t_gdata *gd);
-void	open_sesame(t_gdata *gd);
-float	get_door_offset(t_gdata *gd, int x, int y);
-int		door_calc(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
-
-// floor_cast.c
-void	floor_cast(t_gdata *gd);
-
-// weapon.c
-int		set_weapon(t_gdata *gd);
-void	draw_weapon(t_gdata *gd);
+// utils.c
+int		is_blank(char c);
+void	close_fd(int *fd);
+int		is_num(char c);
+int		exit_status(t_gdata *data, int exit_code);
+int		failed(int return_value);
 
 #endif

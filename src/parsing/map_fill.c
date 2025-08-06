@@ -49,6 +49,7 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 static int	set_map_row(t_gdata *gd, char *buf, char **map, int *row)
 {
 	char	*nl_char;
+
 	if (buffer_has_map_data(buf) == false)
 		return (EXIT_FAILURE);
 	map[*row] = (char *) malloc(sizeof(char *) * (gd->map_width + 1));

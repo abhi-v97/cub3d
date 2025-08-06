@@ -88,9 +88,9 @@ static void	update_map_width(t_gdata *gd, char *buffer)
 bool	buffer_has_map_data(char *buffer)
 {
 	int		i;
+
 	if (!buffer)
 		return (false);
-
 	i = 0;
 	while (buffer[i] == ' ')
 		i++;

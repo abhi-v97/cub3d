@@ -22,7 +22,7 @@ void	floor_cast(t_gdata *gd)
 {
 	int				y;
 	t_floor			floor;
-	
+	int				p;
 
 	floor.ray.dir.x = gd->dir.x - gd->plane.x;
 	floor.ray.dir.y = gd->dir.y - gd->plane.y;
@@ -30,19 +30,21 @@ void	floor_cast(t_gdata *gd)
 	while (y < W_HEIGHT)
 	{
 		floor.is_floor = y > W_HEIGHT / 2.0 + gd->pitch;
-		int p = floor.is_floor ? (y - W_HEIGHT / 2.0 - gd->pitch) : (W_HEIGHT / 2.0 - y + gd->pitch);
-		float camZ = 0.5 * W_HEIGHT;
-		floor.row_dist = camZ / p;
+		if (floor.is_floor)
+			p = y - W_HEIGHT / 2.0 - gd->pitch;
+		else
+			p = W_HEIGHT / 2.0 - y + gd->pitch;
+		floor.row_dist = (0.5 * W_HEIGHT) / p;
 		set_floorcast_info(gd, &floor, y);
 		draw_line(gd, &floor, y);
 		y++;
 	}
 }
 
+// floor->row_dist = W_HEIGHT / (2.0 * y - W_HEIGHT);
 static void	set_floorcast_info(t_gdata *gd, t_floor *floor, int y)
 {
 	(void) y;
-	// floor->row_dist = W_HEIGHT / (2.0 * y - W_HEIGHT);
 	floor->step_x = floor->row_dist * (gd->dir.x + gd->plane.x
 			- floor->ray.dir.x) / W_WIDTH;
 	floor->step_y = floor->row_dist * (gd->dir.y + gd->plane.y

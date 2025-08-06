@@ -39,7 +39,8 @@ static void	put_sprite(t_gdata *gd, t_sprite *sp, int x, int tex_x)
 	y = sp->draw_start_y;
 	while (y < sp->draw_end_y)
 	{
-		tex_y = (((((y - (int)gd->pitch) << 8) - (W_HEIGHT << 7) + (sp->sprite_size << 7))
+		tex_y = (((((y - (int)gd->pitch) << 8) - (W_HEIGHT << 7)
+						+ (sp->sprite_size << 7))
 					* gd->tex_size) / sp->sprite_size) >> 8;
 		colour = gd->textures[SPRITE][gd->tex_size * tex_y + tex_x];
 		if ((colour & 0x00FFFFFF) != 0)
@@ -78,10 +79,10 @@ static void	calc_sprite_info(t_gdata *gd, t_sprite *sp)
 	sp->sprite_screen_x = (int)((W_WIDTH / 2.0) * (1 + sp->transform_x
 				/ sp->transform_y));
 	sp->sprite_size = abs((int)(W_HEIGHT / (sp->transform_y)));
-	sp->draw_start_y = -sp->sprite_size / 2 + W_HEIGHT / 2 + gd->pitch;
+	sp->draw_start_y = -sp->sprite_size / 2 + W_HEIGHT / 2 + (int)gd->pitch;
 	if (sp->draw_start_y < 0)
 		sp->draw_start_y = 0;
-	sp->draw_end_y = sp->sprite_size / 2 + W_HEIGHT / 2 + gd->pitch;
+	sp->draw_end_y = sp->sprite_size / 2 + W_HEIGHT / 2 + (int)gd->pitch;
 	if (sp->draw_end_y >= W_HEIGHT)
 		sp->draw_end_y = W_HEIGHT - 1;
 	sp->draw_start_x = -sp->sprite_size / 2 + sp->sprite_screen_x;

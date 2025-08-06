@@ -12,68 +12,78 @@
 
 #include "cub3d.h"
 
-int	*parse_weapon(t_gdata *data, char *path);
+static int	*parse_weapon(t_gdata *data, char *path);
+static int	get_weapon_texel(t_gdata *gd, int x, int y, int frame_offset);
 
 int	set_weapon(t_gdata *gd)
 {
-	gd->weapon[0] = parse_weapon(gd, "textures/wolfenstein/rifle.xpm");
-	gd->weapon[1] = parse_weapon(gd, "textures/wolfenstein/pistol.xpm");
-	gd->weapon[2] = parse_weapon(gd, "textures/wolfenstein/knife.xpm");
-	gd->weapon[3] = parse_weapon(gd, "textures/wolfenstein/minigun.xpm");
+	gd->weapon.model[0] = parse_weapon(gd, "textures/wolfenstein/rifle.xpm");
+	gd->weapon.model[1] = parse_weapon(gd, "textures/wolfenstein/pistol.xpm");
+	gd->weapon.model[2] = parse_weapon(gd, "textures/wolfenstein/knife.xpm");
+	gd->weapon.model[3] = parse_weapon(gd, "textures/wolfenstein/minigun.xpm");
 	return (0);
 }
 
-int	*parse_weapon(t_gdata *data, char *path)
+static int	*parse_weapon(t_gdata *gd, char *path)
 {
 	t_canvas	img;
 	int			*array;
 	int			x;
 	int			y;
 
-
-
-	(void) path;
 	init_img(&img);
-	img.img = mlx_xpm_file_to_image(data->mlx,
-			path, &data->weapon_width, &data->weapon_height);
+	img.img = mlx_xpm_file_to_image(gd->mlx,
+			path, &gd->weapon.width, &gd->weapon.height);
 	if (img.img == NULL)
 		return (ft_error("Failed to init mlx image!"), NULL);
 	img.addr = (int *)mlx_get_data_addr(img.img,
 			&img.bpp, &img.ll, &img.endian);
-	array = ft_calloc(sizeof(int), data->weapon_width * data->weapon_height);
-	y = 0;
-	while (y < data->weapon_height)
+	array = ft_calloc(sizeof(int), gd->weapon.width * gd->weapon.height);
+	y = -1;
+	while (++y < gd->weapon.height)
 	{
-		x = 0;
-		while (x < data->weapon_width)
+		x = -1;
+		while (++x < gd->weapon.width)
 		{
-			array[x + y * data->weapon_width] = img.addr[x + y * data->weapon_width];
-			x++;
+			array[x + y * gd->weapon.width] = img.addr[x + y
+				* gd->weapon.width];
 		}
-		y++;
 	}
-	return (mlx_destroy_image(data->mlx, img.img), array);	
+	return (mlx_destroy_image(gd->mlx, img.img), array);
 }
 
 void	draw_weapon(t_gdata *gd)
 {
-	int frame_offset = gd->weapon_frame * (64 + 1);
-	int src_x, src_y;
-	
-	int x = 0;
-	int y = 0;
-	while (y < 512)
+	int		frame_offset;
+	int		x;
+	int		y;
+	int		colour;
+
+	y = -1;
+	frame_offset = gd->weapon.frame * (64 + 1);
+	while (++y < 512)
 	{
-		x = 0;
-		while (x < 512)
+		x = -1;
+		while (++x < 512)
 		{
-			src_x = frame_offset + (x * 64) / 512;
-			src_y = (y * 64) / 512;
-			int color = gd->weapon[gd->current_weapon][src_x + src_y * gd->weapon_width];
-			if (color != 9961608)
-				put_pixel(&gd->canvas, x + W_WIDTH / 4, y + W_HEIGHT - 512, color);
-			x++;
+			colour = get_weapon_texel(gd, x, y, frame_offset);
+			if (colour != 9961608)
+				put_pixel(&gd->canvas, x + W_WIDTH / 4, y + W_HEIGHT - 512,
+					colour);
 		}
-		y++;
 	}
+}
+
+static inline int	get_weapon_texel(t_gdata *gd, int x, int y,
+		int frame_offset)
+{
+	int		src_x;
+	int		src_y;
+	int		colour;
+
+	src_x = frame_offset + (x * 64) / 512;
+	src_y = (y * 64) / 512;
+	colour = gd->weapon.model[gd->weapon.current][src_x + src_y
+		* gd->weapon.width];
+	return (colour);
 }

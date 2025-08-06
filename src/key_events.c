@@ -37,23 +37,7 @@ int	key_press(int key, t_gdata *gd)
 	else if (key == XK_p)
 		debug_print(gd);
 	else if (key == XK_1 || key == XK_2 || key == XK_3 || key == XK_4)
-	{
-		if ((key - XK_1) != gd->current_weapon)
-		{
-			gd->current_weapon = key - XK_1;
-			gd->weapon_state = -1;
-		}
-		if (gd->weapon_state == -1)
-		{
-			gd->weapon_state = 2;
-			gd->weapon_frame = 0;
-		}
-		else if (gd->weapon_state == 0)
-		{
-			gd->weapon_state = 3;
-			gd->weapon_frame = 0;
-		}
-	}
+		weapon_switch(gd, key);
 	return (1);
 }
 
@@ -104,31 +88,9 @@ void	handle_key_presses(t_gdata *gd)
 	if (gd->keys[KEY_LEFT])
 		rotate_player(gd, -rot_speed);
 	if (gd->keys[KEY_PITCH_DOWN])
-	{
-		gd->pitch -= 400 * move_speed;
-		if (gd->pitch < -200)
-			gd->pitch = -200;
-	}
+		modify_pitch(gd, move_speed);
 	if (gd->keys[KEY_PITCH_UP])
-	{
-		gd->pitch += 400 * move_speed;
-		if (gd->pitch > 200)
-			gd->pitch = 200;
-	}
-}
-
-int	wall_status(t_gdata *gd, int x, int y)
-{
-	int		i;
-
-	i = 0;
-	while (i < gd->num_doors)
-	{
-		if (gd->door[i].x == x && gd->door[i].y == y)
-			return (gd->door[i].status);
-		i++;
-	}
-	return (1);
+		modify_pitch(gd, move_speed);
 }
 
 static void	move_player(t_gdata *gd, double dx, double dy, double move_speed)

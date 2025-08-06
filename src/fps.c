@@ -13,14 +13,7 @@
 #include "cub3d.h"
 #include <sys/time.h>
 
-int	get_time_stamp(void)
-{
-	static struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000000 + tv.tv_usec);
-}
-
+static int	get_time_stamp(void);
 static int	num_len(int n);
 
 //	update gd->frame_time, used for movement and rotation
@@ -64,4 +57,12 @@ static int	num_len(int n)
 		i++;
 	}
 	return (i);
+}
+
+static int	get_time_stamp(void)
+{
+	static struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000 + tv.tv_usec);
 }

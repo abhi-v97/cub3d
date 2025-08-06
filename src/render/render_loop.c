@@ -16,103 +16,7 @@
 
 static void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 static void	calc_draw_distance(t_gdata *gd, t_ray *ray);
-
-void	weapon_shoot(t_gdata *gd)
-{
-	static int		old_time;
-	
-	if (!old_time)
-		old_time = gd->time;
-	if (gd->weapon_state == 1)
-	{
-		if (gd->time - old_time > 50000)
-		{
-			gd->weapon_frame++;
-			old_time = gd->time;
-		}
-		if (gd->weapon_frame == 5)
-		{
-			if (gd->weapon_auto)
-			{
-				gd->weapon_frame = 1;
-				return ;
-			}
-
-			gd->weapon_state = 0;
-			gd->weapon_frame = 0;
-		}
-	}
-}
-
-void	weapon_holster(t_gdata *gd)
-{
-	static int		old_time;
-	
-	if (!old_time)
-		old_time = gd->time;
-	if (gd->time - old_time > 100000)
-	{
-		gd->weapon_frame++;
-		old_time = gd->time;
-	}
-	if (gd->weapon_frame == 1)
-	{
-		gd->weapon_state = -1;
-		gd->weapon_frame = 0;
-	}
-}
-
-void	weapon_equip(t_gdata *gd)
-{
-	static int		old_time;
-	
-	if (!old_time)
-		old_time = gd->time;
-	if (gd->time - old_time > 50000)
-	{
-		gd->weapon_frame++;
-		old_time = gd->time;
-	}
-	if (gd->weapon_frame == 2)
-	{
-		gd->weapon_state = 0;
-		gd->weapon_frame = 0;
-	}
-}
-
-void	weapon_animate(t_gdata *gd)
-{
-	if (gd->weapon_state == -1)
-		return ;
-	draw_weapon(gd);
-	if (gd->weapon_state == 1)
-		weapon_shoot(gd);
-	if (gd->weapon_state == 2)
-		weapon_equip(gd);
-	if (gd->weapon_state == 3)
-		weapon_holster(gd);
-}
-
-int	mouse_move(t_gdata *gd)
-{
-	(void) gd;
-	int		x;
-	int		y;
-	
-	mlx_mouse_get_pos(gd->mlx, gd->win, &x, &y);
-	if (x != W_WIDTH / 2)
-		rotate_player(gd, (x - W_WIDTH / 2) * gd->frame_time);
-	if (y != W_HEIGHT / 2)
-	{
-		gd->pitch -= (y - W_HEIGHT / 2);
-		if (gd->pitch < -200)
-			gd->pitch = -200;
-		if (gd->pitch > 200)
-			gd->pitch = 200;
-	}
-	mlx_mouse_move(gd->mlx, gd->win, W_WIDTH / 2, W_HEIGHT / 2);
-	return (0);
-}
+static int	mouse_move(t_gdata *gd);
 
 // TODO: add logic to correctly handle RGB instead of texture
 int	render_loop(void *param)
@@ -134,16 +38,34 @@ int	render_loop(void *param)
 		gd->z_buffer[x] = ray.perp_dist;
 		draw_wall(gd, ray, x);
 	}
-	render_minimap(gd);
-	draw_sprite(gd);
+	(render_minimap(gd), draw_sprite(gd));
 	mlx_put_image_to_window(gd->mlx, gd->win, gd->canvas.img, 0, 0);
-	open_sesame(gd);
-	wall_anim(gd);
+	(open_sesame(gd), wall_anim(gd));
 	weapon_animate(gd);
 	handle_key_presses(gd);
 	mouse_move(gd);
 	update_frame_time(gd);
 	return (1);
+}
+
+static int	mouse_move(t_gdata *gd)
+{
+	int		x;
+	int		y;
+
+	mlx_mouse_get_pos(gd->mlx, gd->win, &x, &y);
+	if (x != W_WIDTH / 2)
+		rotate_player(gd, (x - W_WIDTH / 2.0) * gd->frame_time);
+	if (y != W_HEIGHT / 2)
+	{
+		gd->pitch -= (y - W_HEIGHT / 2.0);
+		if (gd->pitch < -200)
+			gd->pitch = -200;
+		if (gd->pitch > 200)
+			gd->pitch = 200;
+	}
+	mlx_mouse_move(gd->mlx, gd->win, W_WIDTH / 2, W_HEIGHT / 2);
+	return (0);
 }
 
 //	perform DDA
@@ -197,11 +119,10 @@ static void	calc_draw_distance(t_gdata *gd, t_ray *ray)
 	else
 		ray->perp_dist = (ray->side_dist.y - ray->delta_dist.y);
 	ray->line_height = (int)(W_HEIGHT / ray->perp_dist);
-	ray->draw_start = -ray->line_height / 2 + W_HEIGHT / 2 + gd->pitch;
+	ray->draw_start = -ray->line_height / 2 + W_HEIGHT / 2 + (int)gd->pitch;
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
-	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2 + gd->pitch;
-
+	ray->draw_end = ray->line_height / 2 + W_HEIGHT / 2 + (int)gd->pitch;
 	if (ray->draw_end >= W_HEIGHT)
 		ray->draw_end = W_HEIGHT - 1;
 }

@@ -16,36 +16,6 @@ static int	init_game_data(t_gdata *gd, int argc, char **argv);
 static int	set_start_pos(t_gdata *gd);
 static void	player_set_direction(t_gdata *gd);
 
-void	weapon_fire(t_gdata *gd)
-{
-	if (gd->weapon_state == 0)
-	{
-		gd->weapon_state = 1;
-		gd->weapon_frame = 1;
-		if (gd->current_weapon == 0 || gd->current_weapon == 3)
-			gd->weapon_auto = 1;
-	}
-}
-
-int	mouse_events(int button, int x, int y, t_gdata *gd)
-{
-	// printf("i: %i %i %i %i\n", button, x, y, x);
-	(void) x;
-	(void) y;
-	if (button == 1) // left click
-		weapon_fire(gd);
-	return (0);
-}
-
-int	mouse_release(int button, int x, int y, t_gdata *gd)
-{
-	(void) x;
-	(void) y;
-	if (button == 1)
-		gd->weapon_auto = 0;
-	return (0);
-}
-
 int	main(int argc, char **argv)
 {
 	t_gdata		gd;
@@ -58,11 +28,10 @@ int	main(int argc, char **argv)
 	mlx_hook(gd.win, KeyPress, KeyPressMask, key_press, &gd);
 	mlx_hook(gd.win, KeyRelease, KeyReleaseMask, key_release, &gd);
 	mlx_hook(gd.win, DestroyNotify, NoEventMask, mlx_loop_end, gd.mlx);
-	mlx_hook(gd.win, 4, 1L << 2, mouse_events, &gd);
+	mlx_hook(gd.win, 4, 1L << 2, mouse_click, &gd);
 	mlx_hook(gd.win, 5, 1L << 3, mouse_release, &gd);
 	mlx_mouse_move(gd.mlx, gd.win, W_WIDTH / 2, W_HEIGHT / 2);
 	mlx_mouse_hide(gd.mlx, gd.win);
-	// mlx_hook(gdata.win,  06, 1L << 6,mouse_move, &gdata);
 	mlx_loop_hook(gd.mlx, render_loop, &gd);
 	mlx_loop(gd.mlx);
 	cleanup(&gd);
