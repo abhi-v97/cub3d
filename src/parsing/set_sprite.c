@@ -49,5 +49,5 @@ void	set_sprite_pos(t_gdata *gd, char *buffer)
 	else
 		exit_status(gd, 31);
 	gd->num_sprite_pos++;
-	free_array(deets);
+	free_array((void **)deets);
 }

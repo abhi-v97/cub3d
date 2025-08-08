@@ -45,7 +45,6 @@ static int	set_texture_info(t_gdata *gd, char *buffer)
 	else if (buffer[0] == 'C' && buffer[1] == ' ')
 		return (set_textures(gd, buffer + 2, CEILING), 0);
 	else if (buffer[0] == 'S' && buffer[1] == 'T')
-		// return (set_textures(gd, buffer + 2, SPRITE), 0);
 		return (set_sprite(gd, buffer + 2), 0);
 	else if (buffer[0] == 'D' && buffer[1] == 'O')
 		return (set_textures(gd, buffer + 2, DOOR), 0);

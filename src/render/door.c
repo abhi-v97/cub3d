@@ -35,7 +35,7 @@ void	find_doors(t_gdata *gd)
 			}
 		}
 	}
-	gd->num_doors = i;
+	gd->num_doors = i - 1;
 }
 
 void	open_sesame(t_gdata *gd)

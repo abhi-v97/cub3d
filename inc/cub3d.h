@@ -96,9 +96,7 @@ typedef enum e_cardinal
 	WEST,
 	FLOOR,
 	CEILING,
-	SPRITE,
 	DOOR,
-	WEAPON,
 }	t_cardinal;
 
 typedef enum e_direction_elements
@@ -351,7 +349,7 @@ void	draw_weapon(t_gdata *gd);
 
 // cleanup.c
 void	cleanup(t_gdata *gdata);
-void	free_array(char **array);
+void	free_array(void **array);
 void	free_data(t_gdata *data);
 
 // debug.c
