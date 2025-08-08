@@ -22,8 +22,7 @@ void	set_sprite(t_gdata *gd, char *buffer)
 	if (gd->num_sprite_tex < 4)
 	{
 		if (path && ft_strchr(path, '/'))
-			gd->sprite_tex[gd->num_sprite_tex] = parse_xpm(gd, path);
-		gd->num_sprite_tex++;
+			gd->sprite_tex[gd->num_sprite_tex++] = parse_xpm(gd, path);
 	}
 	else 
 		exit_status(gd, 31);

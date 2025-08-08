@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	t_gdata		gd;
 
 	if (failed(init_game_data(&gd, argc, argv)))
-		return (gd.exit_status);
+		return (cleanup(&gd), gd.exit_status);
 	gd.minimap.colour_array = minimap_colours(&gd);
 	set_weapon(&gd);
 	find_doors(&gd);

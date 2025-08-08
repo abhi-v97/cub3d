@@ -54,6 +54,7 @@ void	free_data(t_gdata *gd)
 	cleanup_textures(gd);
 	while (i < 4 && gd->weapon.model[i])
 		free(gd->weapon.model[i++]);
+	free(gd->weapon.model);
 	free_array((void **)gd->minimap.colour_array);
 }
 
@@ -68,6 +69,7 @@ static void	cleanup_textures(t_gdata *gd)
 			free(gd->textures[i]);
 		i++;
 	}
+	free(gd->textures);
 	i = 0;
 	while (i < 5)
 	{
@@ -76,6 +78,5 @@ static void	cleanup_textures(t_gdata *gd)
 		i++;
 	}
 	free(gd->sprite_tex);
-	free(gd->textures);
 	free(gd->tex_rgb);
 }
