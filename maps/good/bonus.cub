@@ -2,7 +2,7 @@
  SO textures/wolfenstein/bluestone.xpm
  WE textures/wolfenstein/purplestone.xpm
  EA textures/wolfenstein/wood.xpm
- SP textures/wolfenstein/barrel.xpm
+ ST textures/wolfenstein/barrel.xpm
  DO textures/wolfenstein/door.xpm
 
  F textures/wolfenstein/colorstone.xpm

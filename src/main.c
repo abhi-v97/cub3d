@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/08/05 19:05:59 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 16:50:01 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	t_gdata		gd;
 
 	if (failed(init_game_data(&gd, argc, argv)))
-		return (cleanup(&gd), gd.exit_status);
+		return (handle_error(gd.exit_status, argv), gd.exit_status);
 	gd.minimap.colour_array = minimap_colours(&gd);
 	set_weapon(&gd);
 	find_doors(&gd);
@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 	mlx_hook(gd.win, 4, 1L << 2, mouse_click, &gd);
 	mlx_hook(gd.win, 5, 1L << 3, mouse_release, &gd);
 	mlx_mouse_move(gd.mlx, gd.win, W_WIDTH / 2, W_HEIGHT / 2);
-	mlx_mouse_hide(gd.mlx, gd.win);
+	// mlx_mouse_hide(gd.mlx, gd.win);
 	mlx_loop_hook(gd.mlx, render_loop, &gd);
 	mlx_loop(gd.mlx);
 	cleanup(&gd);
@@ -48,7 +48,7 @@ static int	init_game_data(t_gdata *gd, int argc, char **argv)
 	if (failed(check_arg(gd, argv[1])))
 		return (gd->exit_status);
 	if (failed(init_map_data(gd)))
-		return (gd->exit_status);
+		return (cleanup(gd), gd->exit_status);
 	if (failed(parse_file(gd, argv[1])))
 		return (gd->exit_status);
 	if (failed(check_map(gd)))

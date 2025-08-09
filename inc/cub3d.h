@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/08/05 19:12:01 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 15:30:15 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define EMISSINGTEXTURE 29
 # define EMAPTEXINVALIDFILENAME 30
 # define EMAPTEXERROR 31
+# define ESPRITEERROR 32
 
 # define KEY_COUNT 9
 # define KEY_UP 0

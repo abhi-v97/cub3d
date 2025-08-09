@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:52:09 by abhi              #+#    #+#             */
-/*   Updated: 2025/08/05 19:11:15 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 16:15:50 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,17 +126,3 @@ static void	calc_draw_distance(t_gdata *gd, t_ray *ray)
 	if (ray->draw_end >= W_HEIGHT)
 		ray->draw_end = W_HEIGHT - 1;
 }
-
-// // use this to floorcast somehow. 
-// static void	draw_bg(t_gdata *gd, t_ray *ray, int x)
-// {
-// 	int	start;
-// 	int	end;
-
-// 	start = ray->draw_start;
-// 	while (start >= 0)
-// 		put_pixel(&gd->canvas, x, start--, gd->tex_rgb[CEILING]);
-// 	end = ray->draw_end;
-// 	while (end <= W_HEIGHT)
-// 		put_pixel(&gd->canvas, x, end++, gd->tex_rgb[FLOOR]);
-// }

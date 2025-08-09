@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-22 15:18:55 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-22 15:18:55 by abhi             ###   ########.fr       */
+/*   Created: 2025/07/22 15:18:55 by abhi              #+#    #+#             */
+/*   Updated: 2025/08/09 16:35:37 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void	find_doors(t_gdata *gd)
 			if (gd->map[row][col] == 'D')
 			{
 				gd->door[i].x = col;
-				gd->door[i++].y = row;
+				gd->door[i].y = row;
+				gd->door[i].status = 0;
+				gd->door[i++].offset = 0.0;
 			}
 		}
 	}
-	gd->num_doors = i - 1;
+	gd->num_doors = i;
 }
 
 void	open_sesame(t_gdata *gd)

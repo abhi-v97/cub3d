@@ -17,6 +17,7 @@
 static void	draw_line(t_gdata *gd, t_floor *floor, int y);
 static void	set_floorcast_info(t_gdata *gd, t_floor *floor, int y);
 static void	set_texels(t_gdata *gd, t_floor *floor, int *tx, int *ty);
+static inline int	set_colour(t_gdata *gd, int tx, int ty, bool is_floor);
 
 void	floor_cast(t_gdata *gd)
 {
@@ -64,23 +65,35 @@ static void	draw_line(t_gdata *gd, t_floor *floor, int y)
 	while (x < W_WIDTH)
 	{
 		set_texels(gd, floor, &tx, &ty);
-		if (floor->is_floor)
-		{
-			colour = gd->textures[FLOOR][gd->tex_size * ty + tx];
-			colour = (colour >> 1) & 8355711;
-			put_pixel(&gd->canvas, x, y, colour);
-		}
-		else
-		{
-			colour = gd->textures[CEILING][gd->tex_size * ty + tx];
-			colour = (colour >> 1) & 8355711;
-			put_pixel(&gd->canvas, x, y, colour);
-		}
+		colour = set_colour(gd, tx, ty, floor->is_floor);
+		put_pixel(&gd->canvas, x, y, colour);
 		x++;
 	}
 }
 
-static void	set_texels(t_gdata *gd, t_floor *floor, int *tx, int *ty)
+static inline int	set_colour(t_gdata *gd, int tx, int ty, bool is_floor)
+{
+	int		colour;
+
+	if (is_floor)
+	{
+		if (gd->textures[FLOOR])
+			colour = gd->textures[FLOOR][gd->tex_size * ty + tx];
+		else
+			colour = gd->tex_rgb[FLOOR];
+	}
+	else
+	{
+		if (gd->textures[CEILING])
+			colour = gd->textures[CEILING][gd->tex_size * ty + tx];
+		else
+			colour = gd->tex_rgb[CEILING];
+	}
+	colour = (colour >> 1) & 8355711;
+	return (colour);
+}
+
+static inline void	set_texels(t_gdata *gd, t_floor *floor, int *tx, int *ty)
 {
 	*tx = (int)(gd->tex_size * (floor->floor_x - (int)floor->floor_x))
 		& (gd->tex_size - 1);

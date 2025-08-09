@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 14:27:15 by aistok            #+#    #+#             */
-/*   Updated: 2025/08/05 18:46:11 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 16:53:54 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	free_array(void **array)
 {
 	int		i;
 
+	if (!array)
+		return ;
 	i = 0;
 	while (array && array[i])
 	{
@@ -52,9 +54,12 @@ void	free_data(t_gdata *gd)
 	if (gd->map)
 		free_array((void **)gd->map);
 	cleanup_textures(gd);
-	while (i < 4 && gd->weapon.model[i])
-		free(gd->weapon.model[i++]);
-	free(gd->weapon.model);
+	if (gd->weapon.model)
+	{
+		while (i < 4 && gd->weapon.model[i])
+			free(gd->weapon.model[i++]);
+		free(gd->weapon.model);
+	}
 	free_array((void **)gd->minimap.colour_array);
 }
 
@@ -63,20 +68,17 @@ static void	cleanup_textures(t_gdata *gd)
 	int		i;
 
 	i = 0;
-	while (i < 7)
+	if (gd->textures)
 	{
-		if (gd->textures[i])
-			free(gd->textures[i]);
-		i++;
+		while (i < 7)
+		{
+			if (gd->textures[i])
+				free(gd->textures[i]);
+			i++;
+		}
+		free(gd->textures);
 	}
-	free(gd->textures);
-	i = 0;
-	while (i < 5)
-	{
-		if (gd->sprite_tex[i])
-			free(gd->sprite_tex[i]);
-		i++;
-	}
-	free(gd->sprite_tex);
-	free(gd->tex_rgb);
+	free_array((void **)gd->sprite_tex);
+	if (gd->tex_rgb)
+		free(gd->tex_rgb);
 }

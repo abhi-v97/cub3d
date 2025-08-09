@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_sprite.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-06 20:19:26 by abhi              #+#    #+#             */
-/*   Updated: 2025-08-06 20:19:26 by abhi             ###   ########.fr       */
+/*   Created: 2025/08/06 20:19:26 by abhi              #+#    #+#             */
+/*   Updated: 2025/08/09 16:21:32 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	set_sprite(t_gdata *gd, char *buffer)
 		if (path && ft_strchr(path, '/'))
 			gd->sprite_tex[gd->num_sprite_tex++] = parse_xpm(gd, path);
 	}
-	else 
-		exit_status(gd, 31);
+	else
+		exit_status(gd, ESPRITEERROR);
 	free(path);
 }
 
@@ -35,7 +35,7 @@ void	set_sprite_pos(t_gdata *gd, char *buffer)
 
 	if (gd->num_sprite_pos > 3)
 	{
-		exit_status(gd, 31);
+		exit_status(gd, ESPRITEERROR);
 		return ;
 	}
 	deets = ft_split(buffer, ',');
@@ -46,7 +46,7 @@ void	set_sprite_pos(t_gdata *gd, char *buffer)
 		gd->sprite[gd->num_sprite_pos].y = ft_atoi(deets[2]) + 0.5;
 	}
 	else
-		exit_status(gd, 31);
+		exit_status(gd, ESPRITEERROR);
 	gd->num_sprite_pos++;
 	free_array((void **)deets);
 }
