@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:18:55 by abhi              #+#    #+#             */
-/*   Updated: 2025/08/09 16:35:37 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 18:27:16 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static float	get_door_offset(t_gdata *gd, int x, int y);
 
-void	find_doors(t_gdata *gd)
+int	find_doors(t_gdata *gd)
 {
 	int		row;
 	int		col;
@@ -30,6 +30,8 @@ void	find_doors(t_gdata *gd)
 		{
 			if (gd->map[row][col] == 'D')
 			{
+				if (i > 15)
+					return (42);
 				gd->door[i].x = col;
 				gd->door[i].y = row;
 				gd->door[i].status = 0;
@@ -38,6 +40,7 @@ void	find_doors(t_gdata *gd)
 		}
 	}
 	gd->num_doors = i;
+	return (i);
 }
 
 void	open_sesame(t_gdata *gd)

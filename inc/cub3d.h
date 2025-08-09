@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/08/09 15:30:15 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 18:08:49 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,7 @@ void	set_sprite_pos(t_gdata *gd, char *buffer);
 /* --------------------------------- render --------------------------------- */
 
 // render/door.c
-void	find_doors(t_gdata *gd);
+int		find_doors(t_gdata *gd);
 void	wall_anim(t_gdata *gd);
 void	open_sesame(t_gdata *gd);
 int		door_calc(t_gdata *gd, t_ray *ray, t_ipos *map_pos);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   weapon.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-27 14:50:39 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-27 14:50:39 by abhi             ###   ########.fr       */
+/*   Created: 2025/07/27 14:50:39 by abhi              #+#    #+#             */
+/*   Updated: 2025/08/09 18:08:12 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int	set_weapon(t_gdata *gd)
 	gd->weapon.model[1] = parse_weapon(gd, "textures/wolfenstein/pistol.xpm");
 	gd->weapon.model[2] = parse_weapon(gd, "textures/wolfenstein/knife.xpm");
 	gd->weapon.model[3] = parse_weapon(gd, "textures/wolfenstein/minigun.xpm");
+	if (!gd->weapon.model[0] || !gd->weapon.model[1] || !gd->weapon.model[2]
+		|| !gd->weapon.model[3])
+		return (1);
 	return (0);
 }
 

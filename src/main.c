@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/08/09 17:45:58 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 18:09:45 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(int argc, char **argv)
 	if (failed(init_game_data(&gd, argc, argv)))
 		return (handle_error(gd.exit_status, argv), gd.exit_status);
 	gd.minimap.colour_array = minimap_colours(&gd);
-	set_weapon(&gd);
-	find_doors(&gd);
+	if (find_doors(&gd) > 16 || set_weapon(&gd))
+		return (cleanup(&gd), EXIT_FAILURE);
 	mlx_hook(gd.win, KeyPress, KeyPressMask, key_press, &gd);
 	mlx_hook(gd.win, KeyRelease, KeyReleaseMask, key_release, &gd);
 	mlx_hook(gd.win, DestroyNotify, NoEventMask, mlx_loop_end, gd.mlx);
