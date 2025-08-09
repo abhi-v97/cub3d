@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_fill.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:19:27 by abhi              #+#    #+#             */
-/*   Updated: 2025/07/13 23:23:15 by aistok           ###   ########.fr       */
+/*   Updated: 2025/08/09 17:00:39 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ static int		check_textures(t_gdata *gd);
 // copy contents of map file into map array
 // updates gd->map_height to total count of rows
 // first while loop checks for texture data, breaks once it hits the map
+// returns the output value of check_textures(gd), which will always be
+// gd->exit_status. If any error occurs, gd->exit_status is switched instead
+// of returning at point of error, this prevents gnl buffers and other mallocs
+// being left dangling
 int	map_fill(t_gdata *gd, char **map, int fd)
 {
 	char	*buffer;
@@ -70,7 +74,8 @@ static int	set_map_row(t_gdata *gd, char *buf, char **map, int *row)
 // set_textures func
 // Only checks NWSE for now, if floor or ceiling aren't set it defaults to
 // black
-// doesn't bother checking if gd->exit_status isn't zero
+// doesn't bother checking if gd->exit_status isn't zero as that means an
+// error occurred beforehand
 static int	check_textures(t_gdata *gd)
 {
 	t_cardinal	dir;

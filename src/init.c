@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:34:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/08/09 16:55:32 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 17:46:11 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,13 @@ int	init_map_data(t_gdata *gd)
 	gd->canvas.img = NULL;
 	gd->minimap.colour_array = NULL;
 	gd->mlx = mlx_init();
-	if (failed(alloc_textures(gd)))
-		return (gd->exit_status);
 	if (!gd->mlx)
 		return (exit_status(gd, EMLXINIT));
+	if (failed(alloc_textures(gd)))
+		return (gd->exit_status);
 	return (0);
 }
 
-// will free everything, no need for cleanup outside for init_mlx
 int	init_mlx(t_gdata *gd)
 {
 	gd->win = mlx_new_window(gd->mlx, W_WIDTH, W_HEIGHT, "cub3D");
@@ -61,7 +60,6 @@ int	init_mlx(t_gdata *gd)
 	return (exit_status(gd, EXIT_SUCCESS));
 }
 
-// will free everything, no need for cleanup outside for alloc_textures
 static int	alloc_textures(t_gdata *gd)
 {
 	gd->tex_rgb = ft_calloc(sizeof(int), 8);

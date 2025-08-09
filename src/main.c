@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/08/09 16:50:01 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 17:45:58 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ static int	init_game_data(t_gdata *gd, int argc, char **argv)
 	if (failed(init_map_data(gd)))
 		return (cleanup(gd), gd->exit_status);
 	if (failed(parse_file(gd, argv[1])))
-		return (gd->exit_status);
+		return (cleanup(gd), gd->exit_status);
 	if (failed(check_map(gd)))
-		return (cleanup(gd), exit_status(gd, 1));
+		return (cleanup(gd), gd->exit_status);
 	set_start_pos(gd);
 	player_set_direction(gd);
 	if (failed(init_mlx(gd)))
-		return (gd->exit_status);
+		return (cleanup(gd), gd->exit_status);
 	return (exit_status(gd, EXIT_SUCCESS));
 }
 
