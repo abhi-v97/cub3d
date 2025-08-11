@@ -6,7 +6,7 @@
 /*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 15:27:41 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/09 22:24:02 by aistok           ###   ########.fr       */
+/*   Updated: 2025/08/11 17:47:08 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,12 @@ void	draw_wall(t_gdata *data, t_ray ray, int x)
 		tex.y = (int)texinfo.tex_pos & (data->tex_size - 1);
 		texinfo.tex_pos += texinfo.step;
 		texel = data->tex_size * tex.y + tex.x;
-		put_pixel(&data->canvas, x, y++,
-			data->textures[texinfo.dir][texel]);
+		if (data->tex_rgb[texinfo.dir])
+			put_pixel(&data->canvas, x, y++,
+				data->tex_rgb[texinfo.dir]);
+		else
+			put_pixel(&data->canvas, x, y++,
+				data->textures[texinfo.dir][texel]);
 	}
 }
 

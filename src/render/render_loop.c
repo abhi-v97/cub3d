@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_loop.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:52:09 by abhi              #+#    #+#             */
-/*   Updated: 2025/08/09 16:15:50 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/11 17:49:07 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	ray_calc_side_dist(t_gdata *gd, t_ray *ray, t_ipos *map_pos);
 static void	calc_draw_distance(t_gdata *gd, t_ray *ray);
 static int	mouse_move(t_gdata *gd);
 
-// TODO: add logic to correctly handle RGB instead of texture
 int	render_loop(void *param)
 {
 	t_gdata	*gd;
