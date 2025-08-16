@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aistok <aistok@student.42london.com>       +#+  +:+       +#+         #
+#    By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/13 21:29:37 by aistok            #+#    #+#              #
-#    Updated: 2025/07/13 21:29:43 by aistok           ###   ########.fr        #
+#    Updated: 2025/08/16 14:07:36 by avalsang         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ run:
 	./${NAME} map.cub
 
 v valgrind: ${NAME}
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "maps/good/test.cub"
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "maps/bad/empty.cub"
 
 clean:
 	${RM} ${OBJ_DIR}

@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:19:27 by abhi              #+#    #+#             */
-/*   Updated: 2025/08/16 14:00:36 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/16 15:38:07 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	check_textures(t_gdata *gd)
 {
 	t_cardinal	dir;
 
-	if (gd->exit_status)
+	if (gd->exit_status && gd->exit_status != EMAPPARSE)
 		return (gd->exit_status);
 	dir = 0;
 	while (dir <= WEST)

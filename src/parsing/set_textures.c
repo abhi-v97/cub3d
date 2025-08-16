@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_textures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:48:18 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-31 21:24:22 by abhi             ###   ########.fr       */
+/*   Updated: 2025/08/16 16:53:53 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ static char	*get_texture_path(char *buffer)
 	while (buffer[i] && is_blank(buffer[i]))
 		i++;
 	len = i;
-	while (buffer[len] && !is_blank(buffer[len] && buffer[len] != '\n'))
+	while (buffer[len] && !is_blank(buffer[len]) && buffer[len] != '\n')
 		len++;
 	if (buffer[i] == '\0')
 		return (NULL);
-	result = ft_strndup(buffer + i, len - i - 1);
+	result = ft_strndup(buffer + i, len - i);
 	if (!result)
 		return (NULL);
 	return (result);
