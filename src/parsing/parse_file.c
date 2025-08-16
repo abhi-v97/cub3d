@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-31 21:34:37 by abhi             ###   ########.fr       */
+/*   Updated: 2025/08/16 14:06:45 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ static void	update_map_width(t_gdata *gd, char *buffer)
 // ***
 // skip over empty spaces. If the character is NSWEFC and the following
 // character is not 0 or 1, its most likely a texture file
+// if the texture file check is passed, it simply searches for a 0 or 1
+// and returns true if it finds one
 bool	buffer_has_map_data(char *buffer)
 {
 	int		i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/07/13 23:22:02 by aistok           ###   ########.fr       */
+/*   Updated: 2025/08/16 13:59:16 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define EMISSINGTEXTURE 29
 # define EMAPTEXINVALIDFILENAME 30
 # define EMAPTEXERROR 31
+# define EMAPPARSE 32
 
 # define KEY_COUNT 7
 # define KEY_UP 0

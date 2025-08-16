@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_fill.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:19:27 by abhi              #+#    #+#             */
-/*   Updated: 2025-07-31 21:34:19 by abhi             ###   ########.fr       */
+/*   Updated: 2025/08/16 14:00:36 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 	}
 	while (buffer)
 	{
-		if (set_map_row(gd, buffer, map, &row))
-			gd->exit_status = EINVMAP;
+		if (!gd->exit_status && set_map_row(gd, buffer, map, &row))
+			gd->exit_status = EMAPPARSE;
 		free(buffer);
 		buffer = get_next_line(fd);
 	}

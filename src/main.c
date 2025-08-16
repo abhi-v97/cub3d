@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025-07-31 21:36:49 by abhi             ###   ########.fr       */
+/*   Updated: 2025/08/16 14:01:18 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	init_game_data(t_gdata *gd, int argc, char **argv)
 		return (exit_status(gd, EINVARGS));
 	if (failed(check_arg(gd, argv[1])))
 		return (gd->exit_status);
-	if (failed(parse_file(gd, argv[1])))
+	if (failed(parse_file(gd, argv[1])) && gd->exit_status != EMAPPARSE)
 		return (cleanup(gd), gd->exit_status);
 	if (failed(check_map(gd)))
 		return (cleanup(gd), gd->exit_status);
