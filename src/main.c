@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/08/09 18:09:45 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/17 16:42:57 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ int	main(int argc, char **argv)
 	mlx_hook(gd.win, KeyPress, KeyPressMask, key_press, &gd);
 	mlx_hook(gd.win, KeyRelease, KeyReleaseMask, key_release, &gd);
 	mlx_hook(gd.win, DestroyNotify, NoEventMask, mlx_loop_end, gd.mlx);
-	mlx_hook(gd.win, 4, 1L << 2, mouse_click, &gd);
-	mlx_hook(gd.win, 5, 1L << 3, mouse_release, &gd);
+	mlx_hook(gd.win, ButtonPress, ButtonPressMask, mouse_click, &gd);
+	mlx_hook(gd.win, ButtonRelease, ButtonReleaseMask, mouse_release, &gd);
 	mlx_mouse_move(gd.mlx, gd.win, W_WIDTH / 2, W_HEIGHT / 2);
-	// mlx_mouse_hide(gd.mlx, gd.win);
+	mlx_mouse_hide(gd.mlx, gd.win);
 	mlx_loop_hook(gd.mlx, render_loop, &gd);
 	mlx_loop(gd.mlx);
+	mlx_mouse_show(gd.mlx, gd.win);
 	cleanup(&gd);
 	return (EXIT_SUCCESS);
 }
