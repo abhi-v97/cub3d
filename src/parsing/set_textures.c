@@ -13,7 +13,7 @@
 #include "cub3d.h"
 
 static int		*parse_xpm(t_gdata *data, char *path);
-static void		init_img(t_canvas *img);
+static int		init_img(t_gdata *data, t_canvas *img, char *path);
 static char		*get_texture_path(char *buffer);
 static int		set_rgb(char *path);
 
@@ -48,13 +48,8 @@ static int	*parse_xpm(t_gdata *data, char *path)
 	int			x;
 	int			y;
 
-	init_img(&img);
-	img.img = mlx_xpm_file_to_image(data->mlx,
-			path, &data->tex_size, &data->tex_size);
-	if (img.img == NULL)
-		return (ft_error("Failed to init mlx image!"), NULL);
-	img.addr = (int *)mlx_get_data_addr(img.img,
-			&img.bpp, &img.ll, &img.endian);
+	if (init_img(data, &img, path))
+		return (NULL);
 	array = ft_calloc(sizeof(int), data->tex_size * data->tex_size);
 	i = 0;
 	while (i < data->tex_size * data->tex_size)
@@ -68,8 +63,11 @@ static int	*parse_xpm(t_gdata *data, char *path)
 }
 
 // helper function to initialse the temporary img struct needed by mlx
-static void	init_img(t_canvas *img)
+static int	init_img(t_gdata *data, t_canvas *img, char *path)
 {
+	int		old_tex_size;
+
+	old_tex_size = 0;
 	img->img = NULL;
 	img->addr = NULL;
 	img->bpp = 0;
@@ -77,6 +75,17 @@ static void	init_img(t_canvas *img)
 	img->h = 0;
 	img->ll = 0;
 	img->endian = 0;
+	if (data->tex_size)
+		old_tex_size = data->tex_size;
+	img->img = mlx_xpm_file_to_image(data->mlx,
+			path, &data->tex_size, &data->tex_size);
+	if (old_tex_size && old_tex_size != data->tex_size)
+		data->exit_status = 33;
+	if (img->img == NULL)
+		return (ft_error("Failed to init mlx image!"), 1);
+	img->addr = (int *)mlx_get_data_addr(img->img,
+			&img->bpp, &img->ll, &img->endian);
+	return (0);
 }
 
 // this function copies path of texture file from buffer into result

@@ -16,6 +16,7 @@ static int	alloc_textures(t_gdata *gd);
 
 int	init_map_data(t_gdata *gd)
 {
+	gd->tex_size = 0;
 	gd->map = NULL;
 	gd->map_height = 0;
 	gd->map_width = 0;
