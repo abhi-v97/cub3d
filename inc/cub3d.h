@@ -57,6 +57,7 @@
 # define EMAPTEXINVALIDFILENAME 30
 # define EMAPTEXERROR 31
 # define EMAPPARSE 32
+# define ETEXSIZE 33
 
 # define KEY_COUNT 7
 # define KEY_UP 0

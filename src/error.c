@@ -62,6 +62,8 @@ int	handle_error(int return_code, char **argv)
 		ft_error("Map has none or too many players!");
 	else if (return_code == EMAPTEXERROR)
 		ft_error("Invalid texture configuration!");
+	else if (return_code == ETEXSIZE)
+		ft_error("textures must be of the same size!");
 	return (return_code);
 }
 
