@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:43:10 by avalsang          #+#    #+#             */
-/*   Updated: 2025/08/16 14:01:18 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/18 13:24:53 by aistok           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	main(int argc, char **argv)
 	mlx_hook(gdata.win, KeyPress, KeyPressMask, key_press, &gdata);
 	mlx_hook(gdata.win, KeyRelease, KeyReleaseMask, key_release, &gdata);
 	mlx_hook(gdata.win, DestroyNotify, NoEventMask, mlx_loop_end, gdata.mlx);
-	mlx_hook(gdata.win, 25, 1L << 18, resize_func, &gdata);
+	mlx_hook(gdata.win, ResizeRequest, ResizeRedirectMask,
+		resize_func, &gdata);
 	mlx_loop_hook(gdata.mlx, render_loop, &gdata);
 	mlx_loop(gdata.mlx);
 	cleanup(&gdata);
