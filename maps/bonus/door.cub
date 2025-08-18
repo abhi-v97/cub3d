@@ -1,0 +1,22 @@
+ NO textures/wolfenstein/eagle.xpm
+ SO textures/wolfenstein/bluestone.xpm
+ WE textures/wolfenstein/purplestone.xpm
+ EA textures/wolfenstein/wood.xpm
+ ST textures/wolfenstein/barrel.xpm
+ DO textures/wolfenstein/door.xpm
+
+ F textures/wolfenstein/colorstone.xpm
+ C textures/wolfenstein/greystone.xpm
+
+1111111111111111111111   
+1000100000000000000001
+1000000000000000000001
+111D111D111D111D111D11
+1000000000000000000001
+10000000000W0000000001
+1000000000000000000001
+111D111D11101110111D11
+111D111D1110111D111D11
+111D111D1110111D111D11
+1000000000000000000001
+1111111111111111111111
