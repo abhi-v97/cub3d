@@ -252,7 +252,7 @@ int		render_loop(void *param);
 // cleanup.c
 void	cleanup(t_gdata *gdata);
 void	free_data(t_gdata *data);
-void	free_array(char **array);
+void	free_array(void **array);
 
 // debug.c
 void	debug_print(t_gdata *data);

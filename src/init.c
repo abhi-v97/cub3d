@@ -26,13 +26,15 @@ int	init_map_data(t_gdata *gd)
 	gd->time = 0;
 	gd->old_time = 0;
 	gd->file_fd = -1;
-	if (failed(alloc_textures(gd)))
-		return (gd->exit_status);
+	gd->canvas.img = NULL;
+	gd->win = NULL;
+	gd->textures = NULL;
+	gd->tex_rgb = NULL;
 	gd->mlx = mlx_init();
 	if (!gd->mlx)
 		return (exit_status(gd, EMLXINIT));
-	gd->canvas.img = NULL;
-	gd->win = NULL;
+	if (failed(alloc_textures(gd)))
+		return (gd->exit_status);
 	return (0);
 }
 

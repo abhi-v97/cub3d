@@ -128,12 +128,12 @@ static int	set_rgb(char *path)
 	b = 0;
 	array = ft_split(path, ',');
 	if (!array || (array && !array[0]) || (array && !array[1]))
-		return (free_array(array), (r << 16) + (g << 8) + b);
+		return (free_array((void **)array), (r << 16) + (g << 8) + b);
 	if (array[0])
 		r = ft_atoi(array[0]);
 	if (array[1])
 		g = ft_atoi(array[1]);
 	if (array[2])
 		b = ft_atoi(array[2]);
-	return (free_array(array), (r << 16) + (g << 8) + b);
+	return (free_array((void **)array), (r << 16) + (g << 8) + b);
 }

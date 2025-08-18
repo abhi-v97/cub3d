@@ -12,7 +12,6 @@
 
 #include "cub3d.h"
 
-void		free_array(char **array);
 static void	cleanup_textures(t_gdata *gd);
 
 void	cleanup(t_gdata *gd)
@@ -30,7 +29,7 @@ void	cleanup(t_gdata *gd)
 	free_data(gd);
 }
 
-void	free_array(char **array)
+void	free_array(void **array)
 {
 	int		i;
 
@@ -44,12 +43,12 @@ void	free_array(char **array)
 	free(array);
 }
 
-void	free_data(t_gdata *data)
+void	free_data(t_gdata *gd)
 {
-	close_fd(&data->file_fd);
-	if (data->map)
-		free_array(data->map);
-	cleanup_textures(data);
+	close_fd(&gd->file_fd);
+	if (gd->map)
+		free_array((void **)gd->map);
+	cleanup_textures(gd);
 }
 
 static void	cleanup_textures(t_gdata *gd)
@@ -57,12 +56,16 @@ static void	cleanup_textures(t_gdata *gd)
 	int		i;
 
 	i = 0;
-	while (i < 7)
+	if (gd->textures)
 	{
-		if (gd->textures[i])
-			free(gd->textures[i]);
-		i++;
+		while (i < 7)
+		{
+			if (gd->textures[i])
+				free(gd->textures[i]);
+			i++;
+		}
+		free(gd->textures);
 	}
-	free(gd->textures);
-	free(gd->tex_rgb);
+	if (gd->tex_rgb)
+		free(gd->tex_rgb);
 }
