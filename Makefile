@@ -11,7 +11,6 @@
 # **************************************************************************** #
 
 NAME = cub3D
-NAME_BONUS = cub3D_bonus
 
 CC = gcc -g
 RM = rm -rf
@@ -23,12 +22,20 @@ CFLAGS = -Wall -Wextra -Werror -O0
 # -O3 -Ofast -march=native
 # -Wall -Wextra -Werror
 
-SRC_DIR = src
-SRC_BONUS_DIR = srcb
-OBJ_DIR = obj
-OBJ_BONUS_DIR = objb
-INC_DIR = inc
-INC_BONUS_DIR = ${INC_DIR}/bonus
+SRC_ROOT_DIR		= src
+SRC_MANDATORY_DIR	= ${SRC_ROOT_DIR}/mandatory
+SRC_BONUS_DIR 		= ${SRC_ROOT_DIR}/bonus
+SRC_DIR				= ${SRC_MANDATORY_DIR}
+
+OBJ_ROOT_DIR		= obj
+OBJ_MANDATORY_DIR	= ${OBJ_ROOT_DIR}/mandatory
+OBJ_BONUS_DIR		= ${OBJ_ROOT_DIR}/bonus
+OBJ_DIR				= ${OBJ_MANDATORY_DIR}
+
+INC_ROOT_DIR		= inc
+INC_MANDATORY_DIR	= ${INC_ROOT_DIR}/mandatory
+INC_BONUS_DIR 		= ${INC_ROOT_DIR}/bonus
+INC_DIR				= ${INC_MANDATORY_DIR}
 
 LIBFT_DIR = libft
 LIBFT = ${LIBFT_DIR}/libft.a
@@ -36,106 +43,107 @@ LIBFT = ${LIBFT_DIR}/libft.a
 LIBMLX_DIR = minilibx-linux
 LIBMLX = ${LIBMLX_DIR}/libmlx.a
 
-#TMP_INC_FILES = ${shell find ${INC_DIR} -name "*.h"}
 INC_FILES = ${INC_DIR}/cub3d.h
+
+# assume mandatory will be built
+CURRENT_VERSION = .mandatory
+OTHER_VERSION = .bonus
 
 #if bonus is an argument for make
 ifneq ($(filter bonus,$(MAKECMDGOALS)),)
 SRC_DIR			:=	${SRC_BONUS_DIR}
 OBJ_DIR			:=	${OBJ_BONUS_DIR}
-INC_FILES		:=	${subst ${INC_DIR},${INC_BONUS_DIR},${INC_FILES}}
 INC_DIR			:=	${INC_BONUS_DIR}
+INC_FILES		:=	${INC_BONUS_DIR}/cub3d.h
+CURRENT_VERSION	:= .bonus
+OTHER_VERSION	:= .mandatory
 endif
 
-# TO GET THE ALL SOURCE FILES (TEMPORARILY), UNTIL THE PROJECT BECOMES MORE STABLE
-#TMP_SRC_DIRS = ${shell find ${SRC_DIR} -type d}
-SRC_DIRS = ${SRC_DIR} \
-		   ${SRC_DIR}/parsing \
-		   ${SRC_DIR}/render
+SRC_DIRS = \
+	${SRC_DIR} \
+	${SRC_DIR}/parsing \
+	${SRC_DIR}/render
 
-#SRCB_DIRS = ${subst ${SRC_DIR},${SRCB_DIR},${SRC_DIRS}}
-
-#TMP_OBJ_DIRS = ${subst ${SRC_DIR},${OBJ_DIR},${TMP_SRC_DIRS}}
 OBJ_DIRS = ${subst ${SRC_DIR},${OBJ_DIR},${SRC_DIRS}}
 
-#TMP_FILES = ${wildcard ${addsuffix /*, ${TMP_SRC_DIRS}}}
-SRC = \
-	${SRC_DIR}/cleanup.c \
-	${SRC_DIR}/debug.c \
-	${SRC_DIR}/error.c \
-	${SRC_DIR}/fps.c \
-	${SRC_DIR}/init.c \
-	${SRC_DIR}/key_events.c \
-	${SRC_DIR}/main.c \
-	${SRC_DIR}/map_functions.c \
-	${SRC_DIR}/program_name.c \
-	${SRC_DIR}/utils.c \
-	${SRC_DIR}/parsing/check_arg.c \
-	${SRC_DIR}/parsing/check_map_bounds.c \
-	${SRC_DIR}/parsing/check_map.c \
-	${SRC_DIR}/parsing/map_fill.c \
-	${SRC_DIR}/parsing/parse_file.c \
-	${SRC_DIR}/parsing/parse_textures.c \
-	${SRC_DIR}/parsing/set_textures.c \
-	${SRC_DIR}/render/draw_wall.c \
-	${SRC_DIR}/render/put_pixel.c \
-	${SRC_DIR}/render/ray_create.c \
-	${SRC_DIR}/render/render_loop.c
+SRC_MANDATORY = \
+	${SRC_MANDATORY_DIR}/cleanup.c \
+	${SRC_MANDATORY_DIR}/debug.c \
+	${SRC_MANDATORY_DIR}/error.c \
+	${SRC_MANDATORY_DIR}/fps.c \
+	${SRC_MANDATORY_DIR}/init.c \
+	${SRC_MANDATORY_DIR}/key_events.c \
+	${SRC_MANDATORY_DIR}/main.c \
+	${SRC_MANDATORY_DIR}/map_functions.c \
+	${SRC_MANDATORY_DIR}/program_name.c \
+	${SRC_MANDATORY_DIR}/utils.c \
+	${SRC_MANDATORY_DIR}/parsing/check_arg.c \
+	${SRC_MANDATORY_DIR}/parsing/check_map_bounds.c \
+	${SRC_MANDATORY_DIR}/parsing/check_map.c \
+	${SRC_MANDATORY_DIR}/parsing/map_fill.c \
+	${SRC_MANDATORY_DIR}/parsing/parse_file.c \
+	${SRC_MANDATORY_DIR}/parsing/parse_textures.c \
+	${SRC_MANDATORY_DIR}/parsing/set_textures.c \
+	${SRC_MANDATORY_DIR}/render/draw_wall.c \
+	${SRC_MANDATORY_DIR}/render/put_pixel.c \
+	${SRC_MANDATORY_DIR}/render/ray_create.c \
+	${SRC_MANDATORY_DIR}/render/render_loop.c
 
-SRCB = \
-	${SRC_DIR}/cleanup.c \
-	${SRC_DIR}/debug.c \
-	${SRC_DIR}/error.c \
-	${SRC_DIR}/fps.c \
-	${SRC_DIR}/init.c \
-	${SRC_DIR}/key_events.c \
-	${SRC_DIR}/key_helpers.c \
-	${SRC_DIR}/main.c \
-	${SRC_DIR}/map_functions.c \
-	${SRC_DIR}/mouse_events.c \
-	${SRC_DIR}/program_name.c \
-	${SRC_DIR}/sprite.c \
-	${SRC_DIR}/utils.c \
-	${SRC_DIR}/parsing/check_arg.c \
-	${SRC_DIR}/parsing/check_map_bounds.c \
-	${SRC_DIR}/parsing/check_map.c \
-	${SRC_DIR}/parsing/map_fill.c \
-	${SRC_DIR}/parsing/parse_file.c \
-	${SRC_DIR}/parsing/parse_textures.c \
-	${SRC_DIR}/parsing/set_sprite.c \
-	${SRC_DIR}/parsing/set_textures.c \
-	${SRC_DIR}/render/door.c \
-	${SRC_DIR}/render/draw_wall.c \
-	${SRC_DIR}/render/floorcast.c \
-	${SRC_DIR}/render/minimap.c \
-	${SRC_DIR}/render/put_pixel.c \
-	${SRC_DIR}/render/ray_create.c \
-	${SRC_DIR}/render/render_loop.c \
-	${SRC_DIR}/render/weapon_anim.c \
-	${SRC_DIR}/render/weapon.c
+SRC_BONUS = \
+	${SRC_BONUS_DIR}/cleanup.c \
+	${SRC_BONUS_DIR}/debug.c \
+	${SRC_BONUS_DIR}/error.c \
+	${SRC_BONUS_DIR}/fps.c \
+	${SRC_BONUS_DIR}/init.c \
+	${SRC_BONUS_DIR}/key_events.c \
+	${SRC_BONUS_DIR}/key_helpers.c \
+	${SRC_BONUS_DIR}/main.c \
+	${SRC_BONUS_DIR}/map_functions.c \
+	${SRC_BONUS_DIR}/mouse_events.c \
+	${SRC_BONUS_DIR}/program_name.c \
+	${SRC_BONUS_DIR}/sprite.c \
+	${SRC_BONUS_DIR}/utils.c \
+	${SRC_BONUS_DIR}/parsing/check_arg.c \
+	${SRC_BONUS_DIR}/parsing/check_map_bounds.c \
+	${SRC_BONUS_DIR}/parsing/check_map.c \
+	${SRC_BONUS_DIR}/parsing/map_fill.c \
+	${SRC_BONUS_DIR}/parsing/parse_file.c \
+	${SRC_BONUS_DIR}/parsing/parse_textures.c \
+	${SRC_BONUS_DIR}/parsing/set_sprite.c \
+	${SRC_BONUS_DIR}/parsing/set_textures.c \
+	${SRC_BONUS_DIR}/render/door.c \
+	${SRC_BONUS_DIR}/render/draw_wall.c \
+	${SRC_BONUS_DIR}/render/floorcast.c \
+	${SRC_BONUS_DIR}/render/minimap.c \
+	${SRC_BONUS_DIR}/render/put_pixel.c \
+	${SRC_BONUS_DIR}/render/ray_create.c \
+	${SRC_BONUS_DIR}/render/render_loop.c \
+	${SRC_BONUS_DIR}/render/weapon_anim.c \
+	${SRC_BONUS_DIR}/render/weapon.c
+
+# assume mandatory will be built
+SRC = ${SRC_MANDATORY}
 
 #if bonus is an argument for make
 ifneq ($(filter bonus,$(MAKECMDGOALS)),)
-SRC		:=	${SRCB}
+SRC		:=	${SRC_BONUS}
 #CFLAGS	:= 	$(CFLAGS) -D BONUS=1
 endif
 
 OBJS = ${SRC:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
 
-#BONUS =
-#BONUS_OBJS = ${BONUS:${BONUS_DIR}/%.c=${OBJ_DIR}/%.o}
-
 all: ${NAME}
 bonus: all
 
-${NAME}: ${LIBFT} ${LIBMLX} ${OBJS} ${INC_FILES}
+${NAME}: ${CURRENT_VERSION} ${LIBFT} ${LIBMLX} ${OBJS} ${INC_FILES}
 	${CC} ${CFLAGS} ${OBJS} -o $@ -I${INC_DIR} -I${LIBFT_DIR} -L${LIBFT_DIR} -lft -L${LIBMLX_DIR} -lmlx -lXext -lX11 -lm
 
 ${OBJ_DIR}/%.o:${SRC_DIR}/%.c ${INC_FILES} | ${OBJ_DIR}
 	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -I${LIBFT_DIR} -c $< -o $@
 
-#${BONUS_DIR}/%.o:${BONUS_DIR}/%.c ${INC_FILES} | ${OBJ_DIR}
-#	${CC} ${CFLAGS} -I${INC_DIR} -I${LIBMLX_DIR} -I${LIBFT_DIR} -c $< -o $@
+${CURRENT_VERSION}:
+	@${RM} ${OTHER_VERSION}
+	@touch ${CURRENT_VERSION}
 
 ${OBJ_DIR}:
 	mkdir -p ${OBJ_DIRS}
@@ -155,22 +163,18 @@ ${LIBMLX}: | ${LIBMLX_DIR}
 ${LIBMLX_DIR}:
 	mkdir -p $@
 
-#bonus: ${LIBFT} ${BONUS_OBJS}
-#	${CC} ${CFLAGS} ${BONUS_OBJS} -o fractol -Lminilibx-linux -lmlx -lXext -lX11 -lm ${LIBFT}
-
-run:
-	./${NAME} maps/good/wolf.cub
-
 v valgrind: ${NAME}
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "maps/bad/empty.cub"
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes -s ./cub3D "maps/mandatory/bad/empty.cub"
 
 clean:
-	${RM} ${OBJ_DIR}
+	${RM} ${OBJ_ROOT_DIR}
 	make -C ${LIBFT_DIR} clean
 	make -C ${LIBMLX_DIR} clean
+	${RM} ${CURRENT_VERSION} ${OTHER_VERSION}
 
 clean2:
-	${RM} ${OBJ_DIR}
+	${RM} ${OBJ_ROOT_DIR}
+	${RM} ${CURRENT_VERSION} ${OTHER_VERSION}
 
 fclean: clean
 	${RM} ${NAME}
@@ -185,4 +189,4 @@ re: fclean all
 # only remove the obj dir (and leave the libft and minilibx-linux as is)
 re2: fclean2 all
 
-.PHONY: all clean clean2 fclean fclean2 re re2 run bonus
+.PHONY: all clean clean2 fclean fclean2 re re2 bonus
