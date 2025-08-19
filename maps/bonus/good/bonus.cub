@@ -4,6 +4,7 @@
  EA textures/wolfenstein/wood.xpm
  ST textures/wolfenstein/barrel.xpm
  DO textures/wolfenstein/door.xpm
+ SP 0,2,2
 
  F textures/wolfenstein/colorstone.xpm
  C textures/wolfenstein/greystone.xpm

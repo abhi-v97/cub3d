@@ -3,7 +3,10 @@
  WE textures/wolfenstein/purplestone.xpm
  EA textures/wolfenstein/wood.xpm
  ST textures/wolfenstein/barrel.xpm
+ ST textures/wolfenstein/greenlight.xpm
  DO textures/wolfenstein/door.xpm
+ SP 0,1,1
+ SP 1,2,2
 
  F textures/wolfenstein/floor-lava.64.xpm
  C textures/wolfenstein/ceiling-red-star.64.xpm

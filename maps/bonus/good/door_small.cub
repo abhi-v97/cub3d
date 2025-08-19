@@ -4,6 +4,7 @@
  EA textures/wolfenstein/wood.xpm
  SP textures/wolfenstein/barrel.xpm
  DO textures/wolfenstein/door.xpm
+ SP 0,2,2
 
  F 220,100,0
  C 225,30,0

@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:48:18 by abhi              #+#    #+#             */
-/*   Updated: 2025/08/19 14:06:51 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/19 14:41:58 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,10 @@ static int	set_rgb(char *path)
 	if (!array || (array && !array[0]) || (array && !array[1]))
 		return (free_array((void **)array), (r << 16) + (g << 8) + b);
 	if (array[0])
-		r = ft_atoi(array[0]);
+		r = ft_atoi(array[0]) % 256;
 	if (array[1])
-		g = ft_atoi(array[1]);
+		g = ft_atoi(array[1]) % 256;
 	if (array[2])
-		b = ft_atoi(array[2]);
+		b = ft_atoi(array[2]) % 256;
 	return (free_array((void **)array), (r << 16) + (g << 8) + b);
 }

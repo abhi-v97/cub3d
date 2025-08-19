@@ -1,9 +1,9 @@
-NO ./images/NO.xpm 123
-SO ./images/SO.xpm
-WE ./images/WE.xpm
-EA ./images/EA.xpm
-F 00,153,15
-C 255,255,255
+NO textures/red.xpm
+SO textures/Grey.xpm
+WE textures/yelow.xpm
+EA textures/pink.xpm
+ F 220,100,999
+ C 225,30,0
 
         1111111111111111111111111
         1000000000000000000000001
