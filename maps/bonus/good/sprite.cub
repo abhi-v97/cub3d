@@ -2,7 +2,8 @@
  SO textures/wolfenstein/bluestone.xpm
  WE textures/wolfenstein/purplestone.xpm
  EA textures/wolfenstein/wood.xpm
- SP textures/wolfenstein/greenlight.xpm
+ ST textures/wolfenstein/greenlight.xpm
+ SP 0,3,3
 
  F 220,100,0
  C 225,30,0

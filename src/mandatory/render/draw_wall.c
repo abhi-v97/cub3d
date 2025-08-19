@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_wall.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhi <abhi@student.42.fr>                  #+#  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 15:27:41 by avalsang          #+#    #+#             */
-/*   Updated: 2025-07-31 21:35:40 by abhi             ###   ########.fr       */
+/*   Updated: 2025/08/19 14:07:47 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,16 @@ static void	set_texinfo(t_gdata *data, t_ray ray, t_texinfo *texinfo);
 // texinfo: struct that contains variables used to calculate texture data
 // tex: struct with x and y which are coordinates of the texture array, used to
 // grab the correct colour from the texture array
-// texet = texture pixel
+// texel = texture pixel
 // *******
 // ## tex.x calculation explanation:
-// Pretend you're holding a flat 2d image in your hand and you're looking at it
-// head on. Now, turn around exactly 180 degrees, while holding the image and
-// still looking at it. The image is not mirrored to match your perspective... 
-// if you didn't rotate the image while turning around, you'd be looking at
-// the back of the image, it would be mirrored...
-// First, you multiply tex_size (typically 64) by wall_x (float in range(0,1))
-// Now, if the wall you're looking at is the W or S (don't ask me why yet)
-// flip the image to account for your perspective. For example,
-// data->tex_size - tex.x - 1 = 64 - 4 - 1 = 59, where 59 is the inverse of 4
-// do it for each number between 0-64 and you will get 64-0.
+// Pretend you're holding a flat 2d image in your hand. Now, turn around
+// exactly 180 degrees, while holding the image and still looking at it. The
+// image has "flipped" alongside you.
+// If you didn't rotate the image while turning around, you'd be looking at
+// the back of the image, it would be mirrored.
+// In order to flip the image, you simply swap tex.x to be on the opposite end
+// of the range. So for a range of [0, 64], 0 = 64, 1 = 63, etc
 void	draw_wall(t_gdata *data, t_ray ray, int x)
 {
 	int			y;

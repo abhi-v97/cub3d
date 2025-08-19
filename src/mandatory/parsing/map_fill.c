@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 16:19:27 by abhi              #+#    #+#             */
-/*   Updated: 2025/08/16 15:38:07 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/19 14:06:07 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	map_fill(t_gdata *gd, char **map, int fd)
 static int	set_map_row(t_gdata *gd, char *buf, char **map, int *row)
 {
 	char	*nl_char;
+
 	if (buffer_has_map_data(buf) == false)
 		return (EXIT_FAILURE);
 	map[*row] = (char *) malloc(sizeof(char *) * (gd->map_width + 1));

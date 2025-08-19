@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:44:25 by avalsang          #+#    #+#             */
-/*   Updated: 2025/08/16 13:59:16 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/19 14:02:27 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ int		render_loop(void *param);
 // cleanup.c
 void	cleanup(t_gdata *gdata);
 void	free_data(t_gdata *data);
-void	free_array(char **array);
+void	free_array(void **array);
 
 // debug.c
 void	debug_print(t_gdata *data);

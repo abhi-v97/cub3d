@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:34:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/10 07:24:41 by aistok           ###   ########.fr       */
+/*   Updated: 2025/08/19 14:05:17 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	alloc_textures(t_gdata *gd);
 
 int	init_map_data(t_gdata *gd)
 {
+	gd->tex_size = 0;
 	gd->map = NULL;
 	gd->map_height = 0;
 	gd->map_width = 0;
@@ -25,13 +26,15 @@ int	init_map_data(t_gdata *gd)
 	gd->time = 0;
 	gd->old_time = 0;
 	gd->file_fd = -1;
-	if (failed(alloc_textures(gd)))
-		return (gd->exit_status);
+	gd->canvas.img = NULL;
+	gd->win = NULL;
+	gd->textures = NULL;
+	gd->tex_rgb = NULL;
 	gd->mlx = mlx_init();
 	if (!gd->mlx)
 		return (exit_status(gd, EMLXINIT));
-	gd->canvas.img = NULL;
-	gd->win = NULL;
+	if (failed(alloc_textures(gd)))
+		return (gd->exit_status);
 	return (0);
 }
 
