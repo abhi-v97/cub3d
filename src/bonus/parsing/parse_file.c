@@ -6,7 +6,7 @@
 /*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 20:08:21 by abhi              #+#    #+#             */
-/*   Updated: 2025/08/16 14:06:45 by avalsang         ###   ########.fr       */
+/*   Updated: 2025/08/09 17:42:41 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static void		update_map_width(t_gdata *gd, char *buffer);
 // NOTE: will free everything, no need for cleanup outside for parse_file
 int	parse_file(t_gdata *gd, char *file_name)
 {
-	if (failed(init_map_data(gd)))
-		return (gd->exit_status);
 	gd->map_height = line_count(gd, file_name);
 	if (gd->map_height < 2 || gd->map_width < 2)
 		return (exit_status(gd, EINVMAP));
@@ -85,8 +83,6 @@ static void	update_map_width(t_gdata *gd, char *buffer)
 // ***
 // skip over empty spaces. If the character is NSWEFC and the following
 // character is not 0 or 1, its most likely a texture file
-// if the texture file check is passed, it simply searches for a 0 or 1
-// and returns true if it finds one
 bool	buffer_has_map_data(char *buffer)
 {
 	int		i;

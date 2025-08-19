@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aistok <aistok@student.42london.com>       +#+  +:+       +#+        */
+/*   By: avalsang <avalsang@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 15:34:09 by aistok            #+#    #+#             */
-/*   Updated: 2025/07/10 07:24:41 by aistok           ###   ########.fr       */
+/*   Updated: 2025/08/09 17:46:11 by avalsang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,25 @@ static int	alloc_textures(t_gdata *gd);
 
 int	init_map_data(t_gdata *gd)
 {
-	gd->tex_size = 0;
 	gd->map = NULL;
 	gd->map_height = 0;
 	gd->map_width = 0;
 	gd->player.pos.x = 0.0;
 	gd->player.pos.y = 0.0;
-	ft_memset(gd->keys, 0, KEY_COUNT * sizeof(int));
+	memset(gd->keys, 0, KEY_COUNT * sizeof(int));
 	gd->time = 0;
 	gd->old_time = 0;
 	gd->file_fd = -1;
-	gd->canvas.img = NULL;
+	gd->weapon.frame = 0;
+	gd->weapon.state = 0;
+	gd->weapon.current = 0;
+	gd->weapon.auto_fire = 0;
+	gd->pitch = 0;
+	gd->num_sprite_tex = 0;
+	gd->num_sprite_pos = 0;
 	gd->win = NULL;
-	gd->textures = NULL;
-	gd->tex_rgb = NULL;
+	gd->canvas.img = NULL;
+	gd->minimap.colour_array = NULL;
 	gd->mlx = mlx_init();
 	if (!gd->mlx)
 		return (exit_status(gd, EMLXINIT));
@@ -38,7 +43,6 @@ int	init_map_data(t_gdata *gd)
 	return (0);
 }
 
-// will free everything, no need for cleanup outside for init_mlx
 int	init_mlx(t_gdata *gd)
 {
 	gd->win = mlx_new_window(gd->mlx, W_WIDTH, W_HEIGHT, "cub3D");
@@ -56,14 +60,21 @@ int	init_mlx(t_gdata *gd)
 	return (exit_status(gd, EXIT_SUCCESS));
 }
 
-// will free everything, no need for cleanup outside for alloc_textures
 static int	alloc_textures(t_gdata *gd)
 {
-	gd->tex_rgb = ft_calloc(sizeof(int), 7);
+	gd->tex_rgb = ft_calloc(sizeof(int), 8);
 	if (!gd->tex_rgb)
 		return (exit_status(gd, ERR_MALLOC));
-	gd->textures = ft_calloc(sizeof(int *), 7);
+	gd->textures = ft_calloc(sizeof(int *), 8);
 	if (!gd->textures)
 		return (free(gd->tex_rgb), exit_status(gd, ERR_MALLOC));
+	gd->sprite_tex = ft_calloc(sizeof(int *), 5);
+	if (!gd->sprite_tex)
+		return (free(gd->tex_rgb), free(gd->textures), exit_status(gd,
+				ERR_MALLOC));
+	gd->weapon.model = ft_calloc(sizeof(int *), 5);
+	if (!gd->weapon.model)
+		return (free(gd->tex_rgb), free(gd->textures), free(gd->sprite_tex),
+			exit_status(gd, ERR_MALLOC));
 	return (EXIT_SUCCESS);
 }
