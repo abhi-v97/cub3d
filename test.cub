@@ -1,7 +1,7 @@
-NO ./images/NO.xpm 123
-SO ./images/SO.xpm
-WE ./images/WE.xpm
-EA ./images/EA.xpm
+NO ./textures/atti/painting--N.xpm
+SO ./textures/atti/painting--S.xpm
+WE ./textures/atti/painting--W.xpm
+EA ./textures/atti/painting--E.xpm
 F 00,153,15
 C 255,255,255
 
